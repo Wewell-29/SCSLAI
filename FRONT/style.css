@@ -47,7 +47,7 @@ nav{
 }
 
 nav a{
-    color:white;
+    color:rgb(255, 255, 255);
     text-decoration:none;
     font-weight:bold;
     transition:.3s;
@@ -55,6 +55,62 @@ nav a{
 
 nav a:hover{
     color:#78fdc6;
+}
+
+/* Minimal dropdown styles that don't change nav appearance on click */
+.dropdown{
+    position:relative;
+}
+
+.dropbtn{
+    background:transparent;
+    border:none;
+    color:rgb(255, 255, 255);
+    font-weight:bold;
+    cursor:pointer;
+    padding:0;
+    margin:0;
+    font-size:inherit;
+    transition: none; /* avoid style shift on click */
+}
+
+.dropbtn:hover{
+    color:#78fdc6; /* match nav link hover */
+}
+
+.dropbtn:focus,
+.dropbtn:active{
+    outline: none;
+    color:rgb(255, 255, 255); /* keep white on focus/active */
+}
+
+.dropdown-content{
+    display:none;
+    position:absolute;
+    top:110%;
+    left:0;
+    background:rgba(255,255,255,0.98);
+    min-width:180px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.15);
+    border-radius:6px;
+    overflow:hidden;
+    z-index:50;
+}
+
+.dropdown.open .dropdown-content{
+    display:block;
+}
+
+.dropdown-content a{
+    display:block;
+    color:#123;
+    padding:10px 14px;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.dropdown-content a:hover{
+    background:#f1f1f1;
 }
 
 /* Overlay */
@@ -83,14 +139,33 @@ nav a:hover{
 
 /* Announcement */
 .announcements{
-    background: linear-gradient(rgba(rgb(18,80,60,0.95))) rgba(18,80,60,0.95); 
+    background:rgba(35, 90, 50, 0.664);
+    min-height: 600px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.announcement-posters{
+    display:flex;
+    justify-content:center;
+    padding:10px;
+    overflow:hidden;
+}
+
+.announcement-posters img{
+    width:100%;
+    max-width:100%;
+    height:auto;
+    object-fit:contain;
+    border:1px solid #ccc;
 }
 
 .title{
     text-align:center;
-    font-size:24px;
+    font-size:32px;
     font-weight:bold;
-    color:rgb(255, 255, 255);
+    color:rgb(250, 250, 250);
     padding:10px;
     border-bottom:2px solid #ddd;
 }
@@ -105,7 +180,8 @@ nav a:hover{
 .announcement-posters img{
     width:100%;
     max-width:100%;
-    object-fit:cover;
+    height:auto;
+    object-fit:contain;
     border:1px solid #ccc;
 }
 
@@ -126,6 +202,7 @@ nav a:hover{
 
 /* Right Section */
 .right-section{
+    background:rgba(101, 128, 108, 0.301);
     display:flex;
     flex-direction:column;
     gap:10px;
@@ -135,11 +212,14 @@ nav a:hover{
     position:relative;
     overflow:hidden;
     border-radius:12px;
+    width:100%;
+    min-height:520px;
 }
 
 .carousel{
     position:relative;
-    min-height:520px;
+    width:100%;
+    height:100%;
 }
 
 .carousel-slide{
@@ -151,13 +231,12 @@ nav a:hover{
 
 .carousel-slide.active{
     opacity:1;
-    position:relative;
 }
 
 .carousel-slide img{
     width:100%;
-    height:520px;
-    object-fit:cover;
+    height:100%;
+    object-fit:contain;
     display:block;
 }
 
@@ -201,6 +280,182 @@ nav a:hover{
 
 .carousel-control:hover{
     background:rgba(0,0,0,0.65);
+}
+
+.download-page .download-header{
+    padding-bottom:20px;
+    border-bottom:1px solid rgb(255, 255, 255);
+    margin-bottom:24px;
+}
+
+.download-page .download-header h1{
+    font-size:34px;
+    color:#fff;
+    margin-bottom:10px;
+}
+
+.download-page .download-header p{
+    color:#ececec;
+    line-height:1.8;
+    max-width:780px;
+}
+
+.download-section{
+    margin-bottom:28px;
+}
+
+.section-heading{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(90deg, rgba(18,80,60,0.95));
+    padding:14px 20px;
+    border-radius:8px;
+    margin-bottom:12px;
+}
+
+.section-heading span{
+    color:#f8f7f7;
+    font-weight:700;
+    letter-spacing:1px;
+    font-size:18px;
+}
+
+.download-list{
+    display:grid;
+    gap:10px;
+    background:rgba(255, 255, 255, 0.863);
+    padding:10px;
+    border-radius:10px;
+    border:1px solid rgba(12, 12, 12, 0.87);
+}
+
+.download-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:12px 16px;
+    background:rgba(82, 80, 80, 0.438);
+    border-radius:8px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.download-item span{
+    color:#0f0f0f;
+    font-weight:600;
+    flex:1;
+}
+
+.download-actions{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:90px;
+    padding:10px 14px;
+    border-radius:6px;
+    text-decoration:none;
+    font-size:13px;
+    font-weight:700;
+    transition:transform .2s ease, background .2s ease, color .2s ease;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
+}
+
+.btn-view{
+    background:rgba(38, 134, 122, 0.61);
+    color:#fff;
+    border:1px solid rgba(255,255,255,0.35);
+}
+
+.btn-download{
+    background:#1f3b2d;
+    color:#fff;
+}
+
+.btn-download:hover{
+    background:#5bac7b;
+}
+
+.contact-page .contact-header{
+    margin-bottom:24px;
+}
+
+.contact-page .contact-header h1{
+    color:#fff;
+    font-size:34px;
+    margin-bottom:12px;
+}
+
+.contact-page .contact-header p{
+    color:#edf4f2;
+    max-width:780px;
+    line-height:1.75;
+}
+
+.contact-cards{
+    display:grid;
+    gap:18px;
+    margin-bottom:22px;
+}
+
+.contact-card{
+    display:flex;
+    align-items:flex-start;
+    gap:18px;
+    padding:20px 22px;
+    background:rgba(53, 95, 82, 0.72);
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.12);
+    box-shadow:0 10px 25px rgba(0,0,0,0.14);
+}
+
+.contact-card-icon{
+    min-width:56px;
+    min-height:56px;
+    display:grid;
+    place-items:center;
+    background:rgba(255, 247, 247, 0.39);
+    color:#000;
+    border-radius:50%;
+}
+
+.contact-card-icon svg{
+    width:24px;
+    height:24px;
+    fill:#000;
+}
+
+.contact-card-body h2{
+    margin:0 0 8px;
+    font-size:18px;
+    color:#ffd159;
+    letter-spacing:0.2px;
+}
+
+.contact-card-body p{
+    margin:0;
+    color:#eef6ec;
+    line-height:1.6;
+}
+
+.bank-contact{
+    background:rgba(255,255,255,0.93);
+    color:#164a35;
+    padding:16px 20px;
+    border-radius:12px;
+    border:1px solid rgba(22,74,53,0.25);
+    font-weight:700;
+    font-size:18px;
+    text-align:center;
 }
 
 .gallery{

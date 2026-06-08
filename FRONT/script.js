@@ -37,7 +37,8 @@ if (slides.length > 0) {
 
 const announcementImages = [
   {src: 'images/Annoncements/final-educational-poster.jpg', alt: 'Final Educational Poster'},
-  {src: 'images/Annoncements/ANNOUNCEMENT1.png', alt: 'Announcement 2'}
+  {src: 'images/Annoncements/ANNOUNCEMENT1.png', alt: 'Announcement 2'},
+  {src: 'images/Annoncements/TLA.jpg', alt: 'TLA'}
 ];
 const announcementImg = document.querySelector('.announcement-posters img');
 let announcementIndex = 0;
@@ -72,4 +73,44 @@ nextButton?.addEventListener('click', () => {
 prevButton?.addEventListener('click', () => {
   prevSlide();
   resetCarousel();
+});
+
+// Dropdown should always open when ABOUT US is clicked
+const dropbtn = document.querySelector('.dropbtn');
+const dropdown = document.querySelector('.dropdown');
+
+if (dropbtn && dropdown) {
+  dropbtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdown.classList.add('open');
+    dropbtn.setAttribute('aria-expanded', 'true');
+  });
+
+  document.addEventListener('click', (e) => {
+    const isClickInsideDropdown = dropdown.contains(e.target);
+    if (!isClickInsideDropdown && dropdown.classList.contains('open')) {
+      dropdown.classList.remove('open');
+      dropbtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  dropdown.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') {
+      dropdown.classList.remove('open');
+      dropbtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+}
+
+// Close dropdown on Escape
+document.addEventListener('keydown', (ev) => {
+  if (ev.key === 'Escape') {
+    const dropdown = document.querySelector('.dropdown');
+    const dropbtn = document.querySelector('.dropbtn');
+    if (dropdown && dropdown.classList.contains('open')) {
+      dropdown.classList.remove('open');
+      dropbtn?.setAttribute('aria-expanded', 'false');
+      dropbtn?.focus();
+    }
+  }
 });
