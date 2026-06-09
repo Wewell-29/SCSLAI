@@ -37,8 +37,9 @@ if (slides.length > 0) {
 
 const announcementImages = [
   {src: 'images/Annoncements/final-educational-poster.jpg', alt: 'Final Educational Poster'},
-  {src: 'images/Annoncements/ANNOUNCEMENT1.png', alt: 'Announcement 2'},
-  {src: 'images/Annoncements/TLA.jpg', alt: 'TLA'}
+  {src: 'images/Annoncements/HOUSING LOAN.png', alt: 'Announcement 2'},
+  {src: 'images/Annoncements/anniv.png', alt: 'ANNIVERSARY'},
+  {src: 'images/Annoncements/INDIPENDENCE.png', alt: 'INDEPENDENCE DAY'}
 ];
 const announcementImg = document.querySelector('.announcement-posters img');
 let announcementIndex = 0;
@@ -64,6 +65,60 @@ if (announcementImg) {
   announcementImg.classList.add('slide-up');
   setInterval(nextAnnouncement, 5000);
 }
+
+const galleryItems = document.querySelectorAll('.gallery-item');
+let galleryOverlay = document.querySelector('.gallery-overlay');
+let galleryHideTimer;
+let activeGalleryImage = null;
+
+if (!galleryOverlay) {
+  galleryOverlay = document.createElement('div');
+  galleryOverlay.className = 'gallery-overlay';
+  galleryOverlay.innerHTML = '<img alt=""><div class="gallery-overlay-text">Click outside to close</div>';
+  document.body.appendChild(galleryOverlay);
+}
+
+const galleryOverlayImage = galleryOverlay.querySelector('img');
+
+function showGalleryOverlay(image) {
+  clearTimeout(galleryHideTimer);
+  galleryOverlayImage.src = image.src;
+  galleryOverlayImage.alt = image.alt;
+  galleryOverlay.classList.add('visible');
+  activeGalleryImage = image;
+}
+
+function hideGalleryOverlay() {
+  clearTimeout(galleryHideTimer);
+  galleryOverlay.classList.remove('visible');
+  activeGalleryImage = null;
+}
+
+galleryItems.forEach((item) => {
+  const image = item.querySelector('img');
+  if (!image) return;
+
+  item.addEventListener('click', () => {
+    if (activeGalleryImage === image && galleryOverlay.classList.contains('visible')) {
+      hideGalleryOverlay();
+      return;
+    }
+
+    showGalleryOverlay(image);
+  });
+});
+
+galleryOverlay.addEventListener('click', (event) => {
+  if (event.target === galleryOverlay) {
+    hideGalleryOverlay();
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
+    hideGalleryOverlay();
+  }
+});
 
 nextButton?.addEventListener('click', () => {
   nextSlide();
