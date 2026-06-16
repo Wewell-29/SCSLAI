@@ -277,6 +277,11 @@ function createCalculatorModal() {
           <span>Your monthly amortization appears here.</span>
         </div>
 
+        <div class="calculator-note">
+          <strong>Note:</strong>
+          <span>Your takehome pay should not be lower than 5,000 after deducting loan amortization.</span>
+        </div>
+
       </div>
 
       <div class="calculator-panel" data-court-panel="lower">
@@ -314,6 +319,12 @@ function createCalculatorModal() {
           <strong>Loan Amortization</strong>
           <span>Your monthly amortization appears here.</span>
         </div>
+
+        <div class="calculator-note">
+          <strong>Note:</strong>
+          <span>Your takehome pay should not be lower than 5,000 after deducting loan amortization.</span>
+        </div>
+        
       </div>
     </div>
   `;

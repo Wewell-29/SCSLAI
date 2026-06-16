@@ -1117,7 +1117,7 @@ body.calculator-modal-open{
     border-radius:999px;
 }
 
-/* Footer */
+/*      */
 footer{
     background:rgba(18,80,60,0.95);
     color:white;
@@ -1167,7 +1167,7 @@ footer{
 }
 
 .footer-section i {
-    color: #0d0e0d;
+    color: #4ec291;
     min-width: 20px;
     margin-top: 3px;
 }
