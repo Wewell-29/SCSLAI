@@ -204,6 +204,42 @@ const lowerLoanRates = {
   healthEmergency: { 1: 12, 2: 12, 3: 12 }
 };
 
+const loanLimits = {
+  educational: {
+    min: 0,
+    max: 500000
+  },
+  housing: {
+    min: 0,
+    max: 2000000
+  },
+  multiPurpose: {
+    min: 0,
+    max: 1000000
+  },
+  business: {
+    min: 0,
+    max: 2000000
+  },
+  healthEmergency: {
+    min: 0,
+    max: 400000
+  }
+};
+
+function updateLoanAmountLimits(court, loanType) {
+  const elements = getLoanElements(court);
+
+  if (!elements.loanAmount) return;
+
+  const limits = loanLimits[loanType];
+
+  elements.loanAmount.min = limits.min;
+  elements.loanAmount.max = limits.max;
+  elements.loanAmount.placeholder =
+    `Min: ₱${limits.min.toLocaleString()} | Max: ₱${limits.max.toLocaleString()}`;
+}
+
 function formatCurrency(value) {
   return new Intl.NumberFormat('en-PH', {
     style: 'currency',
@@ -392,6 +428,10 @@ function openCalculator() {
 
   if (supremeLoanType && supremeLoanTerm) {
     updateLoanTerms('supreme', supremeLoanType.value);
+    updateLoanAmountLimits('supreme', supremeLoanType.value);
+    updateLoanTerms('lower', lowerLoanType.value);
+    updateLoanTerms('lower', lowerLoanType.value);
+    updateLoanAmountLimits('lower', lowerLoanType.value);
   }
 
   if (lowerLoanType && lowerLoanTerm) {
@@ -427,6 +467,21 @@ function computeLoan(court) {
   const loanType = elements.loanType.value;
   const termYears = Number(elements.loanTerm.value);
   const amount = Number(elements.loanAmount.value);
+  const limits = loanLimits[loanType];
+
+if (amount < limits.min || amount > limits.max) {
+  elements.result.innerHTML = `
+    <strong>Loan Amortization</strong>
+    <span>
+      Loan amount must be between
+      ${formatCurrency(limits.min)}
+      and
+      ${formatCurrency(limits.max)}.
+    </span>
+  `;
+  return;
+}
+
   const rate = rates[loanType]?.[termYears];
 
   if (!amount || amount <= 0) {
