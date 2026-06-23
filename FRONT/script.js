@@ -236,8 +236,18 @@ function updateLoanAmountLimits(court, loanType) {
 
   elements.loanAmount.min = limits.min;
   elements.loanAmount.max = limits.max;
-  elements.loanAmount.placeholder =
-    `Min: ₱${limits.min.toLocaleString()} | Max: ₱${limits.max.toLocaleString()}`;
+
+  const minText = `Min: ₱${limits.min.toLocaleString()}`;
+  const maxText = `Max: ₱${limits.max.toLocaleString()}`;
+  const placeholder = `${minText} | ${maxText}`;
+
+  // Update the input attributes
+  elements.loanAmount.placeholder = placeholder;
+
+  // If your UI also shows a separate min/max text element,
+  // update it too (optional, only works if it exists).
+  const limitsTextEl = document.querySelector('[data-loan-amount-limits-text]');
+  if (limitsTextEl) limitsTextEl.textContent = placeholder;
 }
 
 function formatCurrency(value) {
@@ -429,9 +439,11 @@ function openCalculator() {
   if (supremeLoanType && supremeLoanTerm) {
     updateLoanTerms('supreme', supremeLoanType.value);
     updateLoanAmountLimits('supreme', supremeLoanType.value);
-    updateLoanTerms('lower', lowerLoanType.value);
+    elements.loanAmount.value = '';
+
     updateLoanTerms('lower', lowerLoanType.value);
     updateLoanAmountLimits('lower', lowerLoanType.value);
+    elements.loanAmountLower.value = '';
   }
 
   if (lowerLoanType && lowerLoanTerm) {
@@ -558,10 +570,12 @@ document.addEventListener('keydown', (event) => {
 document.addEventListener('change', (event) => {
   if (event.target?.matches?.('[data-loan-type]')) {
     updateLoanTerms('supreme', event.target.value);
+    updateLoanAmountLimits('supreme', event.target.value);
   }
 
   if (event.target?.matches?.('[data-loan-type-lower]')) {
     updateLoanTerms('lower', event.target.value);
+    updateLoanAmountLimits('lower', event.target.value);
   }
 });
 
