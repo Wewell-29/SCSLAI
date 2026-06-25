@@ -207,7 +207,7 @@ const lowerLoanRates = {
 const loanLimits = {
   educational: {
     min: 0,
-    max: 500000
+    max: 200000
   },
   housing: {
     min: 0,
@@ -215,11 +215,11 @@ const loanLimits = {
   },
   multiPurpose: {
     min: 0,
-    max: 1000000
+    max: 100000
   },
   business: {
     min: 0,
-    max: 2000000
+    max: 500000
   },
   healthEmergency: {
     min: 0,
@@ -437,17 +437,19 @@ function openCalculator() {
   calculatorModal.setAttribute('aria-hidden', 'false');
 
   if (supremeLoanType && supremeLoanTerm) {
-    updateLoanTerms('supreme', supremeLoanType.value);
-    updateLoanAmountLimits('supreme', supremeLoanType.value);
-    elements.loanAmount.value = '';
+  updateLoanTerms('supreme', supremeLoanType.value);
+  updateLoanAmountLimits('supreme', supremeLoanType.value);
 
-    updateLoanTerms('lower', lowerLoanType.value);
-    updateLoanAmountLimits('lower', lowerLoanType.value);
-    elements.loanAmountLower.value = '';
+  if (supremeLoanAmount) {
+    supremeLoanAmount.value = '';
   }
 
-  if (lowerLoanType && lowerLoanTerm) {
-    updateLoanTerms('lower', lowerLoanType.value);
+  updateLoanTerms('lower', lowerLoanType.value);
+  updateLoanAmountLimits('lower', lowerLoanType.value);
+
+  if (lowerLoanAmount) {
+    lowerLoanAmount.value = '';
+  }
   }
 }
 
