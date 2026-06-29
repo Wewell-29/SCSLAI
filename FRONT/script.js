@@ -511,7 +511,7 @@ if (amount < limits.min || amount > limits.max) {
   const annualRate = rate / 100;
   const monthlyAmortization = pmt(annualRate, termYears, amount);
   //const totalPayable = monthlyAmortization * termYears * 12;
-  //const totalInterest = totalPayable - amount;
+  // const totalInterest = totalPayable - amount;
 
   elements.result.innerHTML = `
     <strong>Loan Amortization</strong>
