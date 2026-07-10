@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SCSLAI Framework - SCSLAI</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="loans.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
@@ -37,77 +38,433 @@
         </nav>
     </header>
     <main>
-        <div class="overlay">
-            <div class="content" style="grid-template-columns:1fr;">
-                <section class="loan-matrix">
+        <div class="overlay loans-page-overlay">
+            <div class="content loans-page-content" style="grid-template-columns:1fr;">
+            
+                <div class="matrix-header">
+                    <h1 class="matrix-title">
+                        Updated Loan Matrix
+                    </h1>
+                    <p class="matrix-description">
+                        Loan products available for Supreme Court and Lower Court members.
+                    </p>
+                </div>
 
-    <div class="matrix-header">
-        <h2><i class="fa-solid fa-table"></i> Loan Matrix</h2>
-        <p>Interest Rates, Payment Terms & Co-maker Requirements</p>
-    </div>
+                <!-- SUPREME COURT -->
+                <section class="court-section supreme-court">
 
-    <div class="matrix-table">
+                    <div class="section-title">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                        Supreme Court
+                    </div>
 
-        <div class="matrix-row heading">
-            <div><i class="fa-solid fa-file-signature"></i> Loan Type</div>
-            <div><i class="fa-solid fa-percent"></i> &lt;12 Mos</div>
-            <div>1 Yr</div>
-            <div>2 Yrs</div>
-            <div>3 Yrs</div>
-            <div>4 Yrs</div>
-            <div>5 Yrs</div>
-            <div><i class="fa-solid fa-users"></i> Co-makers</div>
+                    <!-- Regular Loans -->
+                    <div class="loan-category regular-loans">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                        Regular Loans
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="loan-table">
+
+                            <thead class="loan-table-head">
+
+                                <tr>
+
+                                    <th class="loan-name" rowspan="2">
+                                        Loan Type
+                                    </th>
+
+                                    <th class="loan-interest" colspan="5">
+                                        <i class="fa-solid fa-percent"></i>
+                                        Interest Rates / Payment Terms
+                                    </th>
+
+                                </tr>
+
+                                <tr>
+                                    
+                                    <th>1 Year</th>
+                                    <th>2 Years</th>
+                                    <th>3 Years</th>
+                                    <th>4 Years</th>
+                                    <th>5 Years</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody class="loan-table-body">
+
+                                <tr class="loan-row">
+
+                                    <td class="loan-type">
+                                        Allowance Loan (Casual)
+                                    </td>
+
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">-</td>
+                                    <td class="loan-rate center">-</td>
+
+                                </tr>
+
+                                <tr class="loan-row">
+                                    <td class="loan-type">
+                                        Allowance Loan (Regular)
+                                    </td>
+
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">12%</td>
+
+                                </tr>
+
+                                <tr class="loan-row">
+
+                                    <td class="loan-type">
+                                        Business Loan (Regular)
+                                    </td>
+
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">12%</td>
+                                </tr>
+
+                                <tr class="loan-row">
+
+                                    <td class="loan-type">
+                                        Character Loan (Regular)
+                                    </td>
+
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">15%</td>
+                                    <td class="loan-rate center">-</td>
+                                    <td class="loan-rate center">-</td>
+                                </tr>
+
+                                <tr class="loan-row">
+
+                                    <td class="loan-type">
+                                        Educational Loan (Casual)
+                                    </td>
+
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">-</td>
+                                    <td class="loan-rate center">-</td>
+                                    <td class="loan-rate center">-</td>
+                                </tr>
+
+                                <tr class="loan-row">
+
+                                    <td class="loan-type">
+                                        Educational Loan (Regular)
+                                    </td>
+
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">15%</td>
+                                    <td class="loan-rate center">15%</td>
+                                    <td class="loan-rate center">15%</td>
+                                </tr>
+
+                                <tr class="loan-row">
+
+                                    <td class="loan-type">
+                                        Emergency Rata Loan (Regular)
+                                    </td>
+
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">-</td>
+                                    <td class="loan-rate center">-</td>
+                                    <td class="loan-rate center">-</td>
+                                </tr>
+
+                                <tr class="loan-row">
+
+                                    <td class="loan-type">
+                                        Equitable Loan (Regular)
+                                    </td>
+
+                                    <td class="loan-rate center">10%</td>
+                                    <td class="loan-rate center">-</td>
+                                    <td class="loan-rate center">-</td>
+                                    <td class="loan-rate center">-</td>
+                                    <td class="loan-rate center">-</td>
+                                </tr>
+
+                                <tr class="loan-row">
+
+                                    <td class="loan-type">
+                                        Equity Loan (Regular)
+                                    </td>
+
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">15%</td>
+                                    <td class="loan-rate center">15%</td>
+                                    <td class="loan-rate center">15%</td>
+                                </tr>
+
+                                <tr class="loan-row">
+
+                                    <td class="loan-type">
+                                        Health Emergency Loan (Regular)
+                                    </td>
+
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">-</td>
+                                    <td class="loan-rate center">-</td>
+                                    <td class="loan-rate center">-</td>
+                                </tr>
+
+                                <tr class="loan-row">
+
+                                    <td class="loan-type">
+                                        Help Loan DIR (Regular)
+                                    </td>
+
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">-</td>
+                                    <td class="loan-rate center">-</td>
+
+                                </tr>
+
+                                <tr class="loan-row">
+
+                                    <td class="loan-type">
+                                        Housing Loan (Regular)
+                                    </td>
+
+                                    <td class="loan-rate center">8%</td>
+                                    <td class="loan-rate center">8%</td>
+                                    <td class="loan-rate center">8%</td>
+                                    <td class="loan-rate center">8%</td>
+                                    <td class="loan-rate center">8%</td>
+                                </tr>
+
+                                 <tr class="loan-row">
+
+                                    <td class="loan-type">
+                                        Long Term Loan (Regular)
+                                    </td>
+
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">15%</td>
+                                    <td class="loan-rate center">15%</td>
+                                    <td class="loan-rate center">15%</td>
+                                </tr>
+
+                                 <tr class="loan-row">
+
+                                    <td class="loan-type">
+                                        MAXI Loan (Regular)
+                                    </td>
+
+                                    <td class="loan-rate center">6%</td>
+                                    <td class="loan-rate center">8%</td>
+                                    <td class="loan-rate center">10%</td>
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">14%</td>
+                                </tr>
+
+                                <tr class="loan-row">
+
+                                    <td class="loan-type">
+                                        MEAL Loan (Casual)
+                                    </td>
+
+                                    <td class="loan-rate center">8%</td>
+                                    <td class="loan-rate center">8%</td>
+                                    <td class="loan-rate center">-</td>
+                                    <td class="loan-rate center">-</td>
+                                    <td class="loan-rate center">-</td>
+                                </tr>
+
+                                <tr class="loan-row">
+
+                                    <td class="loan-type">
+                                        MEAL Loan (Regular)
+                                    </td>
+
+                                    <td class="loan-rate center">-</td>
+                                    <td class="loan-rate center">8%</td>
+                                    <td class="loan-rate center">10</td>
+                                    <td class="loan-rate center">-</td>
+                                    <td class="loan-rate center">-</td>
+                                </tr>
+
+                                <tr class="loan-row">
+
+                                    <td class="loan-type">
+                                        Salary Emergency Loan (Regular)
+                                    </td>
+
+                                    <td class="loan-rate center">-</td>
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">-</td>
+                                    <td class="loan-rate center">-</td>
+                                    <td class="loan-rate center">-</td>
+                                </tr>
+
+                                <tr class="loan-row">
+
+                                    <td class="loan-type">
+                                        Multi-Purpose Loan (Regular)
+                                    </td>
+
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">12%</td>
+                                    <td class="loan-rate center">15%</td>
+                                    <td class="loan-rate center">-</td>
+                                    <td class="loan-rate center">-</td>
+                                </tr>
+
+
+
+                                <!-- Add the remaining Supreme Court Regular Loan rows here -->
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                    <!-- Special Loans -->
+
+                    <div class="loan-category special-loans">
+                        <i class="fa-solid fa-star"></i>
+                        Special Loans
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="loan-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Loan Type</th>
+                                    <th><i class="fa-solid fa-percent"></i> Interest</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <!-- Add Special Loan rows -->
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                    <!-- Occasional Loans -->
+
+                    <div class="loan-category occasional-loans">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        Occasional Loans
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="loan-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Loan Type</th>
+                                    <th>1 Year</th>
+                                    <th>2 Years</th>
+                                    <th>3 Years</th>
+
+                                </tr>
+
+                            </thead>
+
+                    
+
+                            <tbody>
+
+                                <!-- Add Occasional Loan rows -->
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </section>
+
+                <!-- LOWER COURT -->
+
+                <section class="court-section lower-court">
+
+                    <div class="section-title">
+                        <i class="fa-solid fa-landmark"></i>
+                        Lower Court
+                    </div>
+
+                    <div class="loan-category regular-loans">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                        Regular Loans
+                    </div>
+
+                    <div class="table-responsive">
+
+                        <table class="loan-table">
+
+                            <thead class="loan-table-head">
+
+                                <tr>
+
+                                    <th class="loan-name" rowspan="2">
+                                       
+                                        Loan Type
+                                    </th>
+
+                                    <th class="loan-interest" colspan="5">
+                                        <i class="fa-solid fa-percent"></i>
+                                        Interest Rates/Payment Terms
+                                    </th>
+
+                                </tr>
+
+                                <tr>
+                                    <th>1 Year</th>
+                                    <th>2 Years</th>
+                                    <th>3 Years</th>
+                                    <th>4 Years</th>
+                                    <th>5 Years</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <!-- Add Lower Court loan rows here -->
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+                    
+             </div>
         </div>
-
-        <div class="matrix-row">
-            <div><i class="fa-solid fa-house"></i> Housing Loan</div>
-            <div>8%</div>
-            <div>8%</div>
-            <div>8%</div>
-            <div>8%</div>
-            <div>8%</div>
-            <div>8%</div>
-            <div>15</div>
-        </div>
-
-        <div class="matrix-row">
-            <div><i class="fa-solid fa-money-bill-wave"></i> Maxi Loan</div>
-            <div>6%</div>
-            <div>8%</div>
-            <div>10%</div>
-            <div>12%</div>
-            <div>14%</div>
-            <div>14%</div>
-            <div>15</div>
-        </div>
-
-        <div class="matrix-row">
-            <div><i class="fa-solid fa-graduation-cap"></i> Educational Loan</div>
-            <div>12%</div>
-            <div>12%</div>
-            <div>15%</div>
-            <div>15%</div>
-            <div>15%</div>
-            <div>15%</div>
-            <div>10</div>
-        </div>
-
-        <div class="matrix-row">
-            <div><i class="fa-solid fa-heart-pulse"></i> Health Emergency</div>
-            <div>12%</div>
-            <div>12%</div>
-            <div>12%</div>
-            <div>-</div>
-            <div>-</div>
-            <div>-</div>
-            <div>10</div>
-        </div>
-
-    </div>
-
-</section>
-            </div>
-        </div>
+        
     </main>
     <footer>
        <div class="footer-content">

@@ -649,37 +649,6 @@ nav a:hover{
     background:rgba(0,0,0,0.65);
 }
 
-/* Loan Matrix */
-.loan-header{
-    padding-bottom:20px;
-    border-bottom:1px solid rgb(255, 255, 255);
-    margin-bottom:24px;
-}
-
-.loan-matrix{
-    justify-content:center;
-    padding: 50px;
-}
-
-.loan-matrix img{
-    width:100%;
-    max-width:100%;
-    height:auto;
-    object-fit:contain;
-    border:1px solid #ccc;
-}
-
-.loan-header h1{
-    color:#fff;
-    font-size:34px;
-    margin-bottom:12px;
-}
-
-.loan-header p{
-    color:#edf4f2;
-    max-width:780px;
-    line-height:1.75;
-}
 
 
 
