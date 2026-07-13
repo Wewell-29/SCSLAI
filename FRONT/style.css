@@ -18,6 +18,9 @@ main{
 
 /* Header */
 header{
+    position:sticky;
+    top:0;
+    z-index:1000;
     background:rgba(18,80,60,0.9);
     display:flex;
     justify-content:space-between;
@@ -140,6 +143,248 @@ nav a:hover{
 .page-section{
     width:100%;
     padding:10px 0;
+    color: #fff;
+}
+
+
+/* History */
+.history-header{
+   padding-bottom:20px;
+    border-bottom:1px solid rgb(255, 255, 255);
+    margin-bottom:24px;
+}
+.history-header h1{
+    color:#fff; 
+}
+
+.history-header p{
+    color:#edf4f2;
+    line-height:1.7;
+    font-size:16px;
+    max-width:780px;
+   
+}
+/* Data Protection Policy */
+.data-protection-header{
+    padding-bottom:20px;
+    border-bottom:1px solid rgb(255, 255, 255);
+    margin-bottom:24px;
+}
+.data-protection-header h1{
+    color:#fff; 
+}
+.data-protection-header p{
+    color:#edf4f2;
+    line-height:1.7;
+    font-size:16px;
+    max-width:780px;
+   
+}
+
+/* Annual Report */
+.annual-report-header{
+    padding-bottom:20px;
+    border-bottom:1px solid rgb(255, 255, 255);
+    margin-bottom:24px;
+}
+.annual-report-header h1{
+    color:#fff; 
+}
+.annual-report-header p{
+    color:#edf4f2;
+    line-height:1.7;
+    font-size:16px;
+    max-width:780px;
+}
+
+
+
+/* SCSLAI Framework */
+.framework-page{
+    color:#101010;
+}
+
+
+.framework-scroll::-webkit-scrollbar{
+    display:none;
+}
+
+.framework-chart{
+    position:relative;
+    min-width:1080px;
+    min-height:1920px;
+    padding:0 40px 40px;
+    overflow:hidden;
+}
+
+.framework-chart::before{
+    content:"";
+    position:absolute;
+    top:112px;
+    left:50%;
+    width:3px;
+    height:1240px;
+    background:#f9f7f7;
+    transform:translateX(-50%);
+    opacity:.9;
+}
+
+.framework-watermark{
+    display:none;
+}
+
+.framework-chart h1{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    font-size:42px;
+    font-weight:1000;
+    line-height:1.05;
+    margin-bottom:12px;
+    color:#ffffff;
+}
+
+.framework-row{
+    position:relative;
+    z-index:2;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    gap:58px;
+    margin-bottom:26px;
+}
+
+.framework-row-4::before,
+.framework-row-6::before,
+.framework-row-7::before,
+.framework-row-8::before{
+    content:"";
+    position:absolute;
+    top:-17px;
+    left:105px;
+    right:105px;
+    height:3px;
+    background:#ffffff;
+    z-index:-1;
+}
+
+.framework-row-3::before{
+    content:"";
+    position:absolute;
+    top:-17px;
+    left:calc(50% - 220px);
+    width:440px;
+    height:3px;
+    background:#ffffff;
+    z-index:-1;
+}
+
+.framework-row-3{
+    gap:230px;
+    margin-top:4px;
+}
+
+.framework-row-4,
+.framework-row-6,
+.framework-row-7,
+.framework-row-8{
+    justify-content:space-between;
+}
+
+.framework-row-4{
+    margin-top:8px;
+}
+
+.framework-row-5{
+    margin-top:0;
+}
+
+.framework-person{
+    position:relative;
+    width:210px;
+    text-align:center;
+}
+
+.framework-person::before{
+    content:"";
+    position:absolute;
+    top:-26px;
+    left:50%;
+    width:3px;
+    height:26px;
+    background:#ffffff;
+    transform:translateX(-50%);
+    z-index:-1;
+}
+
+.framework-row-1 .framework-person::before{
+    display:none;
+}
+
+.framework-photo{
+    width:178px;
+    height:208px;
+    margin:0 auto 8px;
+    display:grid;
+    place-items:center;
+    border:3px solid #151515;
+    background:linear-gradient(180deg, #f5f7f6 0%, #d8e6df 100%);
+    color:#14503c;
+    font-size:44px;
+    font-weight:800;
+    overflow:hidden;
+}
+
+.framework-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.framework-person h2{
+    display:block;
+    margin:0 auto;
+    padding:5px 7px 2px;
+    width:100%;
+    background:rgba(255,255,255,0.96);
+    border:2px solid #151515;
+    border-bottom:none;
+    font-size:16px;
+    line-height:1.08;
+    color:#050505;
+}
+
+.framework-person p{
+    display:block;
+    margin:0 auto;
+    padding:0 7px 5px;
+    width:100%;
+    background:rgba(255,255,255,0.96);
+    border:2px solid #151515;
+    border-top:none;
+    font-size:12px;
+    line-height:1.15;
+    color:#111;
+    font-weight:700;
+}
+
+@media (max-width: 768px){
+    .framework-scroll{
+        max-height:calc(100vh - 220px);
+        padding:12px;
+    }
+
+    .framework-chart{
+        min-width:820px;
+        min-height:1500px;
+        padding-left:26px;
+        padding-right:26px;
+    }
+
+    .framework-chart h1{
+        font-size:36px;
+    }
 }
 
 .mission-page{
@@ -147,20 +392,21 @@ nav a:hover{
 }
 
 .mission-header{
+    padding-bottom:20px;
+    border-bottom:1px solid rgb(255, 255, 255);
     margin-bottom:24px;
 }
 
 .mission-header h1{
-    font-size:clamp(30px, 4vw, 48px);
-    margin-bottom:12px;
-    line-height:1.1;
+    color:#edf4f2;
+    
 }
 
 .mission-header p{
-    max-width:860px;
     color:#edf4f2;
     line-height:1.7;
     font-size:16px;
+    max-width:780px;
 }
 
 .mission-cards{
@@ -243,7 +489,7 @@ nav a:hover{
     color:#fff;
 }
 
-.cares-hero-copy,
+.cares-hero-content,
 .cares-story,
 .cares-hero-visual{
     border-radius:24px;
@@ -252,7 +498,7 @@ nav a:hover{
     box-shadow:0 18px 40px rgba(0,0,0,0.22);
 }
 
-.cares-hero-copy{
+.cares-hero-content{
     padding:34px;
 }
 
@@ -269,6 +515,7 @@ nav a:hover{
     font-weight:700;
     letter-spacing:1.4px;
     text-transform:uppercase;
+    
 }
 
 .cares-hero-copy h1,
@@ -454,17 +701,20 @@ nav a:hover{
     transition:.3s;
 }
 
+
+.scslai-header {
+    padding-bottom:20px;
+    border-bottom:1px solid rgb(255, 255, 255);
+    margin-bottom:24px;
+}
 .scslai-section h1{
-    font-size:clamp(32px, 4vw, 56px);
-    color:#fff;
-    line-height:1.02;
-    margin-bottom:14px;
+    color:#fff; 
 }
 .scslai-section p{
-    font-size:clamp(18px, 2.5vw, 24px);
-    color:#d8efe6;
-    line-height:1.6;
-    margin-bottom:14px;
+    color:#edf4f2;
+    line-height:1.7;
+    font-size:16px;
+    max-width:780px;
 }
 
 .year-card span{
