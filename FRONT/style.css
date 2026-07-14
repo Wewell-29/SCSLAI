@@ -148,40 +148,423 @@ nav a:hover{
 
 
 /* History */
-.history-header{
-   padding-bottom:20px;
-    border-bottom:1px solid rgb(255, 255, 255);
-    margin-bottom:24px;
+
+.history-page-section {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 50px;
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.12);
 }
+
+.history-header{
+    text-align:center;
+    margin-bottom:50px;
+}
+
 .history-header h1{
-    color:#fff; 
+    font-size:3rem;
+    color:#0b6b3a;
+    margin-bottom:15px;
+    font-weight:700;
 }
 
 .history-header p{
-    color:#edf4f2;
-    line-height:1.7;
-    font-size:16px;
-    max-width:780px;
-   
+    color:#666;
+    font-size:1.1rem;
+    line-height:1.8;
 }
-/* Data Protection Policy */
+
+.history-content h2{
+    color:#0b6b3a;
+    font-size:2rem;
+    margin-top:45px;
+    margin-bottom:20px;
+    padding-bottom:10px;
+    border-bottom:3px solid #0b6b3a;
+}
+
+.history-content p{
+    font-size:1.05rem;
+    color:#444;
+    line-height:1.9;
+    text-align:justify;
+    margin-bottom:18px;
+}
+
+.history-content strong{
+    color:#0b6b3a;
+}
+
+.history-content hr{
+    margin:55px 0;
+    border:none;
+    border-top:1px solid #d9d9d9;
+}
+
+/* ===========================
+   HISTORY CARDS
+=========================== */
+
+.history-card{
+    background:#f8fbf8;
+    border-left:6px solid #0b6b3a;
+    padding:25px 30px;
+    border-radius:12px;
+    margin:25px 0;
+    transition:.3s ease;
+    box-shadow:0 4px 15px rgba(0,0,0,.05);
+}
+
+
+.history-card h3{
+    color:#0b6b3a;
+    margin-bottom:12px;
+    font-size:1.3rem;
+}
+
+.history-card p{
+    margin:0;
+}
+
+/* ===========================
+   LIST
+=========================== */
+
+.history-list{
+    margin:25px 0;
+    padding-left:0;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:15px;
+    list-style:none;
+}
+
+.history-list li{
+    background:#ffffff;
+    border-left:5px solid #0b6b3a;
+    padding:18px 20px;
+    border-radius:10px;
+    box-shadow:0 3px 10px rgba(0,0,0,.05);
+    font-weight:500;
+    color:#333;
+    transition:.3s;
+}
+
+
+/* check icon */
+
+.history-list li::before{
+    content:"✔";
+    color:#0b6b3a;
+    font-weight:bold;
+    margin-right:10px;
+}
+
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media (max-width:992px){
+
+    .page-section{
+        padding:40px 30px;
+        margin:30px 20px;
+    }
+
+    .history-header h1{
+        font-size:2.5rem;
+    }
+
+    .history-content h2{
+        font-size:1.7rem;
+    }
+
+}
+
+@media (max-width:768px){
+
+    .page-section{
+        padding:30px 20px;
+    }
+
+    .history-header h1{
+        font-size:2rem;
+    }
+
+    .history-header p{
+        font-size:1rem;
+    }
+
+    .history-content p{
+        font-size:1rem;
+    }
+
+    .history-card{
+        padding:20px;
+    }
+
+    .history-card h3{
+        font-size:1.15rem;
+    }
+
+    .history-list{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media (max-width:480px){
+
+    .page-section{
+        padding:20px 15px;
+    }
+
+    .history-header h1{
+        font-size:1.7rem;
+    }
+
+    .history-content h2{
+        font-size:1.4rem;
+    }
+
+}
+/* ===========================
+   DATA PRIVACY PAGE
+=========================== */
+
+.data-protection-page-section{
+    max-width:1100px;
+    margin:50px auto;
+    padding:50px;
+    background:rgba(255,255,255,.97);
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+
+/* ===========================
+   HEADER
+=========================== */
+
 .data-protection-header{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.data-protection-header h1{
+    font-size:3rem;
+    color:#0b6b3a;
+    margin-bottom:15px;
+    font-weight:700;
+}
+
+.data-protection-header p{
+    color:#666;
+    font-size:1.1rem;
+    line-height:1.8;
+    max-width:850px;
+    margin:10px auto;
+}
+
+/* ===========================
+   CONTENT
+=========================== */
+
+.data-protection-content h2{
+    color:#0b6b3a;
+    font-size:2rem;
+    margin-top:45px;
+    margin-bottom:20px;
+    padding-bottom:10px;
+    border-bottom:3px solid #0b6b3a;
+}
+
+.data-protection-content p{
+    color:#444;
+    font-size:1.05rem;
+    line-height:1.9;
+    text-align:justify;
+    margin-bottom:18px;
+}
+
+.data-protection-content strong{
+    color:#0b6b3a;
+}
+
+.data-protection-content hr{
+    margin:50px 0;
+    border:none;
+    border-top:1px solid #d9d9d9;
+}
+
+/* ===========================
+   INFORMATION CARDS
+=========================== */
+
+.data-card{
+    background:#f8fbf8;
+    border-left:6px solid #0b6b3a;
+    padding:25px 30px;
+    border-radius:12px;
+    margin:25px 0;
+    box-shadow:0 4px 15px rgba(0,0,0,.05);
+    transition:.3s ease;
+}
+
+
+.data-card h3{
+    color:#0b6b3a;
+    font-size:1.3rem;
+    margin-bottom:12px;
+}
+
+.data-card p{
+    margin:0;
+}
+
+/* ===========================
+   LIST
+=========================== */
+
+.data-list{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:15px;
+    list-style:none;
+    padding:0;
+    margin:30px 0;
+}
+
+.data-list li{
+    background:#fff;
+    border-left:5px solid #0b6b3a;
+    padding:18px 20px;
+    border-radius:10px;
+    box-shadow:0 3px 10px rgba(0,0,0,.05);
+    color:#333;
+    font-weight:500;
+    transition:.3s;
+}
+
+.data-list li::before{
+    content:"🔒";
+    margin-right:10px;
+}
+
+/* ===========================
+   EFFECTIVE DATE
+=========================== */
+
+.effective-date{
+    margin-top:40px;
+    background:#0b6b3a;
+    color:#fff;
+    padding:20px;
+    border-radius:10px;
+    text-align:center;
+    font-size:1.1rem;
+    font-weight:600;
+    letter-spacing:.5px;
+}
+
+.effective-date strong{
+    color:#fff;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media (max-width:992px){
+
+    .data-protection-page-section{
+        margin:30px 20px;
+        padding:40px 30px;
+    }
+
+    .data-protection-header h1{
+        font-size:2.5rem;
+    }
+
+    .data-protection-content h2{
+        font-size:1.7rem;
+    }
+
+}
+
+@media (max-width:768px){
+
+    .data-protection-page-section{
+        padding:30px 20px;
+    }
+
+    .data-protection-header h1{
+        font-size:2rem;
+    }
+
+    .data-protection-header p{
+        font-size:1rem;
+    }
+
+    .data-protection-content p{
+        font-size:1rem;
+    }
+
+    .data-card{
+        padding:20px;
+    }
+
+    .data-card h3{
+        font-size:1.15rem;
+    }
+
+    .data-list{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media (max-width:480px){
+
+    .data-protection-page-section{
+        padding:20px 15px;
+    }
+
+    .data-protection-header h1{
+        font-size:1.7rem;
+    }
+
+    .data-protection-content h2{
+        font-size:1.4rem;
+    }
+
+}
+
+
+/* ===========================
+   CORE VALUES PAGE
+=========================== */
+
+.core-values-header{
     padding-bottom:20px;
     border-bottom:1px solid rgb(255, 255, 255);
     margin-bottom:24px;
 }
-.data-protection-header h1{
+.core-values-header h1{
     color:#fff; 
 }
-.data-protection-header p{
+.core-values-header p{
     color:#edf4f2;
     line-height:1.7;
     font-size:16px;
     max-width:780px;
-   
 }
 
-/* Annual Report */
+/* =============================
+ Annual Report 
+ =============================== */
 .annual-report-header{
     padding-bottom:20px;
     border-bottom:1px solid rgb(255, 255, 255);
@@ -199,7 +582,9 @@ nav a:hover{
 
 
 
-/* SCSLAI Framework */
+/* =================================
+ SCSLAI Framework 
+ ================================*/
 .framework-page{
     color:#101010;
 }
