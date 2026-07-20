@@ -336,7 +336,7 @@ nav a:hover{
 =========================== */
 
 .data-protection-page-section{
-    max-width:1100px;
+    max-width:1500px;
     margin:50px auto;
     padding:50px;
     background:rgba(255,255,255,.97);
@@ -553,7 +553,7 @@ nav a:hover{
     margin:35px auto;
     padding:42px;
     color:#fff;
-    background:rgba(18, 80, 60, 0.556);
+    background:rgba(18, 80, 60, 0.734);
     border:1px solid rgba(255,255,255,0.18);
     border-radius:16px;
     box-shadow:0 18px 44px rgba(0,0,0,0.25);
@@ -568,15 +568,15 @@ nav a:hover{
 .core-values-header h1{
     margin-bottom:12px;
     color:#fff;
-    font-size:clamp(34px, 4vw, 52px);
+    font-size:clamp(28px, 4vw, 52px);
     line-height:1.05;
 }
 .core-values-header p{
     margin:0 auto;
     color:#edf4f2;
     line-height:1.7;
-    font-size:25px;
-    max-width:780px;
+    font-size:20px;
+    max-width:1000px;
 }
 
 .core-values-intro{
@@ -587,6 +587,7 @@ nav a:hover{
     margin-bottom:12px;
     color:#ffffff;
     font-size:28px;
+    max-width:1000px;
 }
 
 .core-values-intro p{
@@ -594,6 +595,7 @@ nav a:hover{
     line-height:1.75;
     font-size:17px;
     margin-bottom:30px;
+    max-width:1000px;
 }
 
 .core-values-grid{
@@ -667,7 +669,7 @@ nav a:hover{
     margin:35px auto;
     padding:42px;
     color:#fff;
-    background:rgba(27, 71, 60, 0.646);
+    background:rgba(18, 80, 60, 0.734);
     border:1px solid rgba(255,255,255,0.18);
     border-radius:16px;
     box-shadow:0 18px 44px rgba(0,0,0,0.25);
@@ -703,7 +705,7 @@ nav a:hover{
 }
 
 .annual-report-header p{
-    max-width:780px;
+    max-width:1000px;
     margin:0 auto;
     color:#edf4f2;
     line-height:1.7;
@@ -1257,7 +1259,7 @@ nav a:hover{
     margin:35px auto;
     padding:42px;
     color:#fff;
-    background:rgba(18, 80, 60, 0.494);
+    background:rgba(18, 80, 60, 0.734);
     border:1px solid rgba(255,255,255,0.18);
     border-radius:16px;
     box-shadow:0 18px 44px rgba(0,0,0,0.25);
@@ -1792,19 +1794,158 @@ nav a:hover{
 
 
 /* Membership */
+.membership-page{
+    width:100%;
+    max-width:2000px;
+    margin:35px auto;
+    padding:42px;
+    color:#fff;
+    background:rgba(18, 80, 60, 0.734);
+    border:1px solid rgba(255, 255, 255, 0.18);
+    border-radius:16px;
+    box-shadow:0 18px 44px rgba(0,0,0,0.25);
+}
+
 .membership-header{
-    padding-bottom:20px;
-    border-bottom:1px solid rgb(255, 255, 255);
-    margin-bottom:24px;
+    text-align:center;
+    padding-bottom:24px;
+    border-bottom:1px solid rgba(255,255,255,0.3);
+    margin-bottom:30px;
 }
+
 .membership-header h1{
-    color:#fff; 
+    margin-bottom:12px;
+    color:#fff;
+    font-size:clamp(34px, 4vw, 52px);
+    line-height:1.05;
 }
+
 .membership-header p{
+    margin:0 auto;
     color:#edf4f2;
     line-height:1.7;
-    font-size:16px;
-    max-width:780px;
+    font-size:px;
+    max-width:1000px;
+}
+
+.membership-layout{
+    display:grid;
+    grid-template-columns:minmax(0, 2fr) minmax(320px, 1fr);
+    gap:24px;
+    align-items:start;
+}
+
+.membership-guidelines,
+.membership-faqs{
+    padding:28px;
+    border-radius:8px;
+    background:rgba(255,255,255,0.96);
+    color:#24352f;
+    box-shadow:0 14px 30px rgba(0,0,0,0.22);
+}
+
+.membership-guidelines{
+    min-height:520px;
+}
+
+.membership-section-heading{
+    margin-bottom:22px;
+    padding-bottom:16px;
+    border-bottom:1px solid #d9e3de;
+}
+
+.membership-section-heading span{
+    display:inline-flex;
+    margin-bottom:10px;
+    padding:8px 12px;
+    border-radius:999px;
+    background:#eaf4ef;
+    color:#1d5c3f;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:1.1px;
+    text-transform:uppercase;
+}
+
+.membership-section-heading h2{
+    color:#164a35;
+    font-size:28px;
+    line-height:1.15;
+}
+
+.guideline-list,
+.faq-list{
+    display:grid;
+    gap:16px;
+}
+
+.guideline-item{
+    display:flex;
+    gap:16px;
+    padding:18px;
+    border-radius:8px;
+    background:#f5f8f6;
+    border-left:5px solid #1d7c4d;
+}
+
+.guideline-item span{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    flex:0 0 44px;
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    background:#1d5c3f;
+    color:#fff;
+    font-weight:800;
+}
+
+.guideline-item h3,
+.faq-item h3{
+    margin-bottom:8px;
+    color:#164a35;
+    font-size:18px;
+}
+
+.guideline-item p,
+.faq-item p{
+    color:#3e5149;
+    line-height:1.65;
+    font-size:15px;
+}
+
+.faq-item{
+    padding:18px;
+    border-radius:8px;
+    background:#f5f8f6;
+    border:1px solid #dce5e0;
+}
+
+@media (max-width:1000px){
+    .membership-layout{
+        grid-template-columns:1fr;
+    }
+
+    .membership-guidelines{
+        min-height:auto;
+    }
+}
+
+@media (max-width:700px){
+    .membership-page{
+        margin:24px auto;
+        padding:28px 18px;
+    }
+
+    .membership-guidelines,
+    .membership-faqs{
+        padding:22px 18px;
+    }
+
+    .guideline-item{
+        flex-direction:column;
+    }
 }
 
 /* Calculator */
