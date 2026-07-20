@@ -584,3 +584,50 @@ document.addEventListener('change', (event) => {
 if (document.querySelector('.calculator-page')) {
   openCalculator();
 }
+
+// Annual report book reader
+const reportBook = document.querySelector('[data-report-book]');
+
+if (reportBook) {
+  const pages = Array.from(reportBook.querySelectorAll('.book-page'));
+  const previousPageButton = reportBook.querySelector('[data-report-prev]');
+  const nextPageButton = reportBook.querySelector('[data-report-next]');
+  const currentPageLabel = reportBook.querySelector('[data-report-current]');
+  const totalPageLabel = reportBook.querySelector('[data-report-total]');
+  let reportPageIndex = 0;
+
+  function showReportPage(index) {
+    reportPageIndex = Math.max(0, Math.min(index, pages.length - 1));
+
+    pages.forEach((page, pageIndex) => {
+      const isActive = pageIndex === reportPageIndex;
+      page.classList.toggle('active', isActive);
+      page.setAttribute('aria-hidden', String(!isActive));
+    });
+
+    if (currentPageLabel) currentPageLabel.textContent = String(reportPageIndex + 1);
+    if (totalPageLabel) totalPageLabel.textContent = String(pages.length);
+    if (previousPageButton) previousPageButton.disabled = reportPageIndex === 0;
+    if (nextPageButton) nextPageButton.disabled = reportPageIndex === pages.length - 1;
+  }
+
+  previousPageButton?.addEventListener('click', () => {
+    showReportPage(reportPageIndex - 1);
+  });
+
+  nextPageButton?.addEventListener('click', () => {
+    showReportPage(reportPageIndex + 1);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') {
+      showReportPage(reportPageIndex - 1);
+    }
+
+    if (event.key === 'ArrowRight') {
+      showReportPage(reportPageIndex + 1);
+    }
+  });
+
+  showReportPage(0);
+}
