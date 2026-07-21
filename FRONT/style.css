@@ -1459,45 +1459,58 @@ nav a:hover{
 }
 
 .cares-hero-visual{
-    padding:18px;
     display:grid;
-    gap:10px;
+    grid-template-columns:1.5fr 2fr;
+    gap:15px;
+    padding:20px;
+    align-items:stretch;
 }
 
-.cares-featured-image,
-.cares-photo-grid img{
-    overflow:hidden;
-    border-radius:10px;
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(255,255,255,0.12);
-}
+/* Featured image */
 
 .cares-featured-image{
     margin:0;
-    width:min(100%, 760px);
-    margin-left:auto;
-    margin-right:auto;
+    border-radius:15px;
+    overflow:hidden;
+    height:520px;
 }
 
 .cares-featured-image img{
-    display:block;
     width:100%;
-    height:auto;
-    min-height:180px;
+    height:100%;
     object-fit:cover;
+    display:block;
+    cursor:pointer;
+    transition:.3s;
 }
+
+/* 9 Images */
 
 .cares-photo-grid{
     display:grid;
-    grid-template-columns:repeat(4, minmax(0, 1fr));
-    gap:10px;
+    grid-template-columns:repeat(3,1fr);
+    grid-template-rows:repeat(3,1fr);
+    gap:12px;
 }
 
 .cares-photo-grid img{
     width:100%;
-    height:160px;
+    height:165px;
     object-fit:cover;
-    display:block;
+    border-radius:12px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+/* Hover */
+
+.cares-featured-image img:hover,
+.cares-photo-grid img:hover{
+    transform:scale(1.04);
+}
+
+.cares-photo-grid img:hover{
+    transform:scale(1.03);
 }
 
 .cares-story{
@@ -1541,30 +1554,44 @@ nav a:hover{
     border:1px solid rgba(255,255,255,0.1);
 }
 
-@media (max-width: 1100px){
-    .cares-metrics{
+@media(max-width:1000px){
+
+    .cares-hero-visual{
         grid-template-columns:1fr;
+    }
+
+    .cares-featured-image{
+        height:420px;
+    }
+
+    .cares-photo-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .cares-photo-grid img{
+        height:150px;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .cares-photo-grid{
+        grid-template-columns:repeat(2,1fr);
     }
 
     .cares-photo-grid img{
         height:180px;
     }
+
 }
 
-@media (max-width: 700px){
-    .cares-hero-copy,
-    .cares-story{
-        padding:22px;
-    }
+@media(max-width:500px){
 
     .cares-photo-grid{
         grid-template-columns:1fr;
     }
 
-    .cares-featured-image img,
-    .cares-photo-grid img{
-        height:180px;
-    }
 }
 
 .cares-gallery{
@@ -1633,6 +1660,43 @@ nav a:hover{
     .cares-gallery{
         grid-template-columns:1fr;
     }
+}
+
+/* ---------- LIGHTBOX ---------- */
+
+.lightbox{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.8);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:opacity .3s ease, visibility .3s ease;
+
+    z-index:99999;
+}
+
+.lightbox.show{
+    opacity:1;
+    visibility:visible;
+}
+
+.lightbox img{
+    max-width:90vw;
+    max-height:90vh;
+    border-radius:12px;
+    box-shadow:0 20px 50px rgba(0,0,0,.5);
+
+    transform:scale(.9);
+    transition:transform .3s ease;
+}
+
+.lightbox.show img{
+    transform:scale(1);
 }
 
 /* Announcement */
