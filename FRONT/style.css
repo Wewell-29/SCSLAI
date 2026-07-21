@@ -1563,8 +1563,7 @@ nav a:hover{
 
     .cares-featured-image img,
     .cares-photo-grid img{
-        min-height:220px;
-        height:auto;
+        height:180px;
     }
 }
 
