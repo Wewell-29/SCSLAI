@@ -310,7 +310,7 @@ function createCalculatorModal() {
           </div>
 
           <div class="calculator-field">
-            <label for="supreme-loan-amount">Loan Amount</label>
+            <label for="supreme-loan-amount">Eligible Loan Amount</label>
             <input id="supreme-loan-amount" type="text" readonly placeholder="Calculated from eligible take-home pay" data-loan-amount>
           </div>
 
@@ -325,13 +325,13 @@ function createCalculatorModal() {
         </div>
 
         <div class="calculator-result" data-supreme-result>
-          <strong>Loan Amortization</strong>
-          <span>Your monthly amortization appears here.</span>
+          <strong>Loan Eligibility</strong>
+          <span>Your eligible loan amount appears here.</span>
         </div>
 
         <div class="calculator-note">
           <strong>Note:</strong>
-          <span>Your takehome pay should not be lower than 5,000 after deducting loan amortization.</span>
+          <span>Eligible monthly payment = current take-home pay - &#8369;5,000. Loan amount = eligible monthly payment / factor rate.</span>
         </div>
 
       </div>
@@ -363,7 +363,7 @@ function createCalculatorModal() {
           </div>
 
           <div class="calculator-field">
-            <label for="lower-loan-amount">Loan Amount</label>
+            <label for="lower-loan-amount">Eligible Loan Amount</label>
             <input id="lower-loan-amount" type="text" readonly placeholder="Calculated from eligible take-home pay" data-loan-amount-lower>
           </div>
 
@@ -378,13 +378,13 @@ function createCalculatorModal() {
         </div>
 
         <div class="calculator-result calculator-result-muted" data-lower-result>
-          <strong>Loan Amortization</strong>
-          <span>Your monthly amortization appears here.</span>
+          <strong>Loan Eligibility</strong>
+          <span>Your eligible loan amount appears here.</span>
         </div>
 
         <div class="calculator-note">
           <strong>Note:</strong>
-          <span>Your takehome pay should not be lower than 5,000 after deducting loan amortization.</span>
+          <span>Eligible monthly payment = current take-home pay - &#8369;5,000. Loan amount = eligible monthly payment / factor rate.</span>
         </div>
         
       </div>
@@ -566,9 +566,6 @@ function computeLoan(court) {
 
   elements.result.innerHTML = `
     <strong>Loan Eligibility</strong>
-    <span>Eligible monthly amortization: ${formatCurrency(eligibleMonthlyAmortization)}</span>
-    <span>Factor rate: ${factorRate.toFixed(8)}</span>
-    <span>Eligible loan amount: ${formatCurrency(loanAmount)}</span>
     <span>Monthly amortization: ${formatCurrency(monthlyAmortization)}</span>
     <span>Take-home pay after the payment: ${formatCurrency(remainingTakeHomePay)}</span>
     ${loanAmount < calculatedLoanAmount
@@ -624,15 +621,27 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
+document.addEventListener('input', (event) => {
+  if (event.target?.matches?.('[data-take-home-pay]')) {
+    updateEligibleTakeHomePay('supreme');
+    clearCalculatedLoanAmount('supreme');
+  }
+
+  if (event.target?.matches?.('[data-take-home-pay-lower]')) {
+    updateEligibleTakeHomePay('lower');
+    clearCalculatedLoanAmount('lower');
+  }
+});
+
 document.addEventListener('change', (event) => {
   if (event.target?.matches?.('[data-loan-type]')) {
     updateLoanTerms('supreme', event.target.value);
-    updateLoanAmountLimits('supreme', event.target.value);
+    clearCalculatedLoanAmount('supreme');
   }
 
   if (event.target?.matches?.('[data-loan-type-lower]')) {
     updateLoanTerms('lower', event.target.value);
-    updateLoanAmountLimits('lower', event.target.value);
+    clearCalculatedLoanAmount('lower');
   }
 });
 
