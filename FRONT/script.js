@@ -192,42 +192,77 @@ let lowerEligibleTakeHomePay = document.querySelector('[data-eligible-take-home-
 let lowerComputeButton = document.querySelector('[data-compute-lower]');
 let lowerResult = document.querySelector('[data-lower-result]');
 
-const supremeLoanRates = {
-  educational: { 1: 12, 2: 12, 3: 15, 4: 15, 5: 15 },
-  housing: { 1: 8, 2: 8, 3: 8, 4: 8, 5: 8 },
-  multiPurpose: { 1: 12, 2: 12, 3: 15 },
-  business: { 1: 12, 2: 12, 3: 12, 4: 12, 5: 12 },
-  healthEmergency: { 1: 12, 2: 12, 3: 12 }
-};
-
-const lowerLoanRates = {
-  educational: { 1: 12, 2: 12, 3: 15, 4: 15, 5: 15 },
-  housing: { 1: 8, 2: 8, 3: 8, 4: 8, 5: 8 },
-  multiPurpose: { 1: 12, 2: 12, 3: 15 },
-  business: { 1: 12, 2: 12, 3: 12, 4: 12, 5: 12 },
-  healthEmergency: { 1: 12, 2: 12, 3: 12 }
-};
-
-const loanLimits = {
-  educational: {
-    min: 0,
-    max: 200000
+// Source: UPDATED LOAN MATRIX.xlsx, Sheet1. Zero/blank cells in the workbook
+// mean that the corresponding term is not available.
+const loanMatrix = {
+  supreme: {
+    regular: [
+      { id: 'allowanceCasual', label: 'Allowance Loan (Casual)', rates: { 1: 12, 2: 12 }, max: 40000 },
+      { id: 'allowance', label: 'Allowance Loan', rates: { 1: 12, 2: 12, 3: 12, 4: 12, 5: 12 }, max: 130000 },
+      { id: 'business', label: 'Business Loan', rates: { 1: 12, 2: 12, 3: 12, 4: 12, 5: 12 } },
+      { id: 'character', label: 'Character Loan', rates: { 1: 12, 2: 12, 3: 15 } },
+      { id: 'educationalCasual', label: 'Educational Loan (Casual)', rates: { 1: 12, 2: 12 }, max: 200000 },
+      { id: 'educational', label: 'Educational Loan', rates: { 1: 12, 2: 12, 3: 15, 4: 15, 5: 15 }, max: 200000 },
+      { id: 'emergencyRata', label: 'Emergency RATA Loan', rates: { 1: 12, 2: 12 } },
+      { id: 'equitable', label: 'Equitable Loan', rates: { 1: 10 } },
+      { id: 'equity', label: 'Equity Loan', rates: { 1: 12, 2: 12, 3: 15, 4: 15, 5: 15 } },
+      { id: 'healthEmergency', label: 'Health Emergency Loan PR', rates: { 1: 12, 2: 12, 3: 12 }, max: 400000 },
+      { id: 'help', label: 'Help Loan DIR', rates: { 1: 12, 2: 12, 3: 12 } },
+      { id: 'housing', label: 'Housing Loan', rates: { 1: 8, 2: 8, 3: 8, 4: 8, 5: 8 }, min: 600000, max: 2000000 },
+      { id: 'longTerm', label: 'Long Term Loan', rates: { 1: 12, 2: 12, 3: 15, 4: 15, 5: 15 } },
+      { id: 'maxi', label: 'Maxi Loan', rates: { 1: 6, 2: 8, 3: 10, 4: 12, 5: 14 }, min: 100000, max: 550000 },
+      { id: 'mealCasual', label: 'MEAL (Casual)', rates: { 1: 8, 2: 8 }, max: 50000 },
+      { id: 'meal', label: 'MEAL', rates: { 2: 8, 3: 10 }, min: 50000, max: 300000 },
+      { id: 'salaryEmergency', label: 'Salary Emergency Loan', rates: { 2: 12 } },
+      { id: 'multiPurpose', label: 'Multi-Purpose Loan', rates: { 1: 12, 2: 12, 3: 15 }, max: 100000 },
+      { id: 'motorcycle', label: 'Motorcycle Loan', rates: { 4: 18, 5: 18 } },
+      { id: 'petty', label: 'Petty Loan', rates: { 1: 5 }, max: 150000 },
+      { id: 'subsistence', label: 'Subsistence Loan', rates: { 1: 12, 2: 12 }, max: 100000 }
+    ],
+    special: [
+      { id: 'anniversary', label: 'Anniversary Loan', monthlyRate: 1, max: 10000 },
+      { id: 'cashGift', label: 'Cash Gift', monthlyRate: 1, max: 10000 },
+      { id: 'economicAssistance1', label: 'Emergency Economic Assistance 1', monthlyRate: 1 },
+      { id: 'economicAssistance2', label: 'Emergency Economic Assistance 2', monthlyRate: 1 },
+      { id: 'midYearBonus', label: 'Mid Year Bonus', monthlyRate: 1 },
+      { id: 'yearEndBonus', label: 'Year End Bonus', monthlyRate: 1 }
+    ],
+    occasional: [
+      { id: 'calamity2', label: 'Calamity Loan II', rates: { 1: 5, 2: 5, 3: 5 }, min: 50000, max: 150000 },
+      { id: 'calamity2Casual', label: 'Calamity Loan II (Casual)', rates: { 1: 5, 2: 5 }, min: 50000, max: 150000 },
+      { id: 'inflationAssistance', label: 'Inflation Assistance Loan', rates: { 1: 5, 2: 5, 3: 5 }, min: 20000, max: 120000 }
+    ]
   },
-  housing: {
-    min: 0,
-    max: 2000000
-  },
-  multiPurpose: {
-    min: 0,
-    max: 100000
-  },
-  business: {
-    min: 0,
-    max: 500000
-  },
-  healthEmergency: {
-    min: 0,
-    max: 400000
+  lower: {
+    regular: [
+      { id: 'allowance', label: 'Allowance Loan', rates: { 1: 12, 2: 12, 3: 12, 4: 12, 5: 12 }, max: 130000 },
+      { id: 'allowanceCasual', label: 'Allowance Loan (Casual)', rates: { 1: 12, 2: 12 }, max: 40000 },
+      { id: 'business', label: 'Business Loan', rates: { 1: 12, 2: 12, 3: 12, 4: 12, 5: 12 } },
+      { id: 'educational', label: 'Educational Loan', rates: { 1: 12, 2: 12, 3: 15, 4: 15, 5: 15 } },
+      { id: 'educationalCasual', label: 'Educational Loan (Casual)', rates: { 1: 12, 2: 12 }, max: 200000 },
+      { id: 'emergencyRata', label: 'Emergency RATA Loan', rates: { 1: 12, 2: 12 } },
+      { id: 'healthEmergency', label: 'Health Emergency Loan PR', rates: { 1: 12, 2: 12, 3: 12 }, max: 400000 },
+      { id: 'housing', label: 'Housing Loan', rates: { 1: 8, 2: 8, 3: 8, 4: 8, 5: 8 }, min: 600000, max: 2000000 },
+      { id: 'maxi', label: 'Maxi Loan', rates: { 1: 6, 2: 8, 3: 10, 4: 12, 5: 14 }, max: 500000 },
+      { id: 'meal', label: 'MEAL', rates: { 2: 8, 3: 10 }, min: 50000, max: 150000 },
+      { id: 'mealCasual', label: 'MEAL (Casual)', rates: { 1: 8, 2: 8 }, max: 40000 },
+      { id: 'salaryEmergency', label: 'Salary Emergency Loan', rates: { 2: 12 } },
+      { id: 'multiPurpose', label: 'Multi-Purpose Loan', rates: { 1: 12, 2: 12, 3: 15 }, max: 100000 },
+      { id: 'salary', label: 'Salary Loan', rates: { 1: 12, 2: 12, 3: 15, 4: 15, 5: 15 } }
+    ],
+    special: [
+      { id: 'anniversary', label: 'Anniversary Loan', monthlyRate: 1, max: 10000 },
+      { id: 'cashGift', label: 'Cash Gift', monthlyRate: 1, max: 10000 },
+      { id: 'economicAssistance1', label: 'Emergency Economic Assistance 1', monthlyRate: 1 },
+      { id: 'economicAssistance2', label: 'Emergency Economic Assistance 2', monthlyRate: 1 },
+      { id: 'midYearBonus', label: 'Mid Year Bonus', monthlyRate: 1 },
+      { id: 'yearEnd', label: 'Year End', monthlyRate: 1 }
+    ],
+    occasional: [
+      { id: 'calamity2', label: 'Calamity Loan II', rates: { 1: 5, 2: 5, 3: 5 }, min: 50000, max: 150000 },
+      { id: 'calamity2Casual', label: 'Calamity Loan II (Casual)', rates: { 1: 5, 2: 5 }, min: 50000, max: 150000 },
+      { id: 'inflationAssistance', label: 'Inflation Assistance Loan', rates: { 1: 5, 2: 5, 3: 5 }, min: 20000, max: 120000 }
+    ]
   }
 };
 
@@ -300,13 +335,7 @@ function createCalculatorModal() {
 
           <div class="calculator-field">
             <label for="supreme-loan-type">Loan Type</label>
-            <select id="supreme-loan-type" data-loan-type>
-              <option value="educational">Educational Loan</option>
-              <option value="housing">Housing Loan</option>
-              <option value="multiPurpose">Multi-Purpose Loan</option>
-              <option value="business">Business Loan</option>
-              <option value="healthEmergency">SCSLA Health Emergency Loan PR</option>
-            </select>
+            <select id="supreme-loan-type" data-loan-type></select>
           </div>
 
           <div class="calculator-field">
@@ -353,13 +382,7 @@ function createCalculatorModal() {
 
           <div class="calculator-field">
             <label for="lower-loan-type">Loan Type</label>
-            <select id="lower-loan-type" data-loan-type-lower>
-              <option value="educational">Educational Loan</option>
-              <option value="housing">Housing Loan</option>
-              <option value="multiPurpose">Multi-Purpose Loan</option>
-              <option value="business">Business Loan</option>
-              <option value="healthEmergency">SCSLA Health Emergency Loan PR</option>
-            </select>
+            <select id="lower-loan-type" data-loan-type-lower></select>
           </div>
 
           <div class="calculator-field">
@@ -395,12 +418,29 @@ function createCalculatorModal() {
   return modal;
 }
 
-function getSupremeTermsForType(loanType) {
-  return Object.keys(supremeLoanRates[loanType] || {}).map(Number).sort((a, b) => a - b);
+function getLoanDefinitions(court) {
+  return Object.values(loanMatrix[court]).flat();
 }
 
-function getLoanRates(court) {
-  return court === 'lower' ? lowerLoanRates : supremeLoanRates;
+function getLoanDefinition(court, loanType) {
+  return getLoanDefinitions(court).find((loan) => loan.id === loanType);
+}
+
+function getLoanTypeOptions(court) {
+  const categoryLabels = {
+    regular: 'Regular Loans',
+    special: 'Special Loans (1% per month)',
+    occasional: 'Occasional Loans'
+  };
+
+  return Object.entries(loanMatrix[court])
+    .map(([category, loans]) => {
+      const options = loans
+        .map((loan) => `<option value="${loan.id}">${loan.label}</option>`)
+        .join('');
+      return `<optgroup label="${categoryLabels[category]}">${options}</optgroup>`;
+    })
+    .join('');
 }
 
 function getLoanElements(court) {
@@ -441,8 +481,16 @@ function updateLoanTerms(court, loanType) {
   const elements = getLoanElements(court);
   if (!elements.loanTerm) return;
 
-  const rates = getLoanRates(court);
-  const terms = Object.keys(rates[loanType] || {}).map(Number).sort((a, b) => a - b);
+  const loan = getLoanDefinition(court, loanType);
+  const terms = Object.keys(loan?.rates || {}).map(Number).sort((a, b) => a - b);
+
+  if (terms.length === 0) {
+    elements.loanTerm.disabled = true;
+    elements.loanTerm.innerHTML = '<option value="">Term not listed in the updated matrix</option>';
+    return;
+  }
+
+  elements.loanTerm.disabled = false;
   elements.loanTerm.innerHTML = terms
     .map((term) => `<option value="${term}">${term} Year${term > 1 ? 's' : ''}</option>`)
     .join('');
@@ -468,6 +516,14 @@ function openCalculator() {
   lowerEligibleTakeHomePay = document.querySelector('[data-eligible-take-home-pay-lower]');
   lowerComputeButton = document.querySelector('[data-compute-lower]');
   lowerResult = document.querySelector('[data-lower-result]');
+
+  if (supremeLoanType) {
+    supremeLoanType.innerHTML = getLoanTypeOptions('supreme');
+  }
+
+  if (lowerLoanType) {
+    lowerLoanType.innerHTML = getLoanTypeOptions('lower');
+  }
 
   if (!calculatorModal) return;
   calculatorModal.classList.add('open');
@@ -522,21 +578,33 @@ function setCalculatorCourt(court) {
 
 function computeLoan(court) {
   const elements = getLoanElements(court);
-  const rates = getLoanRates(court);
 
   if (!elements.loanType || !elements.loanAmount || !elements.loanTerm || !elements.takeHomePay || !elements.eligibleTakeHomePay || !elements.result) return;
 
   const loanType = elements.loanType.value;
   const termYears = Number(elements.loanTerm.value);
   const takeHomePay = Number(elements.takeHomePay.value);
+  const loan = getLoanDefinition(court, loanType);
 
-  const rate = rates[loanType]?.[termYears];
+  if (!loan) {
+    clearCalculatedLoanAmount(court);
+    elements.result.innerHTML = '<strong>Loan Eligibility</strong><span>The selected loan type is not available in the updated matrix.</span>';
+    return;
+  }
 
   if (!Number.isFinite(takeHomePay) || takeHomePay <= 0) {
     clearCalculatedLoanAmount(court);
     elements.result.innerHTML = '<strong>Loan Eligibility</strong><span>Please enter a valid current take-home pay.</span>';
     return;
   }
+
+  if (typeof loan.monthlyRate === 'number') {
+    clearCalculatedLoanAmount(court);
+    elements.result.innerHTML = `<strong>Loan Eligibility</strong><span>${loan.label} has a 1% monthly interest rate in the updated matrix, but no repayment term is listed. An eligible loan amount cannot be calculated.</span>`;
+    return;
+  }
+
+  const rate = loan.rates?.[termYears];
 
   if (typeof rate !== 'number') {
     clearCalculatedLoanAmount(court);
@@ -555,9 +623,14 @@ function computeLoan(court) {
 
   const factorRate = getFactorRate(rate / 100, termYears);
   const calculatedLoanAmount = eligibleMonthlyAmortization / factorRate;
-  const loanLimit = loanLimits[loanType]?.max;
-  const loanAmount = typeof loanLimit === 'number'
-    ? Math.min(calculatedLoanAmount, loanLimit)
+  if (typeof loan.min === 'number' && calculatedLoanAmount < loan.min) {
+    clearCalculatedLoanAmount(court);
+    elements.result.innerHTML = `<strong>Loan Eligibility</strong><span>The income-based amount is below this loan type's matrix minimum of ${formatCurrency(loan.min)}.</span>`;
+    return;
+  }
+
+  const loanAmount = typeof loan.max === 'number'
+    ? Math.min(calculatedLoanAmount, loan.max)
     : calculatedLoanAmount;
   const monthlyAmortization = loanAmount * factorRate;
   const remainingTakeHomePay = takeHomePay - monthlyAmortization;
@@ -569,7 +642,7 @@ function computeLoan(court) {
     <span>Monthly amortization: ${formatCurrency(monthlyAmortization)}</span>
     <span>Take-home pay after the payment: ${formatCurrency(remainingTakeHomePay)}</span>
     ${loanAmount < calculatedLoanAmount
-      ? `<span>Loan amount is capped at ${formatCurrency(loanLimit)} for this loan type.</span>`
+      ? `<span>Loan amount is capped at ${formatCurrency(loan.max)} for this loan type.</span>`
       : ''}
   `;
 }
