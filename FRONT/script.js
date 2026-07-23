@@ -229,7 +229,7 @@ const loanMatrix = {
     ],
     occasional: [
       { id: 'calamity2', label: 'Calamity Loan II', rates: { 1: 5, 2: 5, 3: 5 }, min: 50000, max: 150000 },
-      { id: 'calamity2Casual', label: 'Calamity Loan II (Casual)', rates: { 1: 5, 2: 5 }, min: 50000, max: 150000 },
+      { id: 'calamity-2 Casual', label: 'Calamity Loan II (Casual)', rates: { 1: 5, 2: 5 }, min: 50000, max: 150000 },
       { id: 'inflationAssistance', label: 'Inflation Assistance Loan', rates: { 1: 5, 2: 5, 3: 5 }, min: 20000, max: 120000 }
     ]
   },
