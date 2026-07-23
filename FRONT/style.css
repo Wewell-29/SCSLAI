@@ -857,7 +857,7 @@ nav a:hover{
 
 .calculator-grid{
     display:grid;
-    grid-template-columns:repeat(3, minmax(0, 1fr));
+    grid-template-columns:repeat(2, minmax(0, 1fr));
     gap:16px;
 }
 
@@ -865,6 +865,10 @@ nav a:hover{
     display:flex;
     flex-direction:column;
     gap:8px;
+}
+
+.calculator-field--full{
+    grid-column:1 / -1;
 }
 
 .calculator-field label{
@@ -888,6 +892,11 @@ nav a:hover{
 
 .calculator-field input::placeholder{
     color:#889793;
+}
+
+.calculator-field input[readonly]{
+    background:#eef4f1;
+    cursor:default;
 }
 
 .calculator-actions{

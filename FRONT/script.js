@@ -180,11 +180,15 @@ let calculatorPanels = document.querySelectorAll('[data-court-panel]');
 let supremeLoanType = document.querySelector('[data-loan-type]');
 let supremeLoanAmount = document.querySelector('[data-loan-amount]');
 let supremeLoanTerm = document.querySelector('[data-loan-term]');
+let supremeTakeHomePay = document.querySelector('[data-take-home-pay]');
+let supremeEligibleTakeHomePay = document.querySelector('[data-eligible-take-home-pay]');
 let supremeComputeButton = document.querySelector('[data-compute-supreme]');
 let supremeResult = document.querySelector('[data-supreme-result]');
 let lowerLoanType = document.querySelector('[data-loan-type-lower]');
 let lowerLoanAmount = document.querySelector('[data-loan-amount-lower]');
 let lowerLoanTerm = document.querySelector('[data-loan-term-lower]');
+let lowerTakeHomePay = document.querySelector('[data-take-home-pay-lower]');
+let lowerEligibleTakeHomePay = document.querySelector('[data-eligible-take-home-pay-lower]');
 let lowerComputeButton = document.querySelector('[data-compute-lower]');
 let lowerResult = document.querySelector('[data-lower-result]');
 
@@ -227,27 +231,15 @@ const loanLimits = {
   }
 };
 
-function updateLoanAmountLimits(court, loanType) {
+const minimumRetainedTakeHomePay = 5000;
+
+function clearCalculatedLoanAmount(court) {
   const elements = getLoanElements(court);
 
   if (!elements.loanAmount) return;
 
-  const limits = loanLimits[loanType];
-
-  elements.loanAmount.min = limits.min;
-  elements.loanAmount.max = limits.max;
-
-  const minText = `Min: ₱${limits.min.toLocaleString()}`;
-  const maxText = `Max: ₱${limits.max.toLocaleString()}`;
-  const placeholder = `${minText} | ${maxText}`;
-
-  // Update the input attributes
-  elements.loanAmount.placeholder = placeholder;
-
-  // If your UI also shows a separate min/max text element,
-  // update it too (optional, only works if it exists).
-  const limitsTextEl = document.querySelector('[data-loan-amount-limits-text]');
-  if (limitsTextEl) limitsTextEl.textContent = placeholder;
+  elements.loanAmount.value = '';
+  elements.loanAmount.placeholder = 'Calculated from eligible take-home pay';
 }
 
 function formatCurrency(value) {
@@ -267,6 +259,10 @@ function pmt(annualRate, years, loanAmount) {
   }
 
   return (monthlyRate * loanAmount) / (1 - Math.pow(1 + monthlyRate, -numberOfPayments));
+}
+
+function getFactorRate(annualRate, years) {
+  return pmt(annualRate, years, 1);
 }
 
 function createCalculatorModal() {
@@ -292,6 +288,16 @@ function createCalculatorModal() {
 
       <div class="calculator-panel active" data-court-panel="supreme">
         <div class="calculator-grid">
+          <div class="calculator-field calculator-field--full">
+            <label for="supreme-take-home-pay">Current Take-Home Pay</label>
+            <input id="supreme-take-home-pay" type="number" min="0" step="0.01" placeholder="Enter current take-home pay" data-take-home-pay>
+          </div>
+
+          <div class="calculator-field calculator-field--full">
+            <label for="supreme-eligible-take-home-pay">Eligible Take-Home Pay</label>
+            <input id="supreme-eligible-take-home-pay" type="text" readonly placeholder="Calculated from current take-home pay" data-eligible-take-home-pay>
+          </div>
+
           <div class="calculator-field">
             <label for="supreme-loan-type">Loan Type</label>
             <select id="supreme-loan-type" data-loan-type>
@@ -305,10 +311,10 @@ function createCalculatorModal() {
 
           <div class="calculator-field">
             <label for="supreme-loan-amount">Loan Amount</label>
-            <input id="supreme-loan-amount" type="number" min="1" step="1" placeholder="Enter loan amount" data-loan-amount>
+            <input id="supreme-loan-amount" type="text" readonly placeholder="Calculated from eligible take-home pay" data-loan-amount>
           </div>
 
-          <div class="calculator-field">
+          <div class="calculator-field calculator-field--full">
             <label for="supreme-loan-term">Loan Term</label>
             <select id="supreme-loan-term" data-loan-term></select>
           </div>
@@ -335,6 +341,16 @@ function createCalculatorModal() {
         </div>
 
         <div class="calculator-grid">
+          <div class="calculator-field calculator-field--full">
+            <label for="lower-take-home-pay">Current Take-Home Pay</label>
+            <input id="lower-take-home-pay" type="number" min="0" step="0.01" placeholder="Enter current take-home pay" data-take-home-pay-lower>
+          </div>
+
+          <div class="calculator-field calculator-field--full">
+            <label for="lower-eligible-take-home-pay">Eligible Take-Home Pay</label>
+            <input id="lower-eligible-take-home-pay" type="text" readonly placeholder="Calculated from current take-home pay" data-eligible-take-home-pay-lower>
+          </div>
+
           <div class="calculator-field">
             <label for="lower-loan-type">Loan Type</label>
             <select id="lower-loan-type" data-loan-type-lower>
@@ -348,10 +364,10 @@ function createCalculatorModal() {
 
           <div class="calculator-field">
             <label for="lower-loan-amount">Loan Amount</label>
-            <input id="lower-loan-amount" type="number" min="1" step="1" placeholder="Enter loan amount" data-loan-amount-lower>
+            <input id="lower-loan-amount" type="text" readonly placeholder="Calculated from eligible take-home pay" data-loan-amount-lower>
           </div>
 
-          <div class="calculator-field">
+          <div class="calculator-field calculator-field--full">
             <label for="lower-loan-term">Loan Term</label>
             <select id="lower-loan-term" data-loan-term-lower></select>
           </div>
@@ -393,14 +409,32 @@ function getLoanElements(court) {
         loanType: lowerLoanType,
         loanAmount: lowerLoanAmount,
         loanTerm: lowerLoanTerm,
+        takeHomePay: lowerTakeHomePay,
+        eligibleTakeHomePay: lowerEligibleTakeHomePay,
         result: lowerResult
       }
     : {
         loanType: supremeLoanType,
         loanAmount: supremeLoanAmount,
         loanTerm: supremeLoanTerm,
+        takeHomePay: supremeTakeHomePay,
+        eligibleTakeHomePay: supremeEligibleTakeHomePay,
         result: supremeResult
       };
+}
+
+function getEligibleMonthlyAmortization(takeHomePay) {
+  return Math.max(takeHomePay - minimumRetainedTakeHomePay, 0);
+}
+
+function updateEligibleTakeHomePay(court) {
+  const elements = getLoanElements(court);
+  if (!elements.takeHomePay || !elements.eligibleTakeHomePay) return;
+
+  const takeHomePay = Number(elements.takeHomePay.value);
+  elements.eligibleTakeHomePay.value = Number.isFinite(takeHomePay) && takeHomePay > 0
+    ? formatCurrency(getEligibleMonthlyAmortization(takeHomePay))
+    : '';
 }
 
 function updateLoanTerms(court, loanType) {
@@ -423,11 +457,15 @@ function openCalculator() {
   supremeLoanType = document.querySelector('[data-loan-type]');
   supremeLoanAmount = document.querySelector('[data-loan-amount]');
   supremeLoanTerm = document.querySelector('[data-loan-term]');
+  supremeTakeHomePay = document.querySelector('[data-take-home-pay]');
+  supremeEligibleTakeHomePay = document.querySelector('[data-eligible-take-home-pay]');
   supremeComputeButton = document.querySelector('[data-compute-supreme]');
   supremeResult = document.querySelector('[data-supreme-result]');
   lowerLoanType = document.querySelector('[data-loan-type-lower]');
   lowerLoanAmount = document.querySelector('[data-loan-amount-lower]');
   lowerLoanTerm = document.querySelector('[data-loan-term-lower]');
+  lowerTakeHomePay = document.querySelector('[data-take-home-pay-lower]');
+  lowerEligibleTakeHomePay = document.querySelector('[data-eligible-take-home-pay-lower]');
   lowerComputeButton = document.querySelector('[data-compute-lower]');
   lowerResult = document.querySelector('[data-lower-result]');
 
@@ -437,19 +475,29 @@ function openCalculator() {
   calculatorModal.setAttribute('aria-hidden', 'false');
 
   if (supremeLoanType && supremeLoanTerm) {
-  updateLoanTerms('supreme', supremeLoanType.value);
-  updateLoanAmountLimits('supreme', supremeLoanType.value);
+    updateLoanTerms('supreme', supremeLoanType.value);
+    clearCalculatedLoanAmount('supreme');
 
-  if (supremeLoanAmount) {
-    supremeLoanAmount.value = '';
+    if (supremeTakeHomePay) {
+      supremeTakeHomePay.value = '';
+    }
+
+    if (supremeEligibleTakeHomePay) {
+      supremeEligibleTakeHomePay.value = '';
+    }
   }
 
-  updateLoanTerms('lower', lowerLoanType.value);
-  updateLoanAmountLimits('lower', lowerLoanType.value);
+  if (lowerLoanType && lowerLoanTerm) {
+    updateLoanTerms('lower', lowerLoanType.value);
+    clearCalculatedLoanAmount('lower');
 
-  if (lowerLoanAmount) {
-    lowerLoanAmount.value = '';
-  }
+    if (lowerTakeHomePay) {
+      lowerTakeHomePay.value = '';
+    }
+
+    if (lowerEligibleTakeHomePay) {
+      lowerEligibleTakeHomePay.value = '';
+    }
   }
 }
 
@@ -476,50 +524,57 @@ function computeLoan(court) {
   const elements = getLoanElements(court);
   const rates = getLoanRates(court);
 
-  if (!elements.loanType || !elements.loanAmount || !elements.loanTerm || !elements.result) return;
+  if (!elements.loanType || !elements.loanAmount || !elements.loanTerm || !elements.takeHomePay || !elements.eligibleTakeHomePay || !elements.result) return;
 
   const loanType = elements.loanType.value;
   const termYears = Number(elements.loanTerm.value);
-  const amount = Number(elements.loanAmount.value);
-  const limits = loanLimits[loanType];
-
-if (amount < limits.min || amount > limits.max) {
-  elements.result.innerHTML = `
-    <strong>Loan Amortization</strong>
-    <span>
-      Loan amount must be between
-      ${formatCurrency(limits.min)}
-      and
-      ${formatCurrency(limits.max)}.
-    </span>
-  `;
-  return;
-}
+  const takeHomePay = Number(elements.takeHomePay.value);
 
   const rate = rates[loanType]?.[termYears];
 
-  if (!amount || amount <= 0) {
-    elements.result.innerHTML = '<strong>Loan Amortization</strong><span>Please enter a valid loan amount.</span>';
+  if (!Number.isFinite(takeHomePay) || takeHomePay <= 0) {
+    clearCalculatedLoanAmount(court);
+    elements.result.innerHTML = '<strong>Loan Eligibility</strong><span>Please enter a valid current take-home pay.</span>';
     return;
   }
 
   if (typeof rate !== 'number') {
-    elements.result.innerHTML = '<strong>Loan Amortization</strong><span>The selected term is not available for this loan type.</span>';
+    clearCalculatedLoanAmount(court);
+    elements.result.innerHTML = '<strong>Loan Eligibility</strong><span>The selected term is not available for this loan type.</span>';
     return;
   }
 
-  const annualRate = rate / 100;
-  const monthlyAmortization = pmt(annualRate, termYears, amount);
-  //const totalPayable = monthlyAmortization * termYears * 12;
-  // const totalInterest = totalPayable - amount;
+  const eligibleMonthlyAmortization = getEligibleMonthlyAmortization(takeHomePay);
+  elements.eligibleTakeHomePay.value = formatCurrency(eligibleMonthlyAmortization);
+
+  if (eligibleMonthlyAmortization <= 0) {
+    clearCalculatedLoanAmount(court);
+    elements.result.innerHTML = `<strong>Loan Eligibility</strong><span>Current take-home pay must be greater than ${formatCurrency(minimumRetainedTakeHomePay)} to provide a loan payment.</span>`;
+    return;
+  }
+
+  const factorRate = getFactorRate(rate / 100, termYears);
+  const calculatedLoanAmount = eligibleMonthlyAmortization / factorRate;
+  const loanLimit = loanLimits[loanType]?.max;
+  const loanAmount = typeof loanLimit === 'number'
+    ? Math.min(calculatedLoanAmount, loanLimit)
+    : calculatedLoanAmount;
+  const monthlyAmortization = loanAmount * factorRate;
+  const remainingTakeHomePay = takeHomePay - monthlyAmortization;
+
+  elements.loanAmount.value = formatCurrency(loanAmount);
 
   elements.result.innerHTML = `
-    <strong>Loan Amortization</strong>
+    <strong>Loan Eligibility</strong>
+    <span>Eligible monthly amortization: ${formatCurrency(eligibleMonthlyAmortization)}</span>
+    <span>Factor rate: ${factorRate.toFixed(8)}</span>
+    <span>Eligible loan amount: ${formatCurrency(loanAmount)}</span>
     <span>Monthly amortization: ${formatCurrency(monthlyAmortization)}</span>
-    `;
-    //<span>Total interest: ${formatCurrency(totalInterest)}</span>
-    //<span>Total payable: ${formatCurrency(totalPayable)}</span>
-  
+    <span>Take-home pay after the payment: ${formatCurrency(remainingTakeHomePay)}</span>
+    ${loanAmount < calculatedLoanAmount
+      ? `<span>Loan amount is capped at ${formatCurrency(loanLimit)} for this loan type.</span>`
+      : ''}
+  `;
 }
 
 if (calculatorModal) {
