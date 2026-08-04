@@ -1937,7 +1937,7 @@ nav a:hover{
     margin:0 auto;
     color:#edf4f2;
     line-height:1.7;
-    font-size:px;
+    font-size:16px;
     max-width:1000px;
 }
 
@@ -2026,6 +2026,43 @@ nav a:hover{
     color:#3e5149;
     line-height:1.65;
     font-size:15px;
+}
+
+.guideline-item h4,
+.faq-item h4{
+    margin:12px 0 8px;
+    color:#164a35;
+    font-size:16px;
+}
+
+.policy-lead{
+    margin:0 0 8px;
+}
+
+.policy-list{
+    margin:0;
+    padding-left:22px;
+    color:#3e5149;
+}
+
+.policy-list li{
+    margin:0 0 8px;
+    line-height:1.6;
+    font-size:15px;
+}
+
+.policy-sublist-numbered{
+    margin-top:8px;
+}
+
+.policy-note{
+    margin:8px 0 0;
+    padding:10px 12px;
+    border-left:3px solid #1d7c4d;
+    background:#eef4f0;
+    border-radius:4px;
+    color:#2e4139;
+    font-size:14px;
 }
 
 .faq-item{
@@ -2741,4 +2778,47 @@ footer{
         grid-template-columns:1fr;
         gap:20px;
     }
+}
+.loan-modal {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    background: rgba(0, 0, 0, 0.6);
+
+    justify-content: center;
+
+    align-items: center;
+
+}
+
+
+.loan-modal.active {
+
+    display: flex;
+
+}
+
+
+.loan-modal-content {
+
+    background: white;
+
+    width: 90%;
+
+    max-width: 900px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 30px;
+
+    border-radius: 12px;
+
 }

@@ -773,32 +773,36 @@ if (reportBook) {
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightbox-img");
 
-document.querySelectorAll(
-    ".cares-featured-image img, .cares-photo-grid img"
-).forEach(img => {
+if (lightbox && lightboxImg) {
 
-    img.addEventListener("click", () => {
-        lightboxImg.src = img.src;
-        lightbox.classList.add("show");
+    document.querySelectorAll(
+        ".cares-featured-image img, .cares-photo-grid img"
+    ).forEach(img => {
 
-        // Prevent page from scrolling while open
-        document.body.style.overflow = "hidden";
+        img.addEventListener("click", () => {
+            lightboxImg.src = img.src;
+            lightbox.classList.add("show");
+
+            // Prevent page from scrolling while open
+            document.body.style.overflow = "hidden";
+        });
+
     });
 
-});
+    // Close when clicking the dark overlay
+    lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) {
+            lightbox.classList.remove("show");
+            document.body.style.overflow = "";
+        }
+    });
 
-// Close when clicking the dark overlay
-lightbox.addEventListener("click", (e) => {
-    if (e.target === lightbox) {
-        lightbox.classList.remove("show");
-        document.body.style.overflow = "";
-    }
-});
+    // Optional: close with Esc
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+            lightbox.classList.remove("show");
+            document.body.style.overflow = "";
+        }
+    });
 
-// Optional: close with Esc
-document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-        lightbox.classList.remove("show");
-        document.body.style.overflow = "";
-    }
-});
+}
