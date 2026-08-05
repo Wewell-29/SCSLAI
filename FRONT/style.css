@@ -2118,14 +2118,19 @@ nav a:hover{
     justify-content:center;
     padding:8px 14px;
     margin-bottom:14px;
-    border-radius:999px;
-    background:rgba(255,255,255,0.12);
     color:#eaf8f2;
-    font-size:20px;
-    font-weight:700;
-    letter-spacing:1.4px;
+    font-size:35px !important;
+    letter-spacing:15px;
     text-transform:uppercase;
     
+}
+
+.calculator-dialog-header .calculator-eyebrow{
+    display:flex;
+    width:fit-content;
+    margin:0 auto 14px;
+    font-weight:800;
+    font-family: "Inter", sans-serif;
 }
 
 .calculator-hero h1{
@@ -2172,7 +2177,7 @@ nav a:hover{
     visibility:hidden;
     pointer-events:none;
     transition:opacity .2s ease, visibility .2s ease;
-    z-index:200;
+    z-index:3000;
 }
 
 .calculator-modal.open{
@@ -2184,18 +2189,21 @@ nav a:hover{
 .calculator-dialog{
     position:relative;
     width:min(920px, 100%);
-    max-height:min(90vh, 920px);
-    overflow:auto;
-    padding:28px;
+    max-height:calc(100vh - 48px);
+    overflow:hidden;
+    padding:24px;
     border-radius:28px;
     background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(244,248,245,0.98));
     color:#12231e;
     box-shadow:0 28px 70px rgba(0,0,0,0.36);
+    display:flex;
+    flex-direction:column;
+    gap:16px;
 }
 
 .calculator-dialog-header h2{
-    margin-bottom:8px;
-    font-size:clamp(28px, 3vw, 10px);
+    margin-bottom:5px;
+    font-size:clamp(24px, 2.4vw, 10px);
     line-height:1.05;
 }
 
@@ -2203,10 +2211,10 @@ nav a:hover{
     max-width:72ch;
     color:#4a5a55;
     line-height:1.6;
-    font-size:45px;
+    font-size:30px;
     font-weight:700;
-    justify-content:center;
-    color:#0f7555; 
+    color:#0f7555;
+    justify-content: center;
 }
 
 .calculator-close{
@@ -2225,7 +2233,7 @@ nav a:hover{
 .calculator-tabs{
     display:flex;
     gap:14px;
-    margin:22px 0 20px;
+    margin:0;
     flex-wrap:wrap;
 }
 
@@ -2248,6 +2256,8 @@ nav a:hover{
 .calculator-panel{
     display:none;
     gap:18px;
+    flex:1;
+    min-height:0;
 }
 
 .calculator-panel.active{
@@ -2257,7 +2267,7 @@ nav a:hover{
 .calculator-grid{
     display:grid;
     grid-template-columns:repeat(2, minmax(0, 1fr));
-    gap:16px;
+    gap:14px;
 }
 
 .calculator-field{
@@ -2279,12 +2289,12 @@ nav a:hover{
 .calculator-field select,
 .calculator-field input{
     width:100%;
-    padding:15px 16px;
+    padding:12px 14px;
     border-radius:12px;
     border:1px solid #d6ddda;
     background:#fff;
     color:#20352f;
-    font-size:15px;
+    font-size:14px;
     outline:none;
     box-shadow:0 8px 16px rgba(0,0,0,0.06);
 }
@@ -2301,32 +2311,36 @@ nav a:hover{
 .calculator-actions{
     display:flex;
     justify-content:center;
-    margin:20px 0 18px;
+    margin:0;
 }
 
 .calculator-compute{
     min-width:240px;
-    padding:14px 24px;
+    padding:12px 22px;
     border-radius:14px;
     background:#2f6a56;
     color:#fff;
-    font-size:17px;
+    font-size:15px;
     font-weight:700;
     letter-spacing:.6px;
     box-shadow:0 12px 22px rgba(47,106,86,0.34);
+    margin-top:12px;
+    margin-bottom:12px;
+
 }
 
 .calculator-result{
-    padding:18px 20px;
+    padding:14px 16px;
     border-radius:18px;
     background:#eef4f1;
     border:1px solid #d7e1dc;
+    
 }
 
 .calculator-result strong{
     display:block;
-    margin-bottom:8px;
-    font-size:18px;
+    margin-bottom:6px;
+    font-size:16px;
     color:#17312a;
 }
 
@@ -2337,32 +2351,37 @@ nav a:hover{
 }
 
 .calculator-result-muted{
-    margin-top:20px;
-    background:#f7f8f7;
+    margin-top:0;
+    background:#eef4f1;
 }
 
 .calculator-note{
-    margin-top:16px;
-    padding:14px 16px;
+    margin-top:0;
+    padding:12px 14px;
     border-radius:14px;
     background:#f7f1ed;
     color:#f13f3f;
     line-height:1.6;
-    font-size:16px;
+    font-size:14px;
     font-weight:550;
     
 }
 
+.calculator-note span{
+    color:#2e2e2e;
+}
+
 .calculator-lower-copy h3{
-    margin-bottom:10px;
-    font-size:22px;
+    margin-bottom:8px;
+    font-size:18px;
     color:#17312a;
 }
 
 .calculator-lower-copy p{
     color:#4a5a55;
-    line-height:1.7;
-    margin-bottom:10px;
+    line-height:1.5;
+    margin-bottom:8px;
+    font-size:14px;
 }
 
 body.calculator-modal-open{
@@ -2375,7 +2394,8 @@ body.calculator-modal-open{
     }
 
     .calculator-dialog{
-        padding:22px;
+        padding:20px;
+        max-height:calc(100vh - 24px);
     }
 }
 
@@ -2395,6 +2415,17 @@ body.calculator-modal-open{
 
     .calculator-tab{
         width:100%;
+    }
+
+    .calculator-dialog{
+        width:calc(100% - 16px);
+        max-height:calc(100vh - 16px);
+        padding:16px;
+    }
+
+    .calculator-note,
+    .calculator-result{
+        padding:12px;
     }
 }
 
