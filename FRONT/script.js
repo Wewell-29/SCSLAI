@@ -1,3 +1,582 @@
+// ===========================
+// Premium yearbook library
+// ===========================
+const basePages = ['images/gallery/scslaicares1.png', 'images/gallery/scslaicares2.png', 'images/gallery/scslaicares3.png', 'images/gallery/scslaicares4.png', 'images/gallery/scslaicares5.png', 'images/gallery/scslaicares6.png', 'images/gallery/scslaicares7.png'];
+
+function buildPageRecords(year) {
+  const activities = [
+    {
+      activityTitle: 'Annual Outreach Program',
+      caption: 'Members gathered to support local initiatives through coordinated outreach and service.',
+      narrative: 'This activity highlights collaborative work between volunteers, officers, and community partners.',
+      date: `March ${year}`,
+      venue: 'Barangay Community Grounds, Manila',
+      participants: 'SCSLAI members, volunteers, partner residents',
+      photographer: 'SCSLAI Documentation Team',
+      album: `${year} SCSLAI Cares Collection`,
+      remarks: 'Strong member turnout and successful distribution activity.',
+      tags: ['outreach', 'community', `${year}`],
+      keywords: ['outreach', 'community', 'program']
+    },
+    {
+      activityTitle: 'Tree Planting and Environmental Care',
+      caption: 'Members planted seedlings and promoted long-term environmental stewardship.',
+      narrative: 'The event focused on shared responsibility and continuity through sustainable practices.',
+      date: `April ${year}`,
+      venue: 'Partner Green Zone, Metro Manila',
+      participants: 'Member volunteers, youth delegates, local partners',
+      photographer: 'SCSLAI Media Unit',
+      album: `${year} Environmental Initiatives`,
+      remarks: 'Follow-up maintenance schedules were established after planting.',
+      tags: ['environment', 'tree planting', `${year}`],
+      keywords: ['environment', 'green', 'planting']
+    },
+    {
+      activityTitle: 'Member Service Day',
+      caption: 'A full-day activity for member welfare services and assistance booths.',
+      narrative: 'Service teams provided consultations, support pathways, and engagement sessions.',
+      date: `May ${year}`,
+      venue: 'SCSLAI Main Activity Hall',
+      participants: 'Members, support personnel, invited guests',
+      photographer: 'Official Event Photographer',
+      album: `${year} Member Services`,
+      remarks: 'High participation and positive feedback from attendees.',
+      tags: ['member services', 'engagement', `${year}`],
+      keywords: ['service', 'members', 'support']
+    },
+    {
+      activityTitle: 'Community Learning Session',
+      caption: 'Interactive learning and awareness sessions were conducted for participants.',
+      narrative: 'The session encouraged practical community participation and sharing of best practices.',
+      date: `June ${year}`,
+      venue: 'Regional Training Venue',
+      participants: 'Facilitators, members, and invited learners',
+      photographer: 'Training Documentation Desk',
+      album: `${year} Learning Programs`,
+      remarks: 'Multiple follow-up activities were proposed by participants.',
+      tags: ['learning', 'training', `${year}`],
+      keywords: ['session', 'training', 'education']
+    },
+    {
+      activityTitle: 'Relief and Donation Drive',
+      caption: 'SCSLAI members prepared and distributed donation packs for beneficiary groups.',
+      narrative: 'Relief efforts were organized with partner offices and local volunteers.',
+      date: `July ${year}`,
+      venue: 'Distribution Points Across Metro Manila',
+      participants: 'Volunteers, coordinators, partner groups',
+      photographer: 'Field Coverage Team',
+      album: `${year} Donation Drives`,
+      remarks: 'Distribution was completed on schedule across identified areas.',
+      tags: ['relief', 'donation', `${year}`],
+      keywords: ['relief', 'donation', 'drive']
+    },
+    {
+      activityTitle: 'Recognition and Fellowship Event',
+      caption: 'Members celebrated milestones through recognition and fellowship activities.',
+      narrative: 'The event acknowledged contributions and strengthened institutional camaraderie.',
+      date: `August ${year}`,
+      venue: 'SCSLAI Fellowship Hall',
+      participants: 'Member delegates, officers, and guests',
+      photographer: 'Events and Comms Team',
+      album: `${year} Fellowship Events`,
+      remarks: 'Recognition program concluded with a collaborative planning session.',
+      tags: ['recognition', 'fellowship', `${year}`],
+      keywords: ['milestone', 'recognition', 'fellowship']
+    },
+    {
+      activityTitle: 'Year-End Civic Partnership',
+      caption: 'Partner organizations joined the year-end civic action initiative.',
+      narrative: 'This closing chapter documented partnerships and outcomes for the yearbook archive.',
+      date: `September ${year}`,
+      venue: 'Civic Partner Venue',
+      participants: 'Partner institutions and SCSLAI members',
+      photographer: 'Archive Documentation Team',
+      album: `${year} Partnership Chronicle`,
+      remarks: 'Activity outcomes were endorsed for the next annual cycle.',
+      tags: ['partnership', 'civic', `${year}`],
+      keywords: ['partnership', 'civic', 'year-end']
+    }
+  ];
+
+  return basePages.map((image, index) => ({
+    image,
+    ...activities[index],
+    pageNumber: index + 1
+  }));
+}
+
+const yearbookData = [
+  {
+    year: 2022,
+    badge: 'Founding memories',
+    title: '2022 Edition',
+    summary: 'Browse activities and events by year.',
+    pages: buildPageRecords(2022)
+  },
+  {
+    year: 2023,
+    badge: 'Gathering moments',
+    title: '2023 Edition',
+    summary: 'Browse activities and events by year.',
+    pages: buildPageRecords(2023)
+  },
+  {
+    year: 2024,
+    badge: 'Academic elegance',
+    title: '2024 Edition',
+    summary: 'Browse activities and events by year.',
+    pages: buildPageRecords(2024)
+  },
+  {
+    year: 2025,
+    badge: 'Forward in focus',
+    title: '2025 Edition',
+    summary: 'Browse activities and events by year.',
+    pages: buildPageRecords(2025)
+  },
+  {
+    year: 2026,
+    badge: 'Library of memories',
+    title: '2026 Edition',
+    summary: 'Browse activities and events by year.',
+    pages: buildPageRecords(2026)
+  }
+];
+
+const yearbookButtons = document.querySelectorAll('.yearbook-book');
+const yearbookReader = document.getElementById('yearbook-reader');
+const readerBadge = document.querySelector('[data-reader-badge]');
+const readerTitle = document.querySelector('[data-reader-title]');
+const readerSummary = document.querySelector('[data-reader-summary]');
+const pageFlipHost = document.getElementById('page-flip-host');
+let flipbookElement = document.getElementById('flipbook');
+const closeReaderButtons = document.querySelectorAll('[data-close-reader]');
+
+const detailBindings = {
+  activityTitle: document.querySelector('[data-activity-title]'),
+  caption: document.querySelector('[data-activity-caption]'),
+  narrative: document.querySelector('[data-activity-narrative]'),
+  date: document.querySelector('[data-meta-date]'),
+  venue: document.querySelector('[data-meta-venue]'),
+  participants: document.querySelector('[data-meta-participants]'),
+  photographer: document.querySelector('[data-meta-photographer]'),
+  album: document.querySelector('[data-meta-album]'),
+  remarks: document.querySelector('[data-meta-remarks]'),
+  tags: document.querySelector('[data-meta-tags]')
+};
+
+let activeYearbookIndex = -1;
+let singlePageMode = false;
+let activePages = [];
+let resizeRaf = null;
+let preloadPromise = null;
+const resolvedImageSources = new Map();
+let flipLock = false;
+let currentSpreadStart = 0;
+let currentSpreadPage = 1;
+
+function getResolvedImageSource(src) {
+  return resolvedImageSources.get(src) || src;
+}
+
+async function preloadImageBlobUrl(src) {
+  if (resolvedImageSources.has(src)) return resolvedImageSources.get(src);
+
+  try {
+    const response = await fetch(src, { cache: 'force-cache' });
+    if (!response.ok) {
+      resolvedImageSources.set(src, src);
+      return src;
+    }
+
+    const blob = await response.blob();
+    const objectUrl = URL.createObjectURL(blob);
+    resolvedImageSources.set(src, objectUrl);
+    return objectUrl;
+  } catch (error) {
+    resolvedImageSources.set(src, src);
+    return src;
+  }
+}
+
+function preloadBasePages() {
+  if (preloadPromise) return preloadPromise;
+
+  preloadPromise = Promise.all(basePages.map((src) => new Promise(async (resolve) => {
+    const resolvedSrc = await preloadImageBlobUrl(src);
+    const img = new Image();
+    img.decoding = 'sync';
+    img.loading = 'eager';
+
+    const finish = () => {
+      if (typeof img.decode === 'function') {
+        img.decode().catch(() => {}).finally(resolve);
+        return;
+      }
+      resolve();
+    };
+
+    img.src = resolvedSrc;
+    if (img.complete) {
+      finish();
+      return;
+    }
+    img.onload = finish;
+    img.onerror = () => resolve();
+  })));
+
+  return preloadPromise;
+}
+
+function isSinglePageMode() {
+  return window.innerWidth <= 820;
+}
+
+function getFlipSize() {
+  const maxWidth = Math.min(1100, Math.floor(window.innerWidth * 0.86));
+  if (singlePageMode) {
+    return {
+      width: Math.max(300, Math.floor(maxWidth * 0.52)),
+      height: Math.max(420, Math.floor(maxWidth * 0.52 * 1.38))
+    };
+  }
+
+  const spreadWidth = Math.max(600, maxWidth);
+  return {
+    width: spreadWidth,
+    height: Math.max(420, Math.floor(spreadWidth * 0.43))
+  };
+}
+
+function setActiveDetails(pageNumber) {
+  const page = activePages[Math.max(0, Math.min(activePages.length - 1, pageNumber - 1))];
+  if (!page) return;
+
+  detailBindings.activityTitle.textContent = page.activityTitle;
+  detailBindings.caption.textContent = page.caption;
+  detailBindings.narrative.textContent = page.narrative;
+  detailBindings.date.textContent = page.date;
+  detailBindings.venue.textContent = page.venue;
+  detailBindings.participants.textContent = page.participants;
+  detailBindings.photographer.textContent = page.photographer;
+  detailBindings.album.textContent = page.album;
+  detailBindings.remarks.textContent = page.remarks;
+  detailBindings.tags.textContent = page.tags.join(', ');
+}
+
+function currentLogicalPage() {
+  return currentSpreadPage;
+}
+
+function updateReaderStatus() {
+  const page = currentLogicalPage();
+  setActiveDetails(page);
+}
+
+function getPageAt(index) {
+  if (index < 0 || index >= activePages.length) return null;
+  return activePages[index];
+}
+
+function pageMarkup(page) {
+  if (!page) {
+    return '<section class="album-page"><article class="print-layout blank-page"></article></section>';
+  }
+
+  return `
+    <section class="album-page ${page.pageNumber % 2 === 0 ? 'album-page-right' : 'album-page-left'}" data-page-number="${page.pageNumber}">
+      <article class="print-layout">
+        <h3 class="layout-title">${page.activityTitle}</h3>
+        <figure class="scrap-card">
+          <span class="tape tape-tl" aria-hidden="true"></span>
+          <span class="tape tape-tr" aria-hidden="true"></span>
+          <span class="tape tape-bl" aria-hidden="true"></span>
+          <span class="tape tape-br" aria-hidden="true"></span>
+          <div class="photo-mat">
+            <img src="${getResolvedImageSource(page.image)}" alt="${page.activityTitle}" loading="eager" decoding="sync" fetchpriority="high" draggable="false">
+          </div>
+        </figure>
+        <p class="layout-caption">${page.caption}</p>
+        <p class="layout-page-number">Page ${page.pageNumber} of ${activePages.length}</p>
+      </article>
+    </section>
+  `;
+}
+
+function buildBookShell() {
+  const size = getFlipSize();
+  flipbookElement.style.width = `${size.width}px`;
+  flipbookElement.style.height = `${size.height}px`;
+
+  flipbookElement.innerHTML = `
+    <div class="book3d" data-book3d>
+      <div class="book-half left" data-static-left></div>
+      <div class="book-half right" data-static-right></div>
+      <div class="turn-sheet" data-turn-sheet hidden>
+        <div class="turn-face turn-front" data-turn-front></div>
+        <div class="turn-face turn-back" data-turn-back></div>
+        <div class="turn-shadow" data-turn-shadow></div>
+      </div>
+    </div>
+  `;
+}
+
+function renderStaticSpread() {
+  const left = getPageAt(currentSpreadStart);
+  const right = getPageAt(currentSpreadStart + 1);
+
+  const leftEl = flipbookElement.querySelector('[data-static-left]');
+  const rightEl = flipbookElement.querySelector('[data-static-right]');
+  if (!leftEl || !rightEl) return;
+
+  leftEl.innerHTML = pageMarkup(left);
+  rightEl.innerHTML = pageMarkup(right);
+
+  currentSpreadPage = (left?.pageNumber || right?.pageNumber || 1);
+  updateReaderStatus();
+}
+
+function animateForwardTurn() {
+  if (flipLock) return;
+  const right = getPageAt(currentSpreadStart + 1);
+  const nextLeft = getPageAt(currentSpreadStart + 2);
+  const nextRight = getPageAt(currentSpreadStart + 3);
+  if (!right || !nextLeft) return;
+
+  flipLock = true;
+
+  const rightEl = flipbookElement.querySelector('[data-static-right]');
+  const sheet = flipbookElement.querySelector('[data-turn-sheet]');
+  const front = flipbookElement.querySelector('[data-turn-front]');
+  const back = flipbookElement.querySelector('[data-turn-back]');
+  if (!rightEl || !sheet || !front || !back) {
+    flipLock = false;
+    return;
+  }
+
+  rightEl.innerHTML = pageMarkup(nextRight);
+  front.innerHTML = pageMarkup(right);
+  back.innerHTML = pageMarkup(nextLeft);
+
+  sheet.hidden = false;
+  sheet.classList.remove('turn-backward', 'animate');
+  sheet.classList.add('turn-forward');
+
+  void sheet.offsetWidth;
+  sheet.classList.add('animate');
+
+  window.setTimeout(() => {
+    currentSpreadStart += 2;
+    renderStaticSpread();
+    sheet.hidden = true;
+    sheet.classList.remove('turn-forward', 'animate');
+    flipLock = false;
+  }, 1120);
+}
+
+function animateBackwardTurn() {
+  if (flipLock) return;
+  const left = getPageAt(currentSpreadStart);
+  const prevLeft = getPageAt(currentSpreadStart - 2);
+  const prevRight = getPageAt(currentSpreadStart - 1);
+  if (!left || !prevLeft || !prevRight) return;
+
+  flipLock = true;
+
+  const leftEl = flipbookElement.querySelector('[data-static-left]');
+  const sheet = flipbookElement.querySelector('[data-turn-sheet]');
+  const front = flipbookElement.querySelector('[data-turn-front]');
+  const back = flipbookElement.querySelector('[data-turn-back]');
+  if (!leftEl || !sheet || !front || !back) {
+    flipLock = false;
+    return;
+  }
+
+  leftEl.innerHTML = pageMarkup(prevLeft);
+  front.innerHTML = pageMarkup(left);
+  back.innerHTML = pageMarkup(prevRight);
+
+  sheet.hidden = false;
+  sheet.classList.remove('turn-forward', 'animate');
+  sheet.classList.add('turn-backward');
+
+  void sheet.offsetWidth;
+  sheet.classList.add('animate');
+
+  window.setTimeout(() => {
+    currentSpreadStart -= 2;
+    renderStaticSpread();
+    sheet.hidden = true;
+    sheet.classList.remove('turn-backward', 'animate');
+    flipLock = false;
+  }, 1120);
+}
+
+function initTurnJs(pages, startPage) {
+  if (!flipbookElement) return;
+
+  singlePageMode = isSinglePageMode();
+  pageFlipHost.classList.toggle('single-page', singlePageMode);
+  activePages = pages.slice();
+
+  const safeStart = Math.max(1, Math.min(activePages.length, startPage || 1));
+  currentSpreadStart = Math.max(0, safeStart - 1);
+  if (currentSpreadStart % 2 !== 0) {
+    currentSpreadStart -= 1;
+  }
+
+  buildBookShell();
+  renderStaticSpread();
+}
+
+function setActiveYearbookCard(index) {
+  yearbookButtons.forEach((button, idx) => {
+    button.classList.toggle('is-selected', idx === index);
+  });
+}
+
+async function openReader(index, startPage) {
+  const edition = yearbookData[index];
+  if (!edition || !yearbookReader) return;
+
+  await preloadBasePages();
+
+  activeYearbookIndex = index;
+  readerBadge.textContent = `SCSLAI CARES ${edition.year}`;
+  readerTitle.textContent = edition.title;
+  readerSummary.textContent = edition.summary;
+  setActiveYearbookCard(index);
+
+  initTurnJs(edition.pages, startPage || 1);
+  yearbookReader.hidden = false;
+  yearbookReader.classList.add('is-visible');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeReader() {
+  if (!yearbookReader) return;
+  yearbookReader.hidden = true;
+  yearbookReader.classList.remove('is-visible');
+  document.body.style.overflow = '';
+}
+
+function resizeActiveFlipbook() {
+  if (yearbookReader?.hidden) return;
+  if (!flipbookElement) return;
+
+  const nextSingleMode = isSinglePageMode();
+  if (nextSingleMode !== singlePageMode) {
+    singlePageMode = nextSingleMode;
+  }
+
+  const size = getFlipSize();
+  flipbookElement.style.width = `${size.width}px`;
+  flipbookElement.style.height = `${size.height}px`;
+}
+
+function turnNext() {
+  animateForwardTurn();
+}
+
+function turnPrevious() {
+  animateBackwardTurn();
+}
+
+function turnFromSide(side) {
+  if (side === 'right') turnNext();
+  if (side === 'left') turnPrevious();
+}
+
+function setupPageNavigation() {
+  if (!pageFlipHost) return;
+
+  let lastTouchTime = 0;
+
+  const handleHostTurn = (clientX, clientY) => {
+    const rect = pageFlipHost.getBoundingClientRect();
+    if (clientX < rect.left || clientX > rect.right || clientY < rect.top || clientY > rect.bottom) return;
+
+    const localX = clientX - rect.left;
+    if (localX > rect.width * 0.5) {
+      turnFromSide('right');
+    } else {
+      turnFromSide('left');
+    }
+  };
+
+  pageFlipHost.addEventListener('click', (event) => {
+    if (Date.now() - lastTouchTime < 450) return;
+    handleHostTurn(event.clientX, event.clientY);
+  }, true);
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+  pageFlipHost.addEventListener('touchstart', (event) => {
+    lastTouchTime = Date.now();
+    touchStartX = event.changedTouches[0].clientX;
+    touchStartY = event.changedTouches[0].clientY;
+  }, { passive: true, capture: true });
+
+  pageFlipHost.addEventListener('touchend', (event) => {
+    lastTouchTime = Date.now();
+    const delta = event.changedTouches[0].clientX - touchStartX;
+    const deltaY = event.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(delta) < 18 && Math.abs(deltaY) < 18) {
+      handleHostTurn(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
+      return;
+    }
+    if (Math.abs(delta) < 40) return;
+    if (delta < 0) turnNext();
+    if (delta > 0) turnPrevious();
+  }, { passive: true, capture: true });
+
+  document.addEventListener('keydown', (event) => {
+    if (yearbookReader?.hidden) return;
+    if (event.key === 'Escape') {
+      closeReader();
+      return;
+    }
+    if (event.key === 'ArrowRight') {
+      turnNext();
+      event.preventDefault();
+    }
+    if (event.key === 'ArrowLeft') {
+      turnPrevious();
+      event.preventDefault();
+    }
+  });
+}
+
+yearbookButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    const index = Number(button.getAttribute('data-yearbook-index'));
+    openReader(index, 1);
+  });
+});
+
+closeReaderButtons.forEach((button) => {
+  button.addEventListener('click', closeReader);
+});
+
+yearbookReader?.addEventListener('click', (event) => {
+  if (event.target === yearbookReader || event.target.classList.contains('reader-overlay')) {
+    closeReader();
+  }
+});
+
+window.addEventListener('resize', () => {
+  if (resizeRaf) {
+    window.cancelAnimationFrame(resizeRaf);
+  }
+  resizeRaf = window.requestAnimationFrame(() => {
+    resizeActiveFlipbook();
+    resizeRaf = null;
+  });
+});
+
+setupPageNavigation();
+preloadBasePages();
+
 const slides = document.querySelectorAll('.carousel-slide');
 const nextButton = document.querySelector('.carousel-control.next');
 const prevButton = document.querySelector('.carousel-control.prev');
@@ -914,35 +1493,31 @@ const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightbox-img");
 
 if (lightbox && lightboxImg) {
+  document.querySelectorAll(
+      ".cares-featured-image img, .cares-photo-grid img"
+  ).forEach(img => {
+      img.addEventListener("click", () => {
+          lightboxImg.src = img.src;
+          lightbox.classList.add("show");
 
-    document.querySelectorAll(
-        ".cares-featured-image img, .cares-photo-grid img"
-    ).forEach(img => {
+          // Prevent page from scrolling while open
+          document.body.style.overflow = "hidden";
+      });
+  });
 
-        img.addEventListener("click", () => {
-            lightboxImg.src = img.src;
-            lightbox.classList.add("show");
+  // Close when clicking the dark overlay
+  lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) {
+          lightbox.classList.remove("show");
+          document.body.style.overflow = "";
+      }
+  });
 
-            // Prevent page from scrolling while open
-            document.body.style.overflow = "hidden";
-        });
-
-    });
-
-    // Close when clicking the dark overlay
-    lightbox.addEventListener("click", (e) => {
-        if (e.target === lightbox) {
-            lightbox.classList.remove("show");
-            document.body.style.overflow = "";
-        }
-    });
-
-    // Optional: close with Esc
-    document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
-            lightbox.classList.remove("show");
-            document.body.style.overflow = "";
-        }
-    });
-
+  // Optional: close with Esc
+  document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+          lightbox.classList.remove("show");
+          document.body.style.overflow = "";
+      }
+  });
 }
