@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LC Loan Application Form - HTML Only</title>
+    <style>
+        :root {
+            --line: #141414;
+            --text: #111;
+            --paper: #ffffff;
+            --bg: #e9edf0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        .toolbar {
+            position: sticky;
+            top: 0;
+            z-index: 15;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 10px 14px;
+            border-bottom: 1px solid #cad2d8;
+            background: rgba(255, 255, 255, 0.96);
+        }
+
+        .toolbar button {
+            border: 0;
+            border-radius: 4px;
+            padding: 10px 14px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .toolbar button[type="reset"] {
+            background: #6d6d6d;
+        }
+
+        .toolbar button#printBtn {
+            background: #435d6c;
+        }
+
+        .shell {
+            padding: 16px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .sheet {
+            width: min(100%, 980px);
+            background: var(--paper);
+            border: 1.5px solid var(--line);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 1px solid var(--line);
+            padding: 10px 12px 8px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 26px;
+            letter-spacing: 0.8px;
+        }
+
+        .header .org {
+            margin: 3px 0;
+            font-size: 12px;
+            line-height: 1.2;
+        }
+
+        .header .small {
+            margin-top: 5px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .line {
+            border-bottom: 1px solid var(--line);
+        }
+
+        .grid-top {
+            display: grid;
+            grid-template-columns: 1fr 0.86fr 0.42fr;
+        }
+
+        .col {
+            padding: 6px 8px;
+            border-right: 1px solid var(--line);
+        }
+
+        .col:last-child {
+            border-right: 0;
+        }
+
+        .col h3 {
+            margin: 0 0 6px;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .checks {
+            display: grid;
+            gap: 4px 8px;
+            font-size: 12px;
+        }
+
+        .checks.regular {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .checks.special {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .checks label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+        }
+
+        .checks input[type="text"] {
+            width: 110px;
+        }
+
+        .received label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .intro {
+            padding: 6px 8px;
+            border-bottom: 1px solid var(--line);
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .inline-check {
+            display: flex;
+            gap: 18px;
+            margin-top: 4px;
+        }
+
+        .line-input {
+            border: 0;
+            border-bottom: 1px solid var(--line);
+            padding: 0 2px;
+            min-width: 120px;
+            font-size: 12px;
+        }
+
+        .line-input.sm {
+            min-width: 80px;
+        }
+
+        .line-input.xs {
+            min-width: 45px;
+            text-align: center;
+        }
+
+        .tbl {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+
+        .tbl td,
+        .tbl th {
+            border: 1px solid var(--line);
+            padding: 3px 4px;
+            vertical-align: middle;
+        }
+
+        .tbl input,
+        .tbl textarea,
+        .tbl select,
+        .block input,
+        .block textarea,
+        .block select,
+        .received input,
+        .checks input[type="text"] {
+            width: 100%;
+            border: 0;
+            border-bottom: 1px solid #bfc6cc;
+            font-size: 11px;
+            padding: 2px 3px;
+            background: #fff;
+        }
+
+        .tbl textarea,
+        .block textarea {
+            resize: vertical;
+            border: 1px solid #bfc6cc;
+        }
+
+        .tbl input:focus,
+        .tbl textarea:focus,
+        .block input:focus,
+        .block textarea:focus,
+        .line-input:focus,
+        .received input:focus,
+        .checks input[type="text"]:focus {
+            outline: 1px solid #51826a;
+        }
+
+        .identity-wrap {
+            border-bottom: 1px solid var(--line);
+        }
+
+        .identity-wrap .tbl th {
+            text-align: left;
+            font-weight: 700;
+            white-space: nowrap;
+            background: #fff;
+        }
+
+        .sec-title {
+            text-align: center;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 6px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .sec-par {
+            margin: 0;
+            padding: 6px 8px;
+            border-bottom: 1px solid var(--line);
+            font-size: 11px;
+            line-height: 1.3;
+        }
+
+        .three-block {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .block {
+            border-right: 1px solid var(--line);
+            padding: 5px 6px;
+            font-size: 11px;
+        }
+
+        .block:last-child {
+            border-right: 0;
+        }
+
+        .block h4 {
+            margin: 0 0 4px;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .block label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin: 3px 0;
+            font-weight: 700;
+        }
+
+        .block label span {
+            min-width: 78px;
+        }
+
+        .outstanding {
+            padding: 6px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .outstanding h4 {
+            margin: 0 0 4px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .scroll {
+            overflow-x: auto;
+        }
+
+        .loan-rows {
+            min-width: 960px;
+        }
+
+        .totals {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 6px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .totals label {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .delivery {
+            margin-top: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .bottom {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+        }
+
+        .bottom > div {
+            border-right: 1px solid var(--line);
+            padding: 6px;
+        }
+
+        .bottom > div:last-child {
+            border-right: 0;
+        }
+
+        .bottom h4 {
+            margin: 0 0 4px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .bottom label {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            margin: 3px 0;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .signoff {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-top: 1px solid var(--line);
+        }
+
+        .signoff > div {
+            padding: 6px;
+            border-right: 1px solid var(--line);
+        }
+
+        .signoff > div:last-child {
+            border-right: 0;
+        }
+
+        .signoff h5 {
+            margin: 0 0 4px;
+            font-size: 11px;
+        }
+
+        .signoff input {
+            width: 100%;
+            border: 0;
+            border-bottom: 1px solid #bfc6cc;
+            font-size: 11px;
+            padding: 2px 3px;
+        }
+
+        @media (max-width: 1080px) {
+            .grid-top,
+            .three-block,
+            .bottom,
+            .signoff,
+            .totals {
+                grid-template-columns: 1fr;
+            }
+
+            .col,
+            .block,
+            .bottom > div,
+            .signoff > div {
+                border-right: 0;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .col:last-child,
+            .block:last-child,
+            .bottom > div:last-child,
+            .signoff > div:last-child {
+                border-bottom: 0;
+            }
+
+            .checks.regular,
+            .checks.special {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            body {
+                background: #fff;
+            }
+
+            .toolbar {
+                display: none;
+            }
+
+            .shell {
+                padding: 0;
+            }
+
+            .sheet {
+                width: 100%;
+                max-width: none;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <form id="lcLoanHtmlOnlyForm">
+        <div class="toolbar">
+            <button type="reset">Reset</button>
+            <button type="button" id="printBtn">Print</button>
+        </div>
+
+        <div class="shell">
+            <section class="sheet">
+                <header class="header">
+                    <h1>LOAN APPLICATION</h1>
+                    <p class="org">SUPREME COURT SAVINGS &amp; LOAN ASSOCIATION, INC. (SCSLAI)</p>
+                    <p class="org">Supreme Court Bldg., Padre Faura St., Brgy 670 Zone 072, Ermita, Manila</p>
+                    <p class="org">@09293371781 / 8 236-0487</p>
+                    <p class="org">A FINANCIAL INSTITUTION REGULATED AND SUPERVISED BY BANGKO SENTRAL NG PILIPINAS</p>
+                    <p class="small">THIS APPLICATION MAY BE REPRODUCED BY PHOTOCOPYING ONLY AND IS NOT FOR SALE. (PLEASE USE BLUE INK)</p>
+                </header>
+
+                <div class="grid-top line">
+                    <div class="col">
+                        <h3>TYPES OF REGULAR LOAN</h3>
+                        <div class="checks regular">
+                            <label><input type="checkbox">Business</label>
+                            <label><input type="checkbox">Help Loan</label>
+                            <label><input type="checkbox">Multi Purpose</label>
+                            <label><input type="checkbox">Educational</label>
+                            <label><input type="checkbox">JDF/Allowance</label>
+                            <label><input type="checkbox">MEAL</label>
+                            <label><input type="checkbox">Emergency RATA</label>
+                            <label><input type="checkbox">Maxi</label>
+                            <label><input type="checkbox">Salary</label>
+                            <label><input type="checkbox">Housing</label>
+                            <label>Others: <input type="text"></label>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <h3>TYPES OF SPECIAL LOAN</h3>
+                        <div class="checks special">
+                            <label><input type="checkbox">DEEA (April)</label>
+                            <label><input type="checkbox">DEEA (October)</label>
+                            <label><input type="checkbox">Mid Year</label>
+                            <label><input type="checkbox">Year End</label>
+                            <label><input type="checkbox">Anniversary</label>
+                            <label><input type="checkbox">Cash Gift</label>
+                        </div>
+                    </div>
+
+                    <div class="col received">
+                        <label>Received Date:<input type="date"></label>
+                    </div>
+                </div>
+
+                <section class="intro">
+                    <div>
+                        Gentlemen/Mesdames:
+                    </div>
+                    <div>
+                        I, <input class="line-input" type="text"> have the honor to apply for a loan in the amount of
+                        (Php <input class="line-input sm" type="text">), payable in
+                        (<input class="line-input xs" type="number" min="1" max="30">) years
+                        in accordance with the stipulations contained in the herein Promissory Note, undertaking statement set forth herein, SAUF Form (if applicable), and the SCSLAI policies, rules &amp; regulations.
+                    </div>
+                    <div class="inline-check">
+                        <label><input type="checkbox">New Loan</label>
+                        <label><input type="checkbox">Consolidate</label>
+                    </div>
+                </section>
+
+                <section class="identity-wrap">
+                    <table class="tbl">
+                        <tr>
+                            <th>EDP NUMBER</th>
+                            <th>TAX IDENTIFICATION NUMBER (TIN)</th>
+                            <th>DATE OF BIRTH (MMDDYYYY)</th>
+                            <th>PLACE OF BIRTH</th>
+                        </tr>
+                        <tr>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                            <td><input type="date"></td>
+                            <td><input type="text"></td>
+                        </tr>
+                        <tr>
+                            <th>NAME (LAST NAME)</th>
+                            <th>(FIRST NAME)</th>
+                            <th>(MIDDLE NAME)</th>
+                            <th>(SUFFIX)</th>
+                        </tr>
+                        <tr>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">HOME ADDRESS</th>
+                            <th>ZIP CODE</th>
+                            <th>1. SIGNATURE</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="text"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                        </tr>
+                        <tr>
+                            <th>OFFICE/STATION</th>
+                            <th>REGION</th>
+                            <th>POSITION</th>
+                            <th>2. PRINTED NAME</th>
+                        </tr>
+                        <tr>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                        </tr>
+                        <tr>
+                            <th>STATUS OF APPOINTMENT</th>
+                            <th>CONTACT NUMBER</th>
+                            <th colspan="2">E-MAIL ADDRESS</th>
+                        </tr>
+                        <tr>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                            <td colspan="2"><input type="email"></td>
+                        </tr>
+                    </table>
+                </section>
+
+                <div class="sec-title">ENDORSEMENT/CERTIFICATION</div>
+                <p class="sec-par">Respectfully indorsed to the SCSLAI this Loan Application and strongly recommending its approval. I certify that he/she and all his/her sureties are permanent employees of the court and in good standing and that all signatures appearing herein are genuine and authentic. I further certify that he/she has no pending administrative and/or criminal case.</p>
+                <table class="tbl line">
+                    <tr>
+                        <th>Signature over Printed Name of Endorsing Officer</th>
+                        <th>Mobile No.</th>
+                        <th>Designation</th>
+                        <th>EDP Number</th>
+                    </tr>
+                    <tr>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                </table>
+
+                <section class="three-block">
+                    <div class="block">
+                        <h4>Judicial Integrity Board - JIB</h4>
+                        <label><input type="checkbox"> Without Pending Case</label>
+                        <label><input type="checkbox"> With Pending Case</label>
+                        <label><span>By:</span><input type="text"></label>
+                    </div>
+                    <div class="block">
+                        <h4>Leave Division, OAS, OCA</h4>
+                        <label><span>As of:</span><input type="date"></label>
+                        <label><span>Vacation Leave:</span><input type="text"></label>
+                        <label><span>Sick Leave:</span><input type="text"></label>
+                        <label><span>Total:</span><input type="text"></label>
+                        <label><span>By:</span><input type="text"></label>
+                    </div>
+                    <div class="block">
+                        <h4>EDP - Electronic Data Processing</h4>
+                        <label><span>As of:</span><input type="date"></label>
+                        <label><span>Take Home Pay:</span><input type="text"></label>
+                        <label><span>Monthly Salary:</span><input type="text"></label>
+                        <label><span>By:</span><input type="text"></label>
+                    </div>
+                </section>
+
+                <section class="outstanding">
+                    <h4>STATUS OF OUTSTANDING SCSLAI LOANS</h4>
+                    <div class="scroll">
+                        <table class="tbl loan-rows">
+                            <tr>
+                                <th>TYPES OF LOAN</th>
+                                <th>AMOUNT</th>
+                                <th>DATE GRANTED</th>
+                                <th>BALANCE</th>
+                                <th>DEDUCTIONS CURRENT</th>
+                                <th>DEDUCTIONS NEW</th>
+                            </tr>
+                            <tr><td>SALARY</td><td><input></td><td><input type="date"></td><td><input></td><td><input></td><td><input></td></tr>
+                            <tr><td>MULTI-PURPOSE</td><td><input></td><td><input type="date"></td><td><input></td><td><input></td><td><input></td></tr>
+                            <tr><td>EDUCATIONAL</td><td><input></td><td><input type="date"></td><td><input></td><td><input></td><td><input></td></tr>
+                            <tr><td>MAXI</td><td><input></td><td><input type="date"></td><td><input></td><td><input></td><td><input></td></tr>
+                            <tr><td>BUSINESS</td><td><input></td><td><input type="date"></td><td><input></td><td><input></td><td><input></td></tr>
+                            <tr><td>HELP</td><td><input></td><td><input type="date"></td><td><input></td><td><input></td><td><input></td></tr>
+                            <tr><td>EMERGENCY RATA</td><td><input></td><td><input type="date"></td><td><input></td><td><input></td><td><input></td></tr>
+                            <tr><td>MEAL</td><td><input></td><td><input type="date"></td><td><input></td><td><input></td><td><input></td></tr>
+                            <tr><td>HOUSING</td><td><input></td><td><input type="date"></td><td><input></td><td><input></td><td><input></td></tr>
+                            <tr><td>JDF/ALLOWANCE</td><td><input></td><td><input type="date"></td><td><input></td><td><input></td><td><input></td></tr>
+                            <tr><td>EEA (April)</td><td><input></td><td><input type="date"></td><td><input></td><td><input></td><td><input></td></tr>
+                            <tr><td>MID YEAR</td><td><input></td><td><input type="date"></td><td><input></td><td><input></td><td><input></td></tr>
+                            <tr><td>ANNIVERSARY</td><td><input></td><td><input type="date"></td><td><input></td><td><input></td><td><input></td></tr>
+                            <tr><td>EEA (October)</td><td><input></td><td><input type="date"></td><td><input></td><td><input></td><td><input></td></tr>
+                            <tr><td>YEAR END</td><td><input></td><td><input type="date"></td><td><input></td><td><input></td><td><input></td></tr>
+                            <tr><td>CASH GIFT</td><td><input></td><td><input type="date"></td><td><input></td><td><input></td><td><input></td></tr>
+                        </table>
+                    </div>
+                    <div class="totals">
+                        <label>Total Deductions<input type="text"></label>
+                        <label>Take home pay after deductions<input type="text"></label>
+                    </div>
+                    <label class="delivery"><input type="checkbox"> Mode of Delivery of Loan Proceeds by ATM Payroll Account (LBP)</label>
+                </section>
+
+                <section class="bottom">
+                    <div>
+                        <h4>Single Borrower's Limit (SBL)</h4>
+                        <label>Salary:<input type="text"></label>
+                        <label>Allowances:<input type="text"></label>
+                        <label>Capital Contribution:<input type="text"></label>
+                        <label>Others:<input type="text"></label>
+                        <label>SBL:<input type="text"></label>
+                    </div>
+                    <div>
+                        <h4>Remarks:</h4>
+                        <label><textarea rows="5"></textarea></label>
+                        <label>Loan Processor In-Charge (Signature over Printed Name)<input type="text"></label>
+                    </div>
+                </section>
+
+                <section class="signoff">
+                    <div>
+                        <h5>APPROVED BY:</h5>
+                        <div>CREDIT &amp; LOAN REVIEW COMMITTEE</div>
+                        <input type="text">
+                    </div>
+                    <div>
+                        <h5>CONFIRMED BY:</h5>
+                        <div>BOARD OF TRUSTEES</div>
+                        <input type="text">
+                    </div>
+                </section>
+            </section>
+        </div>
+    </form>
+
+    <script>
+        document.getElementById('printBtn').addEventListener('click', function () {
+            window.print();
+        });
+    </script>
+</body>
+</html>

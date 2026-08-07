@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Download Application - SCSLAI</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="FORMS/loanForm.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
@@ -53,28 +54,28 @@
                                 <span>SC Loan Application Form</span>
                                 <div class="download-actions">
                                     <a href="#" class="btn btn-view">VIEW</a>
-                                    <a href="#" class="btn btn-download">DOWNLOAD</a>
+                                    <a href="#" class="btn btn-download">Fill-Out</a>
                                 </div>
                             </article>
                             <article class="download-item">
                                 <span>SC Membership Application Form</span>
                                 <div class="download-actions">
                                     <a href="#" class="btn btn-view">VIEW</a>
-                                    <a href="#" class="btn btn-download">DOWNLOAD</a>
+                                    <a href="#" class="btn btn-download">Fill-Out</a>
                                 </div>
                             </article>
                             <article class="download-item">
                                 <span>SC Capital Contribution Declaration Form</span>
                                 <div class="download-actions">
                                     <a href="#" class="btn btn-view">VIEW</a>
-                                    <a href="#" class="btn btn-download">DOWNLOAD</a>
+                                    <a href="#" class="btn btn-download">Fill-Out</a>
                                 </div>
                             </article>
                             <article class="download-item">
                                 <span>SC Authority to Deduct Form</span>
                                 <div class="download-actions">
                                     <a href="#" class="btn btn-view">VIEW</a>
-                                    <a href="#" class="btn btn-download">DOWNLOAD</a>
+                                    <a href="#" class="btn btn-download">Fill-Out</a>
                                 </div>
                             </article>
                         </div>
@@ -87,28 +88,28 @@
                                 <span>LC Loan Application Form</span>
                                 <div class="download-actions">
                                     <a href="#" class="btn btn-view">VIEW</a>
-                                    <a href="#" class="btn btn-download">DOWNLOAD</a>
+                                    <a href="FORMS/lc-loan-application-html-only.html" class="btn btn-download">Fill-Out</a>
                                 </div>
                             </article>
                             <article class="download-item">
                                 <span>LC Membership Application Form</span>
                                 <div class="download-actions">
                                     <a href="#" class="btn btn-view">VIEW</a>
-                                    <a href="#" class="btn btn-download">DOWNLOAD</a>
+                                    <a href="#" class="btn btn-download">Fill-Out</a>
                                 </div>
                             </article>
                             <article class="download-item">
                                 <span>LC Capital Contribution Declaration Form</span>
                                 <div class="download-actions">
                                     <a href="#" class="btn btn-view">VIEW</a>
-                                    <a href="#" class="btn btn-download">DOWNLOAD</a>
+                                    <a href="#" class="btn btn-download">Fill-Out</a>
                                 </div>
                             </article>
                             <article class="download-item">
                                 <span>LC Authority to Deduct Form</span>
                                 <div class="download-actions">
                                     <a href="#" class="btn btn-view">VIEW</a>
-                                    <a href="#" class="btn btn-download">DOWNLOAD</a>
+                                    <a href="#" class="btn btn-download">Fill-Out</a>
                                 </div>
                             </article>
                         </div>
@@ -121,28 +122,28 @@
                                 <span>Readmission Form</span>
                                 <div class="download-actions">
                                     <a href="#" class="btn btn-view">VIEW</a>
-                                    <a href="#" class="btn btn-download">DOWNLOAD</a>
+                                    <a href="#" class="btn btn-download">Fill-Out</a>
                                 </div>
                             </article>
                             <article class="download-item">
                                 <span>Membership Update Form</span>
                                 <div class="download-actions">
                                     <a href="#" class="btn btn-view">VIEW</a>
-                                    <a href="#" class="btn btn-download">DOWNLOAD</a>
+                                    <a href="#" class="btn btn-download">Fill-Out</a>
                                 </div>
                             </article>
                             <article class="download-item">
                                 <span>Withdrawal Form</span>
                                 <div class="download-actions">
                                     <a href="#" class="btn btn-view">VIEW</a>
-                                    <a href="#" class="btn btn-download">DOWNLOAD</a>
+                                    <a href="#" class="btn btn-download">Fill-Out</a>
                                 </div>
                             </article>
                             <article class="download-item">
                                 <span>Refund Form</span>
                                 <div class="download-actions">
                                     <a href="#" class="btn btn-view">VIEW</a>
-                                    <a href="#" class="btn btn-download">DOWNLOAD</a>
+                                    <a href="#" class="btn btn-download">Fill-Out</a>
                                 </div>
                             </article>
                         </div>
@@ -196,6 +197,433 @@
             <p>&copy; 2026 SCSLAI. All rights reserved.</p>
         </div>
     </footer>
+    <!-- LOAN APPLICATION MODAL -->
+    <div id="loanModal" class="loan-modal">
+
+        <div class="loan-modal-content">
+
+            <div class="loan-modal-header">
+
+                <h2>Loan Application</h2>
+
+                <button
+                    type="button"
+                    id="closeLoanModal"
+                    class="close-loan-modal"
+                >
+                    &times;
+                </button>
+
+            </div>
+
+
+            <div class="loan-modal-body">
+
+                <form id="loanApplicationForm">
+
+                    <div class="modal-section">
+                        <h3>Loan Information</h3>
+
+                        <div class="modal-form-grid">
+                            <div class="modal-form-group">
+                                <label for="loanCategory">
+                                    Loan Category
+                                </label>
+
+                                <select id="loanCategory" required>
+                                    <option value="">
+                                        Select Loan Category
+                                    </option>
+                                    <option value="Regular Loan">
+                                        Regular Loan
+                                    </option>
+                                    <option value="Special Loan">
+                                        Special Loan
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="modal-form-group">
+                                <label for="loanType">
+                                    Type of Loan
+                                </label>
+
+                                <select id="loanType" required>
+                                    <option value="">
+                                        Select Type of Loan
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="modal-form-group">
+                                <label for="applicationType">
+                                    Application Type
+                                </label>
+
+                                <select id="applicationType" required>
+                                    <option value="">
+                                        Select Application Type
+                                    </option>
+                                    <option value="New Loan">
+                                        New Loan
+                                    </option>
+                                    <option value="Consolidate">
+                                        Consolidate
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="modal-form-group" id="otherLoanTypeGroup" style="display:none;">
+                                <label for="otherLoanType">
+                                    Others (Type of Regular Loan)
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="otherLoanType"
+                                    maxlength="40"
+                                >
+                            </div>
+
+                            <div class="modal-form-group">
+                                <label for="loanAmount">
+                                    Loan Amount (Php)
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="loanAmount"
+                                    required
+                                    min="1"
+                                    step="0.01"
+                                >
+                            </div>
+
+                            <div class="modal-form-group">
+                                <label for="payableYears">
+                                    Payable in (Years)
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="payableYears"
+                                    required
+                                    min="1"
+                                    max="30"
+                                >
+                            </div>
+
+                            <div class="modal-form-group">
+                                <label for="receivedDate">
+                                    Received Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="receivedDate"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <h3>Personal Information</h3>
+
+                        <div class="modal-form-grid">
+
+
+                    <div class="modal-form-group">
+
+                        <label for="lastName">
+                            Last Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="lastName"
+                            required
+                            minlength="2"
+                            maxlength="50"
+                        >
+
+                    </div>
+
+
+                    <div class="modal-form-group">
+
+                        <label for="firstName">
+                            First Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="firstName"
+                            required
+                            minlength="2"
+                            maxlength="50"
+                        >
+
+                    </div>
+
+
+                    <div class="modal-form-group">
+
+                        <label for="middleName">
+                            Middle Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="middleName"
+                        >
+
+                    </div>
+
+
+                    <div class="modal-form-group">
+
+                        <label for="suffix">
+                            Suffix
+                        </label>
+
+                        <input
+                            type="text"
+                            id="suffix"
+                        >
+
+                    </div>
+
+
+                    <div class="modal-form-group">
+
+                        <label for="edpNumber">
+                            EDP #
+                        </label>
+
+                        <input
+                            type="text"
+                            id="edpNumber"
+                            required
+                            inputmode="numeric"
+                            pattern="[0-9]+"
+                        >
+
+                    </div>
+
+
+                    <div class="modal-form-group">
+
+                        <label for="tin">
+                            TIN
+                        </label>
+
+                        <input
+                            type="text"
+                            id="tin"
+                        >
+
+                    </div>
+
+
+                    <div class="modal-form-group">
+
+                        <label for="birthdate">
+                            Birthdate
+                        </label>
+
+                        <input
+                            type="date"
+                            id="birthdate"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="modal-form-group">
+
+                        <label for="placeOfBirth">
+                            Place of Birth
+                        </label>
+
+                        <input
+                            type="text"
+                            id="placeOfBirth"
+                            required
+                        >
+
+                    </div>
+
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <h3>Address and Employment</h3>
+
+                        <div class="modal-form-grid">
+
+
+                    <div class="modal-form-group modal-full-width">
+
+                        <label for="homeAddress">
+                            Home Address
+                        </label>
+
+                        <input
+                            type="text"
+                            id="homeAddress"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="modal-form-group">
+
+                        <label for="zipCode">
+                            ZIP Code
+                        </label>
+
+                        <input
+                            type="text"
+                            id="zipCode"
+                            required
+                            inputmode="numeric"
+                            pattern="[0-9]{4}"
+                            maxlength="4"
+                        >
+
+                    </div>
+
+
+                    <div class="modal-form-group">
+
+                        <label for="officeStation">
+                            Office Station
+                        </label>
+
+                        <input
+                            type="text"
+                            id="officeStation"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="modal-form-group">
+
+                        <label for="region">
+                            Region
+                        </label>
+
+                        <input
+                            type="text"
+                            id="region"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="modal-form-group">
+
+                        <label for="position">
+                            Position
+                        </label>
+
+                        <input
+                            type="text"
+                            id="position"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="modal-form-group">
+
+                        <label for="appointment">
+                            Appointment
+                        </label>
+
+                        <input
+                            type="text"
+                            id="appointment"
+                            required
+                        >
+
+                    </div>
+
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <h3>Contact Information</h3>
+
+                        <div class="modal-form-grid">
+
+
+                    <div class="modal-form-group">
+
+                        <label for="contactNumber">
+                            Contact Number
+                        </label>
+
+                        <input
+                           type="tel"
+                            id="contactNumber"
+                            required
+                            placeholder="09XXXXXXXXX"
+                        >
+
+                    </div>
+
+
+                    <div class="modal-form-group">
+
+                        <label for="emailAddress">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="emailAddress"
+                            required
+                        >
+
+                    </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="modal-actions">
+
+                        <button
+                            type="button"
+                            id="cancelLoanModal"
+                        >
+                            Cancel
+                        </button>
+
+                        <button
+                            type="submit"
+                        >
+                            Continue
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
     <script src="script.js"></script>
+    <script src="FORMS/form.js"></script>
 </body>
 </html>

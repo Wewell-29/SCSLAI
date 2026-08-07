@@ -1,0 +1,231 @@
+/* ==============================
+   LOAN APPLICATION MODAL
+============================== */
+
+.loan-modal {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    background: rgba(0, 0, 0, 0.65);
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+}
+
+
+.loan-modal.active {
+
+    display: flex;
+
+}
+
+
+.loan-modal-content {
+
+    background: white;
+
+    width: 100%;
+
+    max-width: 900px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    border-radius: 12px;
+
+}
+
+
+.loan-modal-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 20px 25px;
+
+    background: #0b6b3a;
+
+    color: white;
+
+}
+
+
+.loan-modal-header h2 {
+
+    margin: 0;
+
+}
+
+
+.close-loan-modal {
+
+    border: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 30px;
+
+    cursor: pointer;
+
+}
+
+
+.loan-modal-body {
+
+    padding: 25px;
+
+}
+
+
+.modal-section {
+
+    margin-bottom: 22px;
+
+}
+
+
+.modal-section h3 {
+
+    margin: 0 0 12px;
+
+    font-size: 18px;
+
+    color: #0b6b3a;
+
+}
+
+
+.modal-form-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 12px 16px;
+
+}
+
+
+.modal-full-width {
+
+    grid-column: 1 / -1;
+
+}
+
+
+.modal-form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    margin-bottom: 15px;
+
+}
+
+
+.modal-form-group label {
+
+    margin-bottom: 6px;
+
+    font-weight: 600;
+
+}
+
+
+.modal-form-group input,
+
+.modal-form-group select {
+
+    padding: 11px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 6px;
+
+    font-size: 14px;
+
+}
+
+
+.modal-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 20px;
+
+}
+
+
+.modal-actions button {
+
+    padding: 11px 20px;
+
+    border: none;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+}
+
+
+.modal-actions button[type="submit"] {
+
+    background: #0b6b3a;
+
+    color: white;
+
+}
+
+
+.modal-actions button[type="button"] {
+
+    background: #ddd;
+
+}
+
+
+@media (max-width: 700px) {
+
+    .loan-modal-header {
+
+        padding: 16px 18px;
+
+    }
+
+
+    .loan-modal-body {
+
+        padding: 18px;
+
+    }
+
+
+    .modal-form-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
