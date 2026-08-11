@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LC Loan Application - SCSLAI</title>
+    <link rel="stylesheet" href="lc-loan-application.css">
+</head>
+<body>
+    <main class="page-wrap">
+        <form id="lcLoanForm" class="loan-sheet" novalidate>
+            <header class="form-header bordered">
+                <div class="org-lines">
+                    <h1>SUPREME COURT SAVINGS &amp; LOAN ASSOCIATION, INC. (SCSLAI)</h1>
+                    <p>Supreme Court Bldg., Padre Faura St., Brgy 670 Zone 072, Ermita, Manila</p>
+                    <p>@09293371781 / 8 236-0487</p>
+                    <p>A FINANCIAL INSTITUTION REGULATED AND SUPERVISED BY BANGKO SENTRAL NG PILIPINAS</p>
+                </div>
+                <div class="title-row">
+                    <h2>LOAN APPLICATION LC</h2>
+                    <p>Form No. 05-2026-LC</p>
+                </div>
+                <p class="notice">THIS APPLICATION MAY BE REPRODUCED BY PHOTOCOPYING ONLY AND IS NOT FOR SALE. (PLEASE USE BLUE INK)</p>
+            </header>
+
+            <section class="loan-type-grid bordered">
+                <div class="loan-type-group bordered-right">
+                    <h3>TYPES OF REGULAR LOAN</h3>
+                    <div class="checks three-cols">
+                        <label><input type="checkbox" name="regularLoanType" value="Business">Business</label>
+                        <label><input type="checkbox" name="regularLoanType" value="Help Loan">Help Loan</label>
+                        <label><input type="checkbox" name="regularLoanType" value="Multi Purpose">Multi Purpose</label>
+                        <label><input type="checkbox" name="regularLoanType" value="Educational">Educational</label>
+                        <label><input type="checkbox" name="regularLoanType" value="JDF/Allowance">JDF/Allowance</label>
+                        <label><input type="checkbox" name="regularLoanType" value="MEAL">MEAL</label>
+                        <label><input type="checkbox" name="regularLoanType" value="Emergency RATA">Emergency RATA</label>
+                        <label><input type="checkbox" name="regularLoanType" value="Maxi">Maxi</label>
+                        <label><input type="checkbox" name="regularLoanType" value="Salary">Salary</label>
+                        <label><input type="checkbox" name="regularLoanType" value="Housing">Housing</label>
+                        <label class="others-line">Others: <input type="text" id="otherRegularLoanType" maxlength="40"></label>
+                    </div>
+                </div>
+                <div class="loan-type-group bordered-right">
+                    <h3>TYPES OF SPECIAL LOAN</h3>
+                    <div class="checks two-cols">
+                        <label><input type="checkbox" name="specialLoanType" value="DEEA (April)">DEEA (April)</label>
+                        <label><input type="checkbox" name="specialLoanType" value="DEEA (October)">DEEA (October)</label>
+                        <label><input type="checkbox" name="specialLoanType" value="Mid Year">Mid Year</label>
+                        <label><input type="checkbox" name="specialLoanType" value="Year End">Year End</label>
+                        <label><input type="checkbox" name="specialLoanType" value="Anniversary">Anniversary</label>
+                        <label><input type="checkbox" name="specialLoanType" value="Cash Gift">Cash Gift</label>
+                    </div>
+                </div>
+                <div class="received-col">
+                    <label for="receivedDate">Received Date:</label>
+                    <input type="date" id="receivedDate" name="receivedDate">
+                </div>
+            </section>
+
+            <section class="intro bordered">
+                <p>Gentlemen/Mesdames:</p>
+                <p>
+                    I,
+                    <input type="text" id="applicantFullName" class="line-input" required>
+                    have the honor to apply for a loan in the amount of
+                    (Php
+                    <input type="text" id="loanAmount" class="line-input small" required inputmode="decimal">
+                    ), payable in
+                    (
+                    <input type="number" id="loanYears" class="line-input xsmall" min="1" max="30" required>
+                    ) years
+                    in accordance with the stipulations contained in the herein Promissory Note, undertaking statement set forth herein, SAUF Form (if applicable), and the SCSLAI policies, rules &amp; regulations.
+                </p>
+                <div class="checks inline-checks">
+                    <label><input type="checkbox" name="applicationType" value="New Loan">New Loan</label>
+                    <label><input type="checkbox" name="applicationType" value="Consolidate">Consolidate</label>
+                </div>
+            </section>
+
+            <section class="identity bordered">
+                <div class="row four">
+                    <label>EDP NUMBER<input type="text" id="edpNumber" required inputmode="numeric" pattern="[0-9]+"></label>
+                    <label>TIN<input type="text" id="tin" inputmode="numeric" placeholder="000-000-000-000"></label>
+                    <label>DATE OF BIRTH (MMDDYYYY)<input type="date" id="birthdate" required></label>
+                    <label>PLACE OF BIRTH<input type="text" id="placeOfBirth" required></label>
+                </div>
+                <div class="row four name-row">
+                    <label>NAME (LAST NAME)<input type="text" id="lastName" required></label>
+                    <label>(FIRST NAME)<input type="text" id="firstName" required></label>
+                    <label>(MIDDLE NAME)<input type="text" id="middleName"></label>
+                    <label>(SUFFIX)<input type="text" id="suffix" maxlength="12"></label>
+                </div>
+                <div class="row two-sign">
+                    <label class="wide">HOME ADDRESS<input type="text" id="homeAddress" required></label>
+                    <label>ZIP CODE<input type="text" id="zipCode" required inputmode="numeric" pattern="[0-9]{4}" maxlength="4"></label>
+                    <label>1. SIGNATURE<input type="text" id="signature" required></label>
+                </div>
+                <div class="row four">
+                    <label>OFFICE/STATION<input type="text" id="officeStation" required></label>
+                    <label>REGION<input type="text" id="region" required></label>
+                    <label>POSITION<input type="text" id="position" required></label>
+                    <label>2. PRINTED NAME<input type="text" id="printedName" required></label>
+                </div>
+                <div class="row three">
+                    <label>STATUS OF APPOINTMENT<input type="text" id="appointmentStatus" required></label>
+                    <label>CONTACT NUMBER<input type="tel" id="contactNumber" required placeholder="09XXXXXXXXX"></label>
+                    <label>E-MAIL ADDRESS<input type="email" id="emailAddress" required></label>
+                </div>
+            </section>
+
+            <section class="endorsement bordered">
+                <h3>ENDORSEMENT/CERTIFICATION</h3>
+                <p>Respectfully indorsed to the SCSLAI this Loan Application and strongly recommending its approval. I certify that he/she and all his/her sureties are permanent employees of the court and in good standing and that all signatures appearing herein are genuine and authentic. I further certify that he/she has no pending administrative and/or criminal case.</p>
+                <div class="row four">
+                    <label>Signature over Printed Name of Endorsing Officer<input type="text" id="endorserSignature"></label>
+                    <label>Mobile No.<input type="text" id="endorserMobile" inputmode="numeric"></label>
+                    <label>Designation<input type="text" id="endorserDesignation"></label>
+                    <label>EDP Number<input type="text" id="endorserEdp" inputmode="numeric"></label>
+                </div>
+            </section>
+
+            <section class="mini-panels bordered">
+                <div class="panel bordered-right">
+                    <h4>Judicial Integrity Board - JIB</h4>
+                    <label><input type="checkbox" id="withoutPendingCase">Without Pending Case</label>
+                    <label><input type="checkbox" id="withPendingCase">With Pending Case</label>
+                    <label>By:<input type="text" id="jibBy"></label>
+                </div>
+                <div class="panel bordered-right">
+                    <h4>Leave Division, OAS, OCA</h4>
+                    <label>As of:<input type="date" id="leaveAsOf"></label>
+                    <label>Vacation Leave:<input type="text" id="vacationLeave"></label>
+                    <label>Sick Leave:<input type="text" id="sickLeave"></label>
+                    <label>Total:<input type="text" id="leaveTotal"></label>
+                    <label>By:<input type="text" id="leaveBy"></label>
+                </div>
+                <div class="panel">
+                    <h4>EDP - Electronic Data Processing</h4>
+                    <label>As of:<input type="date" id="edpAsOf"></label>
+                    <label>Take Home Pay:<input type="text" id="takeHomePay"></label>
+                    <label>Monthly Salary:<input type="text" id="monthlySalary"></label>
+                    <label>By:<input type="text" id="edpBy"></label>
+                </div>
+            </section>
+
+            <section class="loans-table-wrap bordered">
+                <h3>STATUS OF OUTSTANDING SCSLAI LOANS</h3>
+                <div class="table-scroll">
+                    <table class="loans-table" id="outstandingLoansTable">
+                        <thead>
+                            <tr>
+                                <th>TYPES OF LOAN</th>
+                                <th>AMOUNT</th>
+                                <th>DATE GRANTED</th>
+                                <th>BALANCE</th>
+                                <th>DEDUCTIONS (Current)</th>
+                                <th>DEDUCTIONS (New)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-loan="SALARY"><td>SALARY</td><td><input type="text" class="money"></td><td><input type="date"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td></tr>
+                            <tr data-loan="MULTI-PURPOSE"><td>MULTI-PURPOSE</td><td><input type="text" class="money"></td><td><input type="date"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td></tr>
+                            <tr data-loan="EDUCATIONAL"><td>EDUCATIONAL</td><td><input type="text" class="money"></td><td><input type="date"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td></tr>
+                            <tr data-loan="MAXI"><td>MAXI</td><td><input type="text" class="money"></td><td><input type="date"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td></tr>
+                            <tr data-loan="BUSINESS"><td>BUSINESS</td><td><input type="text" class="money"></td><td><input type="date"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td></tr>
+                            <tr data-loan="HELP"><td>HELP</td><td><input type="text" class="money"></td><td><input type="date"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td></tr>
+                            <tr data-loan="EMERGENCY RATA"><td>EMERGENCY RATA</td><td><input type="text" class="money"></td><td><input type="date"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td></tr>
+                            <tr data-loan="MEAL"><td>MEAL</td><td><input type="text" class="money"></td><td><input type="date"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td></tr>
+                            <tr data-loan="HOUSING"><td>HOUSING</td><td><input type="text" class="money"></td><td><input type="date"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td></tr>
+                            <tr data-loan="JDF/ALLOWANCE"><td>JDF/ALLOWANCE</td><td><input type="text" class="money"></td><td><input type="date"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td></tr>
+                            <tr data-loan="EEA APRIL"><td>EEA (April)</td><td><input type="text" class="money"></td><td><input type="date"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td></tr>
+                            <tr data-loan="MID YEAR"><td>MID YEAR</td><td><input type="text" class="money"></td><td><input type="date"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td></tr>
+                            <tr data-loan="ANNIVERSARY"><td>ANNIVERSARY</td><td><input type="text" class="money"></td><td><input type="date"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td></tr>
+                            <tr data-loan="EEA OCTOBER"><td>EEA (October)</td><td><input type="text" class="money"></td><td><input type="date"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td></tr>
+                            <tr data-loan="YEAR END"><td>YEAR END</td><td><input type="text" class="money"></td><td><input type="date"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td></tr>
+                            <tr data-loan="CASH GIFT"><td>CASH GIFT</td><td><input type="text" class="money"></td><td><input type="date"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td><td><input type="text" class="money"></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="totals-row">
+                    <label>Total Deductions<input type="text" id="totalDeductions" class="money"></label>
+                    <label>Take home pay after deductions<input type="text" id="takeHomeAfterDeductions" class="money"></label>
+                </div>
+
+                <div class="delivery-row">
+                    <label><input type="checkbox" id="deliveryLbp">Mode of Delivery of Loan Proceeds by ATM Payroll Account (LBP)</label>
+                </div>
+            </section>
+
+            <section class="foot-panels bordered">
+                <div class="sbl bordered-right">
+                    <h4>Single Borrower's Limit (SBL)</h4>
+                    <label>Salary:<input type="text" id="sblSalary" class="money"></label>
+                    <label>Allowances:<input type="text" id="sblAllowances" class="money"></label>
+                    <label>Capital Contribution:<input type="text" id="sblCapitalContribution" class="money"></label>
+                    <label>Others:<input type="text" id="sblOthers" class="money"></label>
+                    <label>SBL:<input type="text" id="sblValue" class="money"></label>
+                </div>
+                <div class="remarks bordered-right">
+                    <h4>Remarks:</h4>
+                    <textarea id="remarks" rows="6"></textarea>
+                    <label>Loan Processor In-Charge (Signature over Printed Name)<input type="text" id="loanProcessor"></label>
+                </div>
+                <div class="signoff">
+                    <label>APPROVED BY: CREDIT &amp; LOAN REVIEW COMMITTEE<input type="text" id="approvedBy"></label>
+                    <label>CONFIRMED BY: BOARD OF TRUSTEES<input type="text" id="confirmedBy"></label>
+                </div>
+            </section>
+
+            <section class="actions no-print">
+                <button type="button" id="resetFormBtn">Clear / Reset</button>
+                <button type="button" id="printFormBtn">Print Form</button>
+                <button type="submit" id="generatePdfBtn">Generate PDF</button>
+            </section>
+        </form>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+    <script src="lc-loan-application.js"></script>
+</body>
+</html>

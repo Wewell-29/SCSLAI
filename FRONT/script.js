@@ -758,6 +758,7 @@ let calculatorTabs = document.querySelectorAll('[data-court-tab]');
 let calculatorPanels = document.querySelectorAll('[data-court-panel]');
 let supremeLoanType = document.querySelector('[data-loan-type]');
 let supremeLoanAmount = document.querySelector('[data-loan-amount]');
+let supremeDesiredLoanAmount = document.querySelector('[data-desired-loan-amount]');
 let supremeLoanTerm = document.querySelector('[data-loan-term]');
 let supremeTakeHomePay = document.querySelector('[data-take-home-pay]');
 let supremeEligibleTakeHomePay = document.querySelector('[data-eligible-take-home-pay]');
@@ -765,6 +766,7 @@ let supremeComputeButton = document.querySelector('[data-compute-supreme]');
 let supremeResult = document.querySelector('[data-supreme-result]');
 let lowerLoanType = document.querySelector('[data-loan-type-lower]');
 let lowerLoanAmount = document.querySelector('[data-loan-amount-lower]');
+let lowerDesiredLoanAmount = document.querySelector('[data-desired-loan-amount-lower]');
 let lowerLoanTerm = document.querySelector('[data-loan-term-lower]');
 let lowerTakeHomePay = document.querySelector('[data-take-home-pay-lower]');
 let lowerEligibleTakeHomePay = document.querySelector('[data-eligible-take-home-pay-lower]');
@@ -864,6 +866,26 @@ function formatCurrency(value) {
   }).format(value);
 }
 
+function parseAmountInput(value) {
+  if (typeof value !== 'string') return Number.NaN;
+  const cleaned = value.replace(/,/g, '').trim();
+  return cleaned ? Number(cleaned) : Number.NaN;
+}
+
+function formatAmountInput(value) {
+  const cleaned = String(value || '').replace(/[^0-9.]/g, '');
+  const parts = cleaned.split('.');
+  const integerPart = (parts[0] || '').replace(/^0+(?=\d)/, '');
+  const decimalPart = parts.slice(1).join('');
+  const grouped = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+  if (parts.length > 1) {
+    return `${grouped || '0'}.${decimalPart}`;
+  }
+
+  return grouped;
+}
+
 function pmt(annualRate, years, loanAmount) {
   const monthlyRate = annualRate / 12;
   const numberOfPayments = years * 12;
@@ -904,7 +926,7 @@ function createCalculatorModal() {
         <div class="calculator-grid">
           <div class="calculator-field calculator-field--full">
             <label for="supreme-take-home-pay">Current Take-Home Pay</label>
-            <input id="supreme-take-home-pay" type="number" min="0" step="0.01" placeholder="Enter current take-home pay" data-take-home-pay>
+            <input id="supreme-take-home-pay" type="text" inputmode="decimal" placeholder="Enter current take-home pay" data-take-home-pay>
           </div>
 
           <div class="calculator-field calculator-field--full">
@@ -923,6 +945,11 @@ function createCalculatorModal() {
           </div>
 
           <div class="calculator-field calculator-field--full">
+            <label for="supreme-desired-loan-amount">Desired Loan Amount (Optional)</label>
+            <input id="supreme-desired-loan-amount" type="text" inputmode="decimal" placeholder="Enter desired amount" data-desired-loan-amount>
+          </div>
+
+          <div class="calculator-field calculator-field--full">
             <label for="supreme-loan-term">Loan Term</label>
             <select id="supreme-loan-term" data-loan-term></select>
           </div>
@@ -933,13 +960,13 @@ function createCalculatorModal() {
         </div>
 
         <div class="calculator-result" data-supreme-result>
-          <strong>Loan Eligibility</strong>
+          <strong>Loan Amortization</strong>
           <span>Your eligible loan amount appears here.</span>
         </div>
 
         <div class="calculator-note">
           <strong>Note:</strong>
-          <span>Eligible monthly payment = current take-home pay - &#8369;5,000. Loan amount = eligible monthly payment / factor rate.</span>
+          <span>The calculation is based on the inputs you provide. To get the Eligible Loan Amount, we subtract 5,000 from your take-home pay so your remaining pay will not go below 5,000.</span>
         </div>
 
       </div>
@@ -951,7 +978,7 @@ function createCalculatorModal() {
         <div class="calculator-grid">
           <div class="calculator-field calculator-field--full">
             <label for="lower-take-home-pay">Current Take-Home Pay</label>
-            <input id="lower-take-home-pay" type="number" min="0" step="0.01" placeholder="Enter current take-home pay" data-take-home-pay-lower>
+            <input id="lower-take-home-pay" type="text" inputmode="decimal" placeholder="Enter current take-home pay" data-take-home-pay-lower>
           </div>
 
           <div class="calculator-field calculator-field--full">
@@ -970,6 +997,11 @@ function createCalculatorModal() {
           </div>
 
           <div class="calculator-field calculator-field--full">
+            <label for="lower-desired-loan-amount">Desired Loan Amount (Optional)</label>
+            <input id="lower-desired-loan-amount" type="text" inputmode="decimal" placeholder="Enter desired amount" data-desired-loan-amount-lower>
+          </div>
+
+          <div class="calculator-field calculator-field--full">
             <label for="lower-loan-term">Loan Term</label>
             <select id="lower-loan-term" data-loan-term-lower></select>
           </div>
@@ -980,13 +1012,13 @@ function createCalculatorModal() {
         </div>
 
         <div class="calculator-result calculator-result-muted" data-lower-result>
-          <strong>Loan Eligibility</strong>
+          <strong>Loan Amortization</strong>
           <span>Your eligible loan amount appears here.</span>
         </div>
 
         <div class="calculator-note">
           <strong>Note:</strong>
-          <span>Eligible monthly payment = current take-home pay - &#8369;5,000. Loan amount = eligible monthly payment / factor rate.</span>
+          <span>The calculation is based on the inputs you provide. To get the Eligible Loan Amount, we subtract 5,000 from your take-home pay so your remaining pay will not go below 5,000.</span>
         </div>
         
       </div>
@@ -1027,6 +1059,7 @@ function getLoanElements(court) {
     ? {
         loanType: lowerLoanType,
         loanAmount: lowerLoanAmount,
+        desiredLoanAmount: lowerDesiredLoanAmount,
         loanTerm: lowerLoanTerm,
         takeHomePay: lowerTakeHomePay,
         eligibleTakeHomePay: lowerEligibleTakeHomePay,
@@ -1035,6 +1068,7 @@ function getLoanElements(court) {
     : {
         loanType: supremeLoanType,
         loanAmount: supremeLoanAmount,
+        desiredLoanAmount: supremeDesiredLoanAmount,
         loanTerm: supremeLoanTerm,
         takeHomePay: supremeTakeHomePay,
         eligibleTakeHomePay: supremeEligibleTakeHomePay,
@@ -1050,7 +1084,7 @@ function updateEligibleTakeHomePay(court) {
   const elements = getLoanElements(court);
   if (!elements.takeHomePay || !elements.eligibleTakeHomePay) return;
 
-  const takeHomePay = Number(elements.takeHomePay.value);
+  const takeHomePay = parseAmountInput(elements.takeHomePay.value);
   elements.eligibleTakeHomePay.value = Number.isFinite(takeHomePay) && takeHomePay > 0
     ? formatCurrency(getEligibleMonthlyAmortization(takeHomePay))
     : '';
@@ -1083,6 +1117,7 @@ function openCalculator() {
   calculatorPanels = document.querySelectorAll('[data-court-panel]');
   supremeLoanType = document.querySelector('[data-loan-type]');
   supremeLoanAmount = document.querySelector('[data-loan-amount]');
+  supremeDesiredLoanAmount = document.querySelector('[data-desired-loan-amount]');
   supremeLoanTerm = document.querySelector('[data-loan-term]');
   supremeTakeHomePay = document.querySelector('[data-take-home-pay]');
   supremeEligibleTakeHomePay = document.querySelector('[data-eligible-take-home-pay]');
@@ -1090,6 +1125,7 @@ function openCalculator() {
   supremeResult = document.querySelector('[data-supreme-result]');
   lowerLoanType = document.querySelector('[data-loan-type-lower]');
   lowerLoanAmount = document.querySelector('[data-loan-amount-lower]');
+  lowerDesiredLoanAmount = document.querySelector('[data-desired-loan-amount-lower]');
   lowerLoanTerm = document.querySelector('[data-loan-term-lower]');
   lowerTakeHomePay = document.querySelector('[data-take-home-pay-lower]');
   lowerEligibleTakeHomePay = document.querySelector('[data-eligible-take-home-pay-lower]');
@@ -1120,6 +1156,10 @@ function openCalculator() {
     if (supremeEligibleTakeHomePay) {
       supremeEligibleTakeHomePay.value = '';
     }
+
+    if (supremeDesiredLoanAmount) {
+      supremeDesiredLoanAmount.value = '';
+    }
   }
 
   if (lowerLoanType && lowerLoanTerm) {
@@ -1132,6 +1172,10 @@ function openCalculator() {
 
     if (lowerEligibleTakeHomePay) {
       lowerEligibleTakeHomePay.value = '';
+    }
+
+    if (lowerDesiredLoanAmount) {
+      lowerDesiredLoanAmount.value = '';
     }
   }
 }
@@ -1162,7 +1206,7 @@ function computeLoan(court) {
 
   const loanType = elements.loanType.value;
   const termYears = Number(elements.loanTerm.value);
-  const takeHomePay = Number(elements.takeHomePay.value);
+  const takeHomePay = parseAmountInput(elements.takeHomePay.value);
   const loan = getLoanDefinition(court, loanType);
 
   if (!loan) {
@@ -1208,21 +1252,41 @@ function computeLoan(court) {
     return;
   }
 
-  const loanAmount = typeof loan.max === 'number'
+  const eligibleLoanAmount = typeof loan.max === 'number'
     ? Math.min(calculatedLoanAmount, loan.max)
     : calculatedLoanAmount;
-  const monthlyAmortization = loanAmount * factorRate;
-  const remainingTakeHomePay = takeHomePay - monthlyAmortization;
+  const desiredLoanAmountInput = parseAmountInput(elements.desiredLoanAmount?.value || '');
+  let amortizationBaseAmount = eligibleLoanAmount;
 
-  elements.loanAmount.value = formatCurrency(loanAmount);
+  if (Number.isFinite(desiredLoanAmountInput)) {
+    if (desiredLoanAmountInput <= 0) {
+      clearCalculatedLoanAmount(court);
+      elements.result.innerHTML = '<strong>Loan Eligibility</strong><span>Please enter a valid desired loan amount.</span>';
+      return;
+    }
+
+    if (typeof loan.min === 'number' && desiredLoanAmountInput < loan.min) {
+      clearCalculatedLoanAmount(court);
+      elements.result.innerHTML = `<strong>Loan Eligibility</strong><span>Desired amount is below this loan type\'s matrix minimum of ${formatCurrency(loan.min)}.</span>`;
+      return;
+    }
+
+    if (desiredLoanAmountInput > eligibleLoanAmount) {
+      clearCalculatedLoanAmount(court);
+      elements.result.innerHTML = `<strong>Loan Eligibility</strong><span>Your maximum eligible amount is ${formatCurrency(eligibleLoanAmount)}. Please enter a desired amount within eligibility.</span>`;
+      return;
+    }
+
+    amortizationBaseAmount = desiredLoanAmountInput;
+  }
+
+  const monthlyAmortization = amortizationBaseAmount * factorRate;
+
+  elements.loanAmount.value = formatCurrency(eligibleLoanAmount);
 
   elements.result.innerHTML = `
-    <strong>Loan Eligibility</strong>
+    <strong>Loan Amortization</strong>
     <span>Monthly amortization: ${formatCurrency(monthlyAmortization)}</span>
-    <span>Take-home pay after the payment: ${formatCurrency(remainingTakeHomePay)}</span>
-    ${loanAmount < calculatedLoanAmount
-      ? `<span>Loan amount is capped at ${formatCurrency(loan.max)} for this loan type.</span>`
-      : ''}
   `;
 }
 
@@ -1250,10 +1314,6 @@ document.addEventListener('click', (event) => {
     closeCalculator();
   }
 
-  if (calculatorModal && event.target === calculatorModal) {
-    closeCalculator();
-  }
-
   if (event.target?.matches?.('[data-court-tab]')) {
     setCalculatorCourt(event.target.dataset.courtTab);
   }
@@ -1275,15 +1335,27 @@ document.addEventListener('keydown', (event) => {
 
 document.addEventListener('input', (event) => {
   if (event.target?.matches?.('[data-take-home-pay]')) {
+    event.target.value = formatAmountInput(event.target.value);
     updateEligibleTakeHomePay('supreme');
     clearCalculatedLoanAmount('supreme');
   }
 
   if (event.target?.matches?.('[data-take-home-pay-lower]')) {
+    event.target.value = formatAmountInput(event.target.value);
     updateEligibleTakeHomePay('lower');
     clearCalculatedLoanAmount('lower');
   }
+
+  if (event.target?.matches?.('[data-desired-loan-amount], [data-desired-loan-amount-lower]')) {
+    event.target.value = formatAmountInput(event.target.value);
+  }
 });
+
+document.addEventListener('blur', (event) => {
+  if (event.target?.matches?.('[data-take-home-pay], [data-take-home-pay-lower], [data-desired-loan-amount], [data-desired-loan-amount-lower]')) {
+    event.target.value = formatAmountInput(event.target.value);
+  }
+}, true);
 
 document.addEventListener('change', (event) => {
   if (event.target?.matches?.('[data-loan-type]')) {
