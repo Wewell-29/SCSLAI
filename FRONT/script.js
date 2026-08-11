@@ -17,6 +17,7 @@ function buildPageRecords(year) {
       remarks: 'Strong member turnout and successful distribution activity.',
       tags: ['outreach', 'community', `${year}`],
       keywords: ['outreach', 'community', 'program']
+      
     },
     {
       activityTitle: 'Tree Planting and Environmental Care',
@@ -564,6 +565,8 @@ yearbookReader?.addEventListener('click', (event) => {
   }
 });
 
+
+
 window.addEventListener('resize', () => {
   if (resizeRaf) {
     window.cancelAnimationFrame(resizeRaf);
@@ -713,7 +716,7 @@ prevButton?.addEventListener('click', () => {
 const siteHeader = document.querySelector('header');
 const siteNav = document.querySelector('header nav');
 let navToggle = null;
-const NAV_BREAKPOINT = 1200;
+const NAV_BREAKPOINT = 1100;
 
 if (siteHeader && siteNav) {
   if (!siteNav.id) {
