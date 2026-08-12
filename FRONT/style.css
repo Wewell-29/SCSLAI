@@ -498,7 +498,7 @@ nav a:hover{
     background:
         radial-gradient(circle at 15% 15%, rgba(255, 219, 147, 0.25), transparent 24%),
         radial-gradient(circle at 85% 0%, rgba(255, 244, 214, 0.18), transparent 30%),
-        linear-gradient(135deg, rgba(25, 15, 8, 0.94) 0%, rgba(74, 41, 19, 0.9) 45%, rgba(16, 9, 5, 0.96) 100%);
+        linear-gradient(135deg, rgba(25, 15, 8, 0.94) 0%, rgba(74, 41, 19, 0.081) 45%, rgba(16, 9, 5, 0.96) 100%);
 }
 
 .yearbook-library-section::before {

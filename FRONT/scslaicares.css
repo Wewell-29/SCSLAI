@@ -20,3 +20,341 @@ body, * {
 .yearbook-book .book-title {
     font-family: "Cormorant Garamond", Georgia, serif !important;
 }
+
+/* Closed-book treatment for the SCSLAI Cares yearbook editions. */
+.yearbook-grid {
+    gap: 2.4rem 1.5rem;
+}
+
+.yearbook-book {
+    padding: 0.8rem 0.5rem 1rem;
+    perspective: 1100px;
+}
+
+.yearbook-cover {
+    --cover-tilt: perspective(920px) rotateX(26deg) rotateZ(-7deg);
+    position: relative;
+    display: block;
+    width: min(100%, 250px);
+    aspect-ratio: 1.48 / 1;
+    max-width: none;
+    margin: 0 auto 1.8rem;
+    overflow: visible;
+    isolation: isolate;
+    border-radius: 10px 13px 9px 11px;
+    background: #faf8f2;
+    transform: var(--cover-tilt);
+    transform-origin: center center;
+    transform-style: preserve-3d;
+    transition: transform 240ms ease, filter 240ms ease;
+}
+
+/* The layered paper block beneath the cover. */
+.yearbook-cover::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 9px -7px -22px 9px;
+    border: 1px solid #aaa28f;
+    border-radius: 4px 7px 10px 9px;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(116, 106, 88, 0.24) 0,
+            rgba(116, 106, 88, 0.24) 1px,
+            rgba(255, 253, 244, 0.98) 1px,
+            rgba(255, 253, 244, 0.98) 3px
+        ),
+        #f8f4e8;
+    box-shadow: 8px 12px 15px rgba(8, 5, 2, 0.33);
+}
+
+/* A lower hard-cover lip makes the page block read as a bound book. */
+.yearbook-cover::after {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    inset: 16px -10px -28px 12px;
+    border-radius: 5px 8px 12px 10px;
+    background: linear-gradient(145deg, #fffef9, #d9d1c1);
+    box-shadow: 9px 16px 18px rgba(8, 5, 2, 0.25);
+}
+
+.yearbook-cover img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 5px solid #fffdf7;
+    border-radius: inherit;
+    box-shadow:
+        inset 4px 0 0 rgba(87, 66, 39, 0.16),
+        0 5px 7px rgba(15, 8, 2, 0.28);
+}
+
+.yearbook-book:hover .yearbook-cover,
+.yearbook-book:focus-visible .yearbook-cover {
+    transform: translateY(-12px) var(--cover-tilt);
+    filter: brightness(1.04);
+}
+
+.yearbook-book:focus-visible {
+    outline: 2px solid #f8e8c9;
+    outline-offset: 5px;
+    border-radius: 8px;
+}
+
+/* First stage: animate the selected library book before its modal opens. */
+.yearbook-book.is-opening {
+    position: relative;
+    z-index: 4;
+    pointer-events: none;
+}
+
+.yearbook-book.is-opening .yearbook-cover {
+    animation: selectedYearbookOpen 560ms cubic-bezier(0.22, 0.8, 0.3, 1) both;
+}
+
+@keyframes selectedYearbookOpen {
+    0% {
+        opacity: 1;
+        transform: var(--cover-tilt);
+    }
+    62% {
+        opacity: 1;
+        transform: translateY(-1.2rem) scale(1.1) perspective(920px) rotateX(18deg) rotateZ(-3deg);
+    }
+    100% {
+        opacity: 0.2;
+        transform: translateY(-1.7rem) scale(1.16) perspective(920px) rotateX(10deg) rotateZ(0deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .yearbook-cover,
+    .yearbook-book {
+        transition: none;
+    }
+}
+
+/* Opening sequence shown between selecting an edition and displaying its reader. */
+.book-opening {
+    --book-cover-delay: 0.45s;
+    --book-page-delay: 1.35s;
+    position: fixed;
+    z-index: 1450;
+    inset: 0;
+    display: grid;
+    padding: 1rem;
+    overflow: auto;
+    place-items: center;
+    background: rgba(13, 11, 22, 0.68);
+    backdrop-filter: blur(5px);
+}
+
+.book-opening[hidden] {
+    display: none !important;
+}
+
+.book-opening-label {
+    position: absolute;
+    z-index: 1;
+    top: calc(50% + 8.4rem);
+    right: 1rem;
+    left: 1rem;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.book-opening-panel {
+    position: relative;
+    width: min(100%, 37rem);
+    height: min(24rem, calc(100vh - 2rem));
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 18px;
+    background: transparent;
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.48);
+}
+
+.book-opening .book {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 18.5rem;
+    height: 12.5rem;
+    margin: auto;
+    perspective: 70rem;
+}
+
+/* Show the closed book first, then open its cover before turning pages. */
+.book-opening.is-playing .book {
+    animation: bookOpeningPrelude 0.45s cubic-bezier(0.22, 0.8, 0.3, 1) both;
+}
+
+.book-opening .cover {
+    width: 9.25rem;
+    height: 12.5rem;
+    background: linear-gradient(135deg, #7b4b2d 0%, #4a2818 62%, #2d160d 57%);
+    transform: rotateY(0deg);
+}
+
+.book-opening .page {
+    top: 0.25rem;
+    left: 0.25rem;
+    width: 9rem;
+    height: 12rem;
+    color: #777;
+    font-family: monospace !important;
+    font-size: 8px;
+    text-align: right;
+    background-color: #e9e6c4;
+    transform: rotateY(0deg);
+}
+
+.book-opening .page::before,
+.book-opening .page::after {
+    display: block;
+    padding-bottom: 1rem;
+    content: "";
+    border-top: 1px dashed rgba(0, 0, 0, 0.3);
+}
+
+.book-opening .cover,
+.book-opening .page {
+    position: absolute;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 5px 0 0 5px;
+    box-shadow:
+        inset 3px 0 20px rgba(0, 0, 0, 0.2),
+        0 0 15px rgba(0, 0, 0, 0.1);
+    transform-origin: 100% 0;
+}
+
+.book-opening.is-playing .cover.turn {
+    animation: bookCover 0.85s cubic-bezier(0.22, 0.8, 0.3, 1) forwards;
+    animation-delay: var(--book-cover-delay);
+}
+
+.book-opening.is-playing .page.turn {
+    animation: bookOpen 3s forwards;
+    animation-delay: var(--book-page-delay);
+}
+
+.book-opening.is-playing .page:nth-of-type(1) {
+    animation-delay: calc(var(--book-page-delay) + 0.05s);
+}
+
+.book-opening.is-playing .page:nth-of-type(2) {
+    animation-delay: calc(var(--book-page-delay) + 0.33s);
+}
+
+.book-opening.is-playing .page:nth-of-type(3) {
+    animation-delay: calc(var(--book-page-delay) + 0.66s);
+}
+
+.book-opening.is-playing .page:nth-of-type(4) {
+    animation: bookOpen150deg 3s forwards;
+    animation-delay: calc(var(--book-page-delay) + 0.99s);
+}
+
+.book-opening.is-playing .page:nth-of-type(5) {
+    animation: bookOpen30deg 3s forwards;
+    animation-delay: calc(var(--book-page-delay) + 1.2s);
+}
+
+.book-opening.is-playing .page:nth-of-type(6) {
+    animation: bookOpen55deg 3s forwards;
+    animation-delay: calc(var(--book-page-delay) + 1.25s);
+}
+
+@keyframes bookOpeningPrelude {
+    from {
+        opacity: 0;
+        transform: translateY(0.8rem) scale(0.92);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes bookOpen {
+    30% {
+        z-index: 999;
+    }
+    100% {
+        z-index: 999;
+        transform: rotateY(180deg);
+    }
+}
+
+@keyframes bookCover {
+    30% {
+        z-index: 999;
+    }
+    100% {
+        z-index: 1;
+        transform: rotateY(180deg);
+    }
+}
+
+@keyframes bookOpen150deg {
+    30% {
+        z-index: 999;
+    }
+    100% {
+        z-index: 999;
+        transform: rotateY(150deg);
+    }
+}
+
+@keyframes bookOpen55deg {
+    30% {
+        z-index: 999;
+    }
+    100% {
+        z-index: 999;
+        transform: rotateY(55deg);
+    }
+}
+
+@keyframes bookOpen30deg {
+    50% {
+        z-index: 999;
+    }
+    100% {
+        z-index: 999;
+        transform: rotateY(30deg);
+    }
+}
+
+@media (max-width: 480px) {
+    .book-opening {
+        padding: 0.6rem;
+    }
+
+    .book-opening-panel {
+        height: min(21rem, calc(100vh - 1.2rem));
+        border-radius: 14px;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .yearbook-book.is-opening .yearbook-cover,
+    .book-opening.is-playing .book,
+    .book-opening.is-playing .cover.turn,
+    .book-opening.is-playing .page.turn {
+        animation: none;
+    }
+}

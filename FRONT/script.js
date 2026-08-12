@@ -151,6 +151,8 @@ const readerSummary = document.querySelector('[data-reader-summary]');
 const pageFlipHost = document.getElementById('page-flip-host');
 let flipbookElement = document.getElementById('flipbook');
 const closeReaderButtons = document.querySelectorAll('[data-close-reader]');
+const bookOpening = document.getElementById('book-opening');
+const bookOpeningLabel = document.querySelector('[data-book-opening-label]');
 
 const detailBindings = {
   activityTitle: document.querySelector('[data-activity-title]'),
@@ -174,6 +176,8 @@ const resolvedImageSources = new Map();
 let flipLock = false;
 let currentSpreadStart = 0;
 let currentSpreadPage = 1;
+let bookOpeningSequence = 0;
+let isBookOpening = false;
 
 function getResolvedImageSource(src) {
   return resolvedImageSources.get(src) || src;
@@ -453,6 +457,77 @@ async function openReader(index, startPage) {
   document.body.style.overflow = 'hidden';
 }
 
+function hasReducedMotionPreference() {
+  return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+}
+
+function cancelBookOpening() {
+  if (!isBookOpening) return;
+
+  bookOpeningSequence += 1;
+  isBookOpening = false;
+  bookOpening?.classList.remove('is-playing');
+  if (bookOpening) {
+    bookOpening.hidden = true;
+    bookOpening.setAttribute('aria-hidden', 'true');
+  }
+  yearbookButtons.forEach((button) => button.classList.remove('is-opening'));
+  setActiveYearbookCard(-1);
+  document.body.style.overflow = '';
+}
+
+async function openReaderAfterBookOpening(index, startPage) {
+  const edition = yearbookData[index];
+  if (!edition || !yearbookReader) return;
+
+  if (!bookOpening) {
+    openReader(index, startPage);
+    return;
+  }
+
+  if (isBookOpening) return;
+
+  const sequence = ++bookOpeningSequence;
+  isBookOpening = true;
+  setActiveYearbookCard(index);
+  const selectedBook = yearbookButtons[index];
+  selectedBook?.classList.add('is-opening');
+
+  const cardTransitionDuration = hasReducedMotionPreference() ? 0 : 560;
+  await new Promise((resolve) => window.setTimeout(resolve, cardTransitionDuration));
+
+  if (sequence !== bookOpeningSequence) {
+    selectedBook?.classList.remove('is-opening');
+    return;
+  }
+
+  selectedBook?.classList.remove('is-opening');
+  if (bookOpeningLabel) {
+    bookOpeningLabel.textContent = `Opening ${edition.title}`;
+  }
+
+  bookOpening.hidden = false;
+  bookOpening.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  bookOpening.classList.remove('is-playing');
+  void bookOpening.offsetWidth;
+  bookOpening.classList.add('is-playing');
+
+  const animationDuration = hasReducedMotionPreference() ? 0 : 5700;
+  await Promise.all([
+    preloadBasePages(),
+    new Promise((resolve) => window.setTimeout(resolve, animationDuration))
+  ]);
+
+  if (sequence !== bookOpeningSequence) return;
+
+  isBookOpening = false;
+  bookOpening.classList.remove('is-playing');
+  bookOpening.hidden = true;
+  bookOpening.setAttribute('aria-hidden', 'true');
+  await openReader(index, startPage);
+}
+
 function closeReader() {
   if (!yearbookReader) return;
   yearbookReader.hidden = true;
@@ -550,7 +625,7 @@ function setupPageNavigation() {
 yearbookButtons.forEach((button) => {
   button.addEventListener('click', () => {
     const index = Number(button.getAttribute('data-yearbook-index'));
-    openReader(index, 1);
+    openReaderAfterBookOpening(index, 1);
   });
 });
 
@@ -561,6 +636,12 @@ closeReaderButtons.forEach((button) => {
 yearbookReader?.addEventListener('click', (event) => {
   if (event.target === yearbookReader || event.target.classList.contains('reader-overlay')) {
     closeReader();
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && isBookOpening) {
+    cancelBookOpening();
   }
 });
 
