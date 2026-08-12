@@ -17,6 +17,7 @@ function buildPageRecords(year) {
       remarks: 'Strong member turnout and successful distribution activity.',
       tags: ['outreach', 'community', `${year}`],
       keywords: ['outreach', 'community', 'program']
+      
     },
     {
       activityTitle: 'Tree Planting and Environmental Care',
@@ -790,6 +791,52 @@ prevButton?.addEventListener('click', () => {
   resetCarousel();
 });
 
+// Mobile navigation toggle
+const siteHeader = document.querySelector('header');
+const siteNav = document.querySelector('header nav');
+let navToggle = null;
+const NAV_BREAKPOINT = 1100;
+
+if (siteHeader && siteNav) {
+  if (!siteNav.id) {
+    siteNav.id = 'site-navigation';
+  }
+
+  navToggle = document.createElement('button');
+  navToggle.type = 'button';
+  navToggle.className = 'nav-toggle';
+  navToggle.setAttribute('aria-label', 'Toggle navigation menu');
+  navToggle.setAttribute('aria-controls', siteNav.id);
+  navToggle.setAttribute('aria-expanded', 'false');
+  navToggle.innerHTML = '<i class="fa-solid fa-bars" aria-hidden="true"></i>';
+
+  siteHeader.appendChild(navToggle);
+
+  navToggle.addEventListener('click', (event) => {
+    event.stopPropagation();
+    const isOpen = siteHeader.classList.toggle('nav-open');
+    navToggle?.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  document.addEventListener('click', (event) => {
+    if (window.innerWidth > NAV_BREAKPOINT || !siteHeader.classList.contains('nav-open')) {
+      return;
+    }
+
+    if (!siteHeader.contains(event.target)) {
+      siteHeader.classList.remove('nav-open');
+      navToggle?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > NAV_BREAKPOINT) {
+      siteHeader.classList.remove('nav-open');
+      navToggle?.setAttribute('aria-expanded', 'false');
+    }
+  });
+}
+
 // Dropdown should always open when ABOUT US is clicked
 const dropbtn = document.querySelector('.dropbtn');
 const dropdown = document.querySelector('.dropdown');
@@ -797,8 +844,12 @@ const dropdown = document.querySelector('.dropdown');
 if (dropbtn && dropdown) {
   dropbtn.addEventListener('click', (e) => {
     e.stopPropagation();
-    dropdown.classList.add('open');
-    dropbtn.setAttribute('aria-expanded', 'true');
+
+    const isMobile = window.innerWidth <= NAV_BREAKPOINT;
+    const willOpen = isMobile ? !dropdown.classList.contains('open') : true;
+
+    dropdown.classList.toggle('open', willOpen);
+    dropbtn.setAttribute('aria-expanded', String(willOpen));
   });
 
   document.addEventListener('click', (e) => {
@@ -813,19 +864,37 @@ if (dropbtn && dropdown) {
     if (e.target.tagName === 'A') {
       dropdown.classList.remove('open');
       dropbtn.setAttribute('aria-expanded', 'false');
+
+      if (window.innerWidth <= NAV_BREAKPOINT && siteHeader?.classList.contains('nav-open')) {
+        siteHeader.classList.remove('nav-open');
+        navToggle?.setAttribute('aria-expanded', 'false');
+      }
     }
   });
 }
 
+siteNav?.querySelectorAll(':scope > a').forEach((link) => {
+  link.addEventListener('click', () => {
+    if (window.innerWidth <= NAV_BREAKPOINT && siteHeader?.classList.contains('nav-open')) {
+      siteHeader.classList.remove('nav-open');
+      navToggle?.setAttribute('aria-expanded', 'false');
+    }
+  });
+});
+
 // Close dropdown on Escape
 document.addEventListener('keydown', (ev) => {
   if (ev.key === 'Escape') {
-    const dropdown = document.querySelector('.dropdown');
-    const dropbtn = document.querySelector('.dropbtn');
     if (dropdown && dropdown.classList.contains('open')) {
       dropdown.classList.remove('open');
       dropbtn?.setAttribute('aria-expanded', 'false');
       dropbtn?.focus();
+    }
+
+    if (siteHeader?.classList.contains('nav-open')) {
+      siteHeader.classList.remove('nav-open');
+      navToggle?.setAttribute('aria-expanded', 'false');
+      navToggle?.focus();
     }
   }
 });
