@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Download Application - SCSLAI</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="FORMS/loanForm.css">
+    <link rel="stylesheet" href="FORMS/loanForm.css?v=4">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
@@ -54,7 +54,7 @@
                                 <span>SC Loan Application Form</span>
                                 <div class="download-actions">
                                     <a href="#" class="btn btn-view">VIEW</a>
-                                    <a href="#" class="btn btn-download">Fill-Out</a>
+                                    <a href="#" class="btn btn-download" data-open-loan-form>Fill-Out</a>
                                 </div>
                             </article>
                             <article class="download-item">
@@ -200,7 +200,7 @@
     <!-- LOAN APPLICATION MODAL -->
     <div id="loanModal" class="loan-modal">
 
-        <div class="loan-modal-content">
+        <div class="loan-modal-content loan-form-modal">
 
             <div class="loan-modal-header">
 
@@ -221,401 +221,99 @@
 
                 <form id="loanApplicationForm">
 
-                    <div class="modal-section">
-                        <h3>Loan Information</h3>
+  <div class="loan-form-canvas">
+    <img class="loan-form-background"
+         src="FORMS/Supreme Court (SC) Loan Application Form_page-0001.png"
+         alt="SCSLAI Loan Application Form">
+
+    <!-- ============ TEXT INPUTS (transparent overlay) ============ -->
+    <input type="text" id="others" class="form-input" maxlength="60">
+
+    <input type="number" id="loanAmount" class="form-input" min="0" step="0.01" maxlength="15">
+    <input type="text" id="amountWords" class="form-input" maxlength="80">
+    <input type="text" id="payableYears" class="form-input" maxlength="10">
+    <!-- <input type="text" id="receivedDate" class="form-input" maxlength="12"> -->
+    <input type="text" id="applicantName" class="form-input" maxlength="80">
+
+    <input type="text" id="edpNumber" class="form-input" maxlength="12">
+    <input type="text" id="tin" class="form-input" maxlength="16">
+    <input type="date" id="birthdate" class="form-input">
+    <input type="text" id="placeOfBirth" class="form-input" maxlength="60">
+
+    <input type="text" id="lastName" class="form-input" maxlength="50">
+    <input type="text" id="firstName" class="form-input" maxlength="50">
+    <input type="text" id="middleName" class="form-input" maxlength="50">
+    <input type="text" id="suffix" class="form-input" maxlength="10">
+    <!-- <input type="text" id="signature" class="form-input" maxlength="60"> -->
+
+    <input type="text" id="officeStation" class="form-input" maxlength="60">
+    <input type="text" id="position" class="form-input" maxlength="50">
+    <input type="text" id="appointment" class="form-input" maxlength="60">
+
+    <input type="text" id="homeAddress" class="form-input" maxlength="100">
+    <input type="text" id="zipCode" class="form-input" maxlength="4">
+    <input type="text" id="printedName" class="form-input" maxlength="60">
+
+    <input type="text" id="contactNumber" class="form-input" maxlength="15">
+    <input type="email" id="emailAddress" class="form-input" maxlength="80">
+
+    <!-- ============ CHECKBOXES (transparent overlay) ============ -->
+    <!-- Loan types: Regular -->
+    <input type="checkbox" id="business" class="form-checkbox">
+    <input type="checkbox" id="emergencyRata" class="form-checkbox">
+    <input type="checkbox" id="maxi" class="form-checkbox">
+    <input type="checkbox" id="character" class="form-checkbox">
+    <input type="checkbox" id="help" class="form-checkbox">
+    <input type="checkbox" id="meal" class="form-checkbox">
+    <input type="checkbox" id="educational" class="form-checkbox">
+    <input type="checkbox" id="housing" class="form-checkbox">
+    <input type="checkbox" id="multiPurpose" class="form-checkbox">
+    <input type="checkbox" id="equitable" class="form-checkbox">
+    <input type="checkbox" id="jdfAllowance" class="form-checkbox">
+    <input type="checkbox" id="petty" class="form-checkbox">
+    <input type="checkbox" id="equity" class="form-checkbox">
+    <input type="checkbox" id="longTerm" class="form-checkbox">
+    <input type="checkbox" id="subsistence" class="form-checkbox">
+    <!-- Loan types: Special -->
+    <input type="checkbox" id="deeaApril" class="form-checkbox">
+    <input type="checkbox" id="eeaOctober" class="form-checkbox">
+    <input type="checkbox" id="midYear" class="form-checkbox">
+    <input type="checkbox" id="yearEnd" class="form-checkbox">
+    <input type="checkbox" id="anniversary" class="form-checkbox">
+    <input type="checkbox" id="cashGift" class="form-checkbox">
+    <!-- Application type -->
+    <input type="checkbox" id="newLoan" class="form-checkbox">
+    <input type="checkbox" id="consolidate" class="form-checkbox">
+    <!-- Mode of delivery -->
+    <input type="checkbox" id="deliveryAtm" class="form-checkbox">
+    <input type="checkbox" id="deliveryPickup" class="form-checkbox">
+  </div>
+
+  <div class="loan-form-canvas" data-page="2">
+    <img class="loan-form-background"
+         src="FORMS/Supreme Court (SC) Loan Application Form_page-0002.png"
+         alt="SCSLAI Promissory Note">
+
+    <input type="text" id="pnNumber" class="form-input" maxlength="20">
+    <input type="text" id="pnAmountWords" class="form-input" maxlength="100">
+    <input type="text" id="pnAmountFigures" class="form-input" maxlength="20">
+    <input type="text" id="pnInterestRate" class="form-input" maxlength="10">
+    <input type="text" id="pnInstallments" class="form-input" maxlength="10">
+    <input type="text" id="pnInstallmentAmt" class="form-input" maxlength="20">
+    <input type="text" id="pnAddlRate" class="form-input" maxlength="10">
+    <input type="text" id="pnPrintedName" class="form-input" maxlength="60">
+    <!-- <input type="text" id="pnSignature" class="form-input" maxlength="60">
+    <input type="text" id="pnSignature2" class="form-input" maxlength="60"> -->
+    <input type="text" id="pnDate" class="form-input" maxlength="20">
+  </div>
+
+  <div class="modal-actions">
+    <button type="button" id="cancelLoanModal">Cancel</button>
+    <button type="submit">Complete</button>
+  </div>
+
+</form>
 
-                        <div class="modal-form-grid">
-                            <div class="modal-form-group">
-                                <label for="loanCategory">
-                                    Loan Category
-                                </label>
-
-                                <select id="loanCategory" required>
-                                    <option value="">
-                                        Select Loan Category
-                                    </option>
-                                    <option value="Regular Loan">
-                                        Regular Loan
-                                    </option>
-                                    <option value="Special Loan">
-                                        Special Loan
-                                    </option>
-                                </select>
-                            </div>
-
-                            <div class="modal-form-group">
-                                <label for="loanType">
-                                    Type of Loan
-                                </label>
-
-                                <select id="loanType" required>
-                                    <option value="">
-                                        Select Type of Loan
-                                    </option>
-                                </select>
-                            </div>
-
-                            <div class="modal-form-group">
-                                <label for="applicationType">
-                                    Application Type
-                                </label>
-
-                                <select id="applicationType" required>
-                                    <option value="">
-                                        Select Application Type
-                                    </option>
-                                    <option value="New Loan">
-                                        New Loan
-                                    </option>
-                                    <option value="Consolidate">
-                                        Consolidate
-                                    </option>
-                                </select>
-                            </div>
-
-                            <div class="modal-form-group" id="otherLoanTypeGroup" style="display:none;">
-                                <label for="otherLoanType">
-                                    Others (Type of Regular Loan)
-                                </label>
-
-                                <input
-                                    type="text"
-                                    id="otherLoanType"
-                                    maxlength="40"
-                                >
-                            </div>
-
-                            <div class="modal-form-group">
-                                <label for="loanAmount">
-                                    Loan Amount (Php)
-                                </label>
-
-                                <input
-                                    type="number"
-                                    id="loanAmount"
-                                    required
-                                    min="1"
-                                    step="0.01"
-                                >
-                            </div>
-
-                            <div class="modal-form-group">
-                                <label for="payableYears">
-                                    Payable in (Years)
-                                </label>
-
-                                <input
-                                    type="number"
-                                    id="payableYears"
-                                    required
-                                    min="1"
-                                    max="30"
-                                >
-                            </div>
-
-                            <div class="modal-form-group">
-                                <label for="receivedDate">
-                                    Received Date
-                                </label>
-
-                                <input
-                                    type="date"
-                                    id="receivedDate"
-                                >
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal-section">
-                        <h3>Personal Information</h3>
-
-                        <div class="modal-form-grid">
-
-
-                    <div class="modal-form-group">
-
-                        <label for="lastName">
-                            Last Name
-                        </label>
-
-                        <input
-                            type="text"
-                            id="lastName"
-                            required
-                            minlength="2"
-                            maxlength="50"
-                        >
-
-                    </div>
-
-
-                    <div class="modal-form-group">
-
-                        <label for="firstName">
-                            First Name
-                        </label>
-
-                        <input
-                            type="text"
-                            id="firstName"
-                            required
-                            minlength="2"
-                            maxlength="50"
-                        >
-
-                    </div>
-
-
-                    <div class="modal-form-group">
-
-                        <label for="middleName">
-                            Middle Name
-                        </label>
-
-                        <input
-                            type="text"
-                            id="middleName"
-                        >
-
-                    </div>
-
-
-                    <div class="modal-form-group">
-
-                        <label for="suffix">
-                            Suffix
-                        </label>
-
-                        <input
-                            type="text"
-                            id="suffix"
-                        >
-
-                    </div>
-
-
-                    <div class="modal-form-group">
-
-                        <label for="edpNumber">
-                            EDP #
-                        </label>
-
-                        <input
-                            type="text"
-                            id="edpNumber"
-                            required
-                            inputmode="numeric"
-                            pattern="[0-9]+"
-                        >
-
-                    </div>
-
-
-                    <div class="modal-form-group">
-
-                        <label for="tin">
-                            TIN
-                        </label>
-
-                        <input
-                            type="text"
-                            id="tin"
-                        >
-
-                    </div>
-
-
-                    <div class="modal-form-group">
-
-                        <label for="birthdate">
-                            Birthdate
-                        </label>
-
-                        <input
-                            type="date"
-                            id="birthdate"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="modal-form-group">
-
-                        <label for="placeOfBirth">
-                            Place of Birth
-                        </label>
-
-                        <input
-                            type="text"
-                            id="placeOfBirth"
-                            required
-                        >
-
-                    </div>
-
-                        </div>
-                    </div>
-
-                    <div class="modal-section">
-                        <h3>Address and Employment</h3>
-
-                        <div class="modal-form-grid">
-
-
-                    <div class="modal-form-group modal-full-width">
-
-                        <label for="homeAddress">
-                            Home Address
-                        </label>
-
-                        <input
-                            type="text"
-                            id="homeAddress"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="modal-form-group">
-
-                        <label for="zipCode">
-                            ZIP Code
-                        </label>
-
-                        <input
-                            type="text"
-                            id="zipCode"
-                            required
-                            inputmode="numeric"
-                            pattern="[0-9]{4}"
-                            maxlength="4"
-                        >
-
-                    </div>
-
-
-                    <div class="modal-form-group">
-
-                        <label for="officeStation">
-                            Office Station
-                        </label>
-
-                        <input
-                            type="text"
-                            id="officeStation"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="modal-form-group">
-
-                        <label for="region">
-                            Region
-                        </label>
-
-                        <input
-                            type="text"
-                            id="region"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="modal-form-group">
-
-                        <label for="position">
-                            Position
-                        </label>
-
-                        <input
-                            type="text"
-                            id="position"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="modal-form-group">
-
-                        <label for="appointment">
-                            Appointment
-                        </label>
-
-                        <input
-                            type="text"
-                            id="appointment"
-                            required
-                        >
-
-                    </div>
-
-                        </div>
-                    </div>
-
-                    <div class="modal-section">
-                        <h3>Contact Information</h3>
-
-                        <div class="modal-form-grid">
-
-
-                    <div class="modal-form-group">
-
-                        <label for="contactNumber">
-                            Contact Number
-                        </label>
-
-                        <input
-                           type="tel"
-                            id="contactNumber"
-                            required
-                            placeholder="09XXXXXXXXX"
-                        >
-
-                    </div>
-
-
-                    <div class="modal-form-group">
-
-                        <label for="emailAddress">
-                            Email Address
-                        </label>
-
-                        <input
-                            type="email"
-                            id="emailAddress"
-                            required
-                        >
-
-                    </div>
-
-                        </div>
-                    </div>
-
-
-                    <div class="modal-actions">
-
-                        <button
-                            type="button"
-                            id="cancelLoanModal"
-                        >
-                            Cancel
-                        </button>
-
-                        <button
-                            type="submit"
-                        >
-                            Continue
-                        </button>
-
-                    </div>
-
-                </form>
 
             </div>
 
@@ -624,6 +322,6 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
     <script src="script.js"></script>
-    <script src="FORMS/form.js"></script>
+    <script src="FORMS/form.js?v=5"></script>
 </body>
 </html>

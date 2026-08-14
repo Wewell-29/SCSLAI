@@ -1,0 +1,15 @@
+
+=== H-RUNS INTRO x=80-720 y=436-478 ===
+
+=== RECEIVED DATE VERTICAL LINES x=900-1240 y=250-305 ===
+  x=934 ink=48
+  x=935 ink=48
+  x=936 ink=47
+  x=1212 ink=55
+  x=1213 ink=55
+  x=1214 ink=55
+
+=== RECEIVED DATE HORIZONTAL LINES x=900-1240 y=250-305 ===
+  y=258 ink=315
+  y=259 ink=315
+  y=260 ink=281
