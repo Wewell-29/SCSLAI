@@ -1,264 +1,247 @@
-/* ==============================
-   LOAN APPLICATION MODAL
-============================== */
+/* ============================================================
+   SCSLAI - LOAN APPLICATION "FILL-OUT ON IMAGE" MODAL
+   The official SC Loan Application Form PNG is the canvas.
+   HTML inputs/checkboxes are a transparent overlay layer.
+   ------------------------------------------------------------
+   Coordinates are measured from the PNG itself:
+   image = 1275 x 2100 px (A4 @ 150 dpi).
+   Left/Top/Width/Height are set in % so every overlay scales
+   together with the image. Fonts scale with --form-scale.
+   ============================================================ */
 
-.loan-modal {
-
-    display: none;
-
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 9999;
-
-    background: rgba(0, 0, 0, 0.65);
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 20px;
-
-}
-
-
-.loan-modal.active {
-
+/* --- Larger, centered modal scroll area -------------------- */
+.loan-modal .loan-modal-content.loan-form-modal {
+    max-width: 1150px;
+    width: 96vw;
+    max-height: 94vh;
+    padding: 0;
+    border-radius: 14px;
+    overflow: hidden;
     display: flex;
-
-}
-
-
-.loan-modal-content {
-
-    background: white;
-
-    width: 100%;
-
-    max-width: 900px;
-
-    max-height: 90vh;
-
-    overflow-y: auto;
-
-    border-radius: 12px;
-
-}
-
-
-.loan-modal-header {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    padding: 20px 25px;
-
-    background: #0b6b3a;
-
-    color: white;
-
-}
-
-
-.loan-modal-header h2 {
-
-    margin: 0;
-
-}
-
-
-.close-loan-modal {
-
-    border: none;
-
-    background: transparent;
-
-    color: white;
-
-    font-size: 30px;
-
-    cursor: pointer;
-
-}
-
-
-.loan-modal-body {
-
-    padding: 25px;
-
-}
-
-
-.modal-section {
-
-    margin-bottom: 22px;
-
-}
-
-
-.modal-section h3 {
-
-    margin: 0 0 12px;
-
-    font-size: 18px;
-
-    color: #0b6b3a;
-
-}
-
-
-.modal-form-grid {
-
-    display: grid;
-
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    gap: 12px 16px;
-
-}
-
-
-.modal-full-width {
-
-    grid-column: 1 / -1;
-
-}
-
-
-.modal-form-group {
-
-    display: flex;
-
     flex-direction: column;
-
-    margin-bottom: 15px;
-
+    background: #f5f6f4;
 }
 
-
-.modal-form-group label {
-
-    margin-bottom: 6px;
-
-    font-weight: 600;
-
+body.loan-modal-open {
+    overflow: hidden;
 }
 
-
-.modal-form-group input,
-
-.modal-form-group select {
-
-    padding: 11px;
-
-    border: 1px solid #ccc;
-
-    border-radius: 6px;
-
-    font-size: 14px;
-
-}
-
-
-.modal-actions {
-
+.loan-form-modal .loan-modal-header {
+    flex: 0 0 auto;
     display: flex;
-
-    justify-content: flex-end;
-
-    gap: 10px;
-
-    margin-top: 20px;
-
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 26px;
+    background: #123f2e;
+    color: #fff;
 }
 
+.loan-form-modal .loan-modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+    letter-spacing: 0.4px;
+}
 
-.modal-actions button {
-
-    padding: 11px 20px;
-
+.loan-form-modal .close-loan-modal {
     border: none;
-
-    border-radius: 6px;
-
+    background: transparent;
+    color: #fff;
+    font-size: 30px;
+    line-height: 1;
     cursor: pointer;
-
+    padding: 0 4px;
 }
 
-
-.modal-actions button[type="submit"] {
-
-    background: #0b6b3a;
-
-    color: white;
-
+.loan-form-modal .loan-modal-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 0;
+    background: #e9ebe9;
+    overscroll-behavior: contain;
 }
 
-
-.modal-actions button[type="button"] {
-
-    background: #ddd;
-
+/* --- The form canvas: PNG + overlays ----------------------- */
+.loan-form-canvas {
+    position: relative;
+    width: 100%;
+    max-width: 1150px;
+    margin: 0 auto 24px;
+    background: #fff;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
 }
 
-
-@media (max-width: 700px) {
-
-    .loan-modal-header {
-
-        padding: 16px 18px;
-
-    }
-
-
-    .loan-modal-body {
-
-        padding: 18px;
-
-    }
-
-
-    .modal-form-grid {
-
-        grid-template-columns: 1fr;
-
-    }
-
+.loan-form-background {
+    display: block;
+    width: 100%;
+    height: auto;
+    -webkit-user-select: none;
+    user-select: none;
+    pointer-events: none;
 }
 
-@media (max-width: 520px) {
+/* --- Text inputs (visible layer over printed blanks) --- */
+.form-input {
+    position: absolute;
+    z-index: 2;
+    background: rgba(235, 244, 240, 0.85);
+    border: 1px dashed rgba(25, 75, 55, 0.7);
+    outline: none;
+    box-shadow: none;
+    border-radius: 3px;
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    padding: 0 3px;
+    box-sizing: border-box;
+    font-family: "Times New Roman", Times, Georgia, serif;
+    font-weight: 600;
+    color: #111;
+    text-align: left;
+    line-height: normal;
+    overflow: visible;
+    cursor: text;
+}
 
-    .loan-modal {
+.form-input:hover {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(35, 80, 60, 0.85);
+}
 
-        padding: 10px;
+/* highlight only while actively typing, never a solid box */
+.form-input:focus {
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(18, 63, 46, 0.9);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(35, 80, 60, 0.15);
+}
 
+.form-input::placeholder {
+    color: #c4c4c4;
+    font-weight: 400;
+    opacity: 1;
+}
+
+/* uppercase lettering that mimics handwriting on the form */
+.form-input.form-upper {
+    text-transform: uppercase;
+}
+
+/* --- Checkboxes (transparent, printed square stays visible) */
+.form-checkbox {
+    position: absolute;
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: block;
+    z-index: 5;
+}
+
+/* enlarge the invisible tap/click target without moving the mark */
+.form-checkbox::before {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    cursor: pointer;
+}
+
+/* black checkmark drawn exactly inside the printed square */
+.form-checkbox::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 60%;
+    height: 60%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    opacity: 0;
+    pointer-events: none;
+    box-sizing: border-box;
+}
+
+.form-checkbox:checked::after {
+    opacity: 1;
+}
+
+.form-checkbox:focus-visible {
+    outline: 2px dashed rgba(0, 0, 0, 0.6);
+    outline-offset: 2px;
+}
+
+.form-checkbox:hover {
+    background: rgba(35, 80, 60, 0.12);
+}
+
+/* --- Modal footer actions ---------------------------------- */
+.loan-form-modal .modal-actions {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 26px;
+    background: #f0f1ef;
+    border-top: 1px solid #d7d9d5;
+}
+
+.loan-form-modal .modal-actions button {
+    padding: 11px 24px;
+    border: none;
+    border-radius: 7px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.loan-form-modal .modal-actions button[type="button"] {
+    background: #dcdedb;
+    color: #222;
+}
+
+.loan-form-modal .modal-actions button[type="button"]:hover {
+    background: #cbcdca;
+}
+
+.loan-form-modal .modal-actions button[type="submit"] {
+    background: #123f2e;
+    color: #fff;
+}
+
+.loan-form-modal .modal-actions button[type="submit"]:hover {
+    background: #1d6647;
+}
+
+/* --- Mobile: full-screen fill-out -------------------------- */
+@media (max-width: 720px) {
+    .loan-modal .loan-modal-content.loan-form-modal {
+        width: 100vw;
+        max-width: 100vw;
+        max-height: 100vh;
+        height: 100vh;
+        border-radius: 0;
     }
 
-
-    .loan-modal-content {
-
-        width: 100%;
-
-        max-height: 95vh;
-
+    .loan-form-modal .loan-modal-header {
+        padding: 10px 14px;
     }
 
-
-    .modal-actions {
-
-        flex-direction: column;
-
+    .loan-form-modal .loan-modal-body {
+        padding: 0;
     }
 
-
-    .modal-actions button {
-
-        width: 100%;
-
+    .loan-form-modal .modal-actions {
+        padding: 10px 14px;
     }
 
+    .loan-form-modal .modal-actions button {
+        flex: 1;
+        padding: 12px 10px;
+    }
 }

@@ -1,719 +1,452 @@
-// ===============================
-// LOAN APPLICATION MODAL
-// ===============================
+﻿/* ============================================================
+   SCSLAI - LOAN APPLICATION FILL-OUT ON IMAGE (form.js)
+   ------------------------------------------------------------
+   Positions inputs & checkboxes measured from the official
+   "Supreme Court (SC) Loan Application Form_page-0001.png"
+   (1275 x 2100 px). Image-pixel coords -> % so overlays scale
+   exactly with the rendered PNG. Fonts scale with --form-scale.
+   ============================================================ */
+(function () {
+  "use strict";
 
-const loanModal = document.getElementById("loanModal");
+  var IMG_W = 1275; // measured image width  (px)
+  var IMG_H = 2100; // measured image height (px)
 
-const openLoanModal = document.getElementById("openLoanModal");
+  /* ---- MEASURED TEXT FIELD COORDS (top-left, image pixels) ---- */
+  var FORM_FIELDS = {
+    // receivedDate:  { x: 940,  y: 266, w: 266, h: 24, fs: 13 },
+    applicantName: { x: 140,  y: 452, w: 472, h: 20, fs: 14 },
+    others:        { x: 182,  y: 382, w: 204, h: 16, fs: 12 },
+    amountWords:   { x: 170,  y: 476, w: 340, h: 20, fs: 13 },
+    loanAmount:    { x: 610,  y: 476, w: 132, h: 20, fs: 13 },
+    payableYears:  { x: 832,  y: 476, w: 94,  h: 20, fs: 13 },
+    edpNumber:     { x: 58,   y: 572, w: 270, h: 22, fs: 14 },
+    tin:           { x: 340,  y: 572, w: 330, h: 22, fs: 13 },
+    birthdate:     { x: 685,  y: 572, w: 238, h: 22, fs: 13 },
+    placeOfBirth:  { x: 932,  y: 572, w: 296, h: 22, fs: 13 },
+    lastName:      { x: 88,  y: 622, w: 202, h: 30, fs: 14 },
+    firstName:     { x: 308,  y: 622, w: 299, h: 30, fs: 14 },
+    middleName:    { x: 622,  y: 622, w: 212, h: 30, fs: 14 },
+    suffix:        { x: 842,  y: 622, w: 94, h: 30, fs: 14 },
+    // signature:     { x: 952,  y: 654, w: 244, h: 15, fs: 12 },
+    officeStation: { x: 58,   y: 680, w: 472, h: 22, fs: 14 },
+    position:      { x: 535,  y: 680, w: 155, h: 22, fs: 14 },
+    appointment:   { x: 695,  y: 680, w: 306, h: 22, fs: 14 },
+    homeAddress:   { x: 58,   y: 728, w: 692, h: 19, fs: 14 },
+    zipCode:       { x: 762,  y: 728, w: 240, h: 19, fs: 14 },
+    printedName:   { x: 952,  y: 723, w: 247, h: 15, fs: 10 },
+    contactNumber: { x: 61,   y: 783, w: 482, h: 22, fs: 14 },
+    emailAddress:  { x: 563,  y: 783, w: 444, h: 22, fs: 13 }
+  };
 
-const closeLoanModal = document.getElementById("closeLoanModal");
+  /* ---- PAGE 2 (PROMISSORY NOTE + CONSENT) TEXT FIELDS ---- */
+  var PAGE2_FIELDS = {
+    pnNumber:         { x: 120, y: 61,  w: 232, h: 18, fs: 13 },
+    pnAmountWords:    { x: 388, y: 155, w: 392, h: 20, fs: 13 },
+    pnAmountFigures:  { x: 812, y: 155, w: 148, h: 20, fs: 13 },
+    pnInterestRate:   { x: 276, y: 179, w: 84, h: 20, fs: 13 },
+    pnInstallments:   { x: 488, y: 180, w: 84,  h: 20, fs: 13 },
+    pnInstallmentAmt: { x: 728, y: 180, w: 75,  h: 20, fs: 13 },
+    pnAddlRate:       { x: 803, y: 348, w: 84, h: 20, fs: 13 },
+    pnPrintedName:    { x: 112, y: 878, w: 305, h: 20, fs: 13 },
+    // pnSignature:      { x: 488, y: 878, w: 300, h: 20, fs: 13 },
+    // pnSignature2:     { x: 855, y: 878, w: 300, h: 20, fs: 13 },
+    pnDate:           { x: 132, y: 938, w: 176, h: 20, fs: 13 }
+  };
 
-const cancelLoanModal = document.getElementById("cancelLoanModal");
+  /* ---- MEASURED CHECKBOX CENTERS (cx, cy, image pixels) ----
+     Regular: cols x=123,249,411  |  Special: cols x=632,812 ---- */
+  var FORM_CHECKBOXES = {
+    business:      { cx: 123, cy: 287, w: 10, h: 12, category: "regular" },
+    emergencyRata: { cx: 249, cy: 287, w: 10, h: 12, category: "regular" },
+    maxi:          { cx: 411, cy: 287, w: 10, h: 12, category: "regular" },
+    character:     { cx: 123, cy: 307, w: 10, h: 12, category: "regular" },
+    help:          { cx: 249, cy: 307, w: 10, h: 12, category: "regular" },
+    meal:          { cx: 411, cy: 307, w: 10, h: 12, category: "regular" },
+    educational:   { cx: 123, cy: 327, w: 10, h: 12, category: "regular" },
+    housing:       { cx: 249, cy: 327, w: 10, h: 12, category: "regular" },
+    multiPurpose:  { cx: 411, cy: 327, w: 10, h: 12, category: "regular" },
+    equitable:     { cx: 123, cy: 348, w: 10, h: 13, category: "regular" },
+    jdfAllowance:  { cx: 249, cy: 348, w: 10, h: 13, category: "regular" },
+    petty:         { cx: 411, cy: 348, w: 10, h: 13, category: "regular" },
+    equity:        { cx: 123, cy: 368, w: 10, h: 13, category: "regular" },
+    longTerm:      { cx: 249, cy: 368, w: 10, h: 13, category: "regular" },
+    subsistence:   { cx: 411, cy: 368, w: 10, h: 13, category: "regular" },
+    deeaApril:     { cx: 632, cy: 322, w: 10, h: 13, category: "special" },
+    eeaOctober:    { cx: 812, cy: 322, w: 10, h: 13, category: "special" },
+    midYear:       { cx: 632, cy: 342, w: 10, h: 13, category: "special" },
+    yearEnd:       { cx: 812, cy: 342, w: 10, h: 13, category: "special" },
+    anniversary:   { cx: 632, cy: 362, w: 10, h: 13, category: "special" },
+    cashGift:      { cx: 812, cy: 362, w: 10, h: 13, category: "special" },
+    newLoan:       { cx: 374, cy: 417, w: 12, h: 15, category: "application" },
+    consolidate:   { cx: 518, cy: 417, w: 13, h: 15, category: "application" },
+    deliveryAtm:    { cx: 509, cy: 1547, w: 12, h: 17, category: "delivery" },
+    deliveryPickup: { cx: 887, cy: 1547, w: 12, h: 17, category: "delivery" }
+  };
 
-const loanForm = document.getElementById(
-    "loanApplicationForm"
-);
+  /* Friendly label per checkbox (matches the printed loan type) */
+  var CHECKBOX_LABELS = {
+    business: "Business", emergencyRata: "Emergency RATA", maxi: "Maxi",
+    character: "Character", help: "HELP", meal: "MEAL",
+    educational: "Educational", housing: "Housing", multiPurpose: "Multi Purpose",
+    equitable: "Equitable", jdfAllowance: "JDF/Allowance", petty: "Petty",
+    equity: "Equity", longTerm: "Long term", subsistence: "Subsistence",
+    deeaApril: "DEEA (April)", eeaOctober: "EEA (October)", midYear: "Mid Year",
+    yearEnd: "Year End", anniversary: "Anniversary", cashGift: "Cash Gift",
+    newLoan: "New Loan", consolidate: "Consolidate",
+    deliveryAtm: "By ATM Payroll Account (LBP)",
+    deliveryPickup: "Personal Pick-up of crossed check"
+  };
 
-const loanPdfTemplate = "FORMS/Lower Court (LC) Loan Application Form1 (1).pdf";
+  var modal = document.getElementById("loanModal");
+  var canvases = document.querySelectorAll(".loan-form-canvas");
+  var form = document.getElementById("loanApplicationForm");
+  var closeBtn = document.getElementById("closeLoanModal");
+  var cancelBtn = document.getElementById("cancelLoanModal");
+  var openBtns = document.querySelectorAll("[data-open-loan-form]");
+  var body = document.body;
 
-let activeLoanPreviewWindow = null;
-window.__loanPreviewLastOpened = null;
+  /* ---------------- Scale = canvas width / 1275 -------- */
+  function getScaleFor(cv) {
+    if (!cv) return 1;
+    var img = cv.querySelector(".loan-form-background");
+    var cw = img ? img.getBoundingClientRect().width : 0;
+    if (cw <= 0) cw = cv.getBoundingClientRect().width;
+    return cw / IMG_W;
+  }
 
-const pdfFieldMap = {
-    loanCategory: { page: 0, x: 170, y: 740, size: 9, maxCharsPerLine: 24, lineSpacing: 12, align: "left" },
-    loanType: { page: 0, x: 425, y: 740, size: 9, maxCharsPerLine: 24, lineSpacing: 12, align: "left" },
-    applicationType: { page: 0, x: 170, y: 713, size: 9, maxCharsPerLine: 24, lineSpacing: 12, align: "left" },
-    lastName: { page: 0, x: 114, y: 676, size: 9, maxCharsPerLine: 30, lineSpacing: 12, align: "left" },
-    firstName: { page: 0, x: 350, y: 676, size: 9, maxCharsPerLine: 28, lineSpacing: 12, align: "left" },
-    middleName: { page: 0, x: 114, y: 640, size: 9, maxCharsPerLine: 24, lineSpacing: 12, align: "left" },
-    suffix: { page: 0, x: 350, y: 640, size: 9, maxCharsPerLine: 12, lineSpacing: 12, align: "left" },
-    edpNumber: { page: 0, x: 114, y: 604, size: 9, maxCharsPerLine: 18, lineSpacing: 12, align: "left" },
-    tin: { page: 0, x: 350, y: 604, size: 9, maxCharsPerLine: 18, lineSpacing: 12, align: "left" },
-    birthdate: { page: 0, x: 114, y: 568, size: 9, maxCharsPerLine: 20, lineSpacing: 12, align: "left" },
-    placeOfBirth: { page: 0, x: 350, y: 568, size: 9, maxCharsPerLine: 22, lineSpacing: 12, align: "left" },
-    homeAddress: { page: 0, x: 114, y: 497, size: 9, maxCharsPerLine: 42, lineSpacing: 12, align: "left" },
-    zipCode: { page: 0, x: 428, y: 497, size: 9, maxCharsPerLine: 10, lineSpacing: 12, align: "left" },
-    officeStation: { page: 0, x: 114, y: 435, size: 9, maxCharsPerLine: 28, lineSpacing: 12, align: "left" },
-    region: { page: 0, x: 350, y: 435, size: 9, maxCharsPerLine: 20, lineSpacing: 12, align: "left" },
-    position: { page: 0, x: 114, y: 399, size: 9, maxCharsPerLine: 28, lineSpacing: 12, align: "left" },
-    appointment: { page: 0, x: 350, y: 399, size: 9, maxCharsPerLine: 24, lineSpacing: 12, align: "left" },
-    contactNumber: { page: 0, x: 114, y: 337, size: 9, maxCharsPerLine: 20, lineSpacing: 12, align: "left" },
-    emailAddress: { page: 0, x: 350, y: 337, size: 9, maxCharsPerLine: 30, lineSpacing: 12, align: "left" }
-};
+  function updateFormScale() {
+    canvases.forEach(function (cv) {
+      cv.style.setProperty("--form-scale", getScaleFor(cv));
+    });
+  }
 
-const pdfSelectionMap = {
-    "Regular Loan": { page: 0, x: 132, y: 742, size: 9, boxWidth: 8, boxHeight: 8 },
-    "Special Loan": { page: 0, x: 334, y: 742, size: 9, boxWidth: 8, boxHeight: 8 },
-    "MAXI LOAN": { page: 0, x: 132, y: 715, size: 9, boxWidth: 8, boxHeight: 8 },
-    "Housing Loan": { page: 0, x: 334, y: 715, size: 9, boxWidth: 8, boxHeight: 8 },
-    "Emergency Loan": { page: 0, x: 132, y: 688, size: 9, boxWidth: 8, boxHeight: 8 },
-    "Special Housing Loan": { page: 0, x: 132, y: 660, size: 9, boxWidth: 8, boxHeight: 8 },
-    "Special Salary Loan": { page: 0, x: 334, y: 660, size: 9, boxWidth: 8, boxHeight: 8 },
-    "Special Emergency Loan": { page: 0, x: 132, y: 633, size: 9, boxWidth: 8, boxHeight: 8 },
-    "New Loan": { page: 0, x: 132, y: 563, size: 9, boxWidth: 8, boxHeight: 8 },
-    "Consolidate": { page: 0, x: 334, y: 563, size: 9, boxWidth: 8, boxHeight: 8 }
-};
+  /* --------------- Position every overlay (in %) ---------------- */
+  function positionOverlays() {
+    canvases.forEach(function (cv) {
+      var isPage2 = cv.getAttribute("data-page") === "2";
+      var map = isPage2 ? PAGE2_FIELDS : FORM_FIELDS;
+      var scale = getScaleFor(cv);
+      var inputs = cv.querySelectorAll(".form-input");
+      var i, el, f;
+      for (i = 0; i < inputs.length; i++) {
+        el = inputs[i];
+        f = map[el.id];
+        if (!f) continue;
+        el.style.left = (f.x / IMG_W) * 100 + "%";
+        el.style.top = (f.y / IMG_H) * 100 + "%";
+        el.style.width = (f.w / IMG_W) * 100 + "%";
+        el.style.height = (f.h / IMG_H) * 100 + "%";
+        el.style.fontSize = Math.round(f.fs * scale) + "px";
+        el.style.lineHeight = "normal";
+      }
+      if (!isPage2) {
+        var boxes = cv.querySelectorAll(".form-checkbox");
+        var c;
+        for (i = 0; i < boxes.length; i++) {
+          el = boxes[i];
+          c = FORM_CHECKBOXES[el.id];
+          if (!c) continue;
+          el.style.left = ((c.cx - c.w / 2) / IMG_W) * 100 + "%";
+          el.style.top = ((c.cy - c.h / 2) / IMG_H) * 100 + "%";
+          el.style.width = (c.w / IMG_W) * 100 + "%";
+          el.style.height = (c.h / IMG_H) * 100 + "%";
+        }
+      }
+      cv.style.setProperty("--form-scale", scale);
+    });
+  }
 
+  /* --------------- Modal open / close -------------------------- */
+  function openModal() {
+    if (!modal) return;
+    modal.classList.add("active");
+    body.classList.add("loan-modal-open");
+    modal.setAttribute("aria-hidden", "false");
+    requestAnimationFrame(positionOverlays);
+  }
 
-const loanCategoryField = document.getElementById("loanCategory");
+  function closeModal() {
+    if (!modal) return;
+    modal.classList.remove("active");
+    body.classList.remove("loan-modal-open");
+    modal.setAttribute("aria-hidden", "true");
+  }
 
-const loanTypeField = document.getElementById("loanType");
+  openBtns.forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      openModal();
+    });
+  });
 
-const applicationTypeField = document.getElementById("applicationType");
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
+  if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
+  if (modal) {
+    modal.addEventListener("click", function (e) {
+      if (e.target === modal) closeModal();
+    });
+  }
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && modal && modal.classList.contains("active")) {
+      closeModal();
+    }
+  });
 
+  /* --------------- Loan-type categories: single choice --------- */
+  function wireCheckboxGroups() {
+    var boxes = document.querySelectorAll(".loan-form-canvas .form-checkbox");
+    Array.prototype.forEach.call(boxes, function (box) {
+      box.addEventListener("change", function () {
+        var meta = FORM_CHECKBOXES[this.id];
+        var cat = meta ? meta.category : null;
+        if (!cat || !this.checked) return;
+        Array.prototype.forEach.call(boxes, function (other) {
+          var om = FORM_CHECKBOXES[other.id];
+          if (om && om.category === cat && other.id !== this.id) {
+            other.checked = false;
+          }
+        }, this);
+      });
+    });
+  }
 
-const loanTypeOptions = {
-    "Regular Loan": [
-        "MAXI LOAN",
-        "Housing Loan",
-        "Emergency Loan"
-    ],
-    "Special Loan": [
-        "Special Housing Loan",
-        "Special Salary Loan",
-        "Special Emergency Loan"
-    ]
-};
+  /* --------------- Validation helpers -------------------------- */
+  function getVal(id) {
+    var el = document.getElementById(id);
+    return el ? el.value.trim() : "";
+  }
 
+  function checkedOf(category) {
+    var list = [];
+    var key, el;
+    for (key in FORM_CHECKBOXES) {
+      if (!Object.prototype.hasOwnProperty.call(FORM_CHECKBOXES, key)) continue;
+      if (FORM_CHECKBOXES[key].category !== category) continue;
+      el = document.getElementById(key);
+      if (el && el.checked) list.push({ id: key, label: CHECKBOX_LABELS[key] || key });
+    }
+    return list;
+  }
 
-function populateLoanTypes(selectedCategory) {
+  /* --------------- Submit: gather + validate -------------------- */
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
 
-    if (!loanTypeField) {
+      var edpNumber = getVal("edpNumber"),
+          lastName = getVal("lastName"),
+          firstName = getVal("firstName"),
+          birthdate = getVal("birthdate"),
+          placeOfBirth = getVal("placeOfBirth"),
+          homeAddress = getVal("homeAddress"),
+          zipCode = getVal("zipCode"),
+          officeStation = getVal("officeStation"),
+          position = getVal("position"),
+          appointment = getVal("appointment"),
+          contactNumber = getVal("contactNumber"),
+          emailAddress = getVal("emailAddress"),
+          loanAmount = getVal("loanAmount"),
+          amountWords = getVal("amountWords"),
+          payableYears = getVal("payableYears"),
+          others = getVal("others");
 
+      var regs = checkedOf("regular");
+      var specs = checkedOf("special");
+      var apps = checkedOf("application");
+
+      var missing = [];
+      if (!edpNumber) missing.push("EDP Number");
+      if (!lastName) missing.push("Last Name");
+      if (!firstName) missing.push("First Name");
+      if (!birthdate) missing.push("Birthdate");
+      if (!placeOfBirth) missing.push("Place of Birth");
+      if (!homeAddress) missing.push("Home Address");
+      if (!zipCode) missing.push("ZIP Code");
+      if (!officeStation) missing.push("Office / Station");
+      if (!position) missing.push("Position");
+      if (!appointment) missing.push("Status of Appointment");
+      if (!contactNumber) missing.push("Contact Number");
+      if (!emailAddress) missing.push("Email Address");
+      if (!loanAmount) missing.push("Loan Amount");
+      if (regs.length === 0 && specs.length === 0) missing.push("Type of Loan");
+      if (apps.length === 0) missing.push("Application Type (New Loan / Consolidate)");
+
+      if (missing.length) {
+        alert("Please complete the following:\n- " + missing.join("\n- "));
         return;
+      }
+      if (!/^[0-9]+$/.test(edpNumber)) {
+        alert("EDP Number must contain numbers only."); return;
+      }
+      if (zipCode && !/^[0-9]{4}$/.test(zipCode)) {
+        alert("Please enter a valid 4-digit ZIP Code."); return;
+      }
+      var mobile = contactNumber ? contactNumber.replace(/[\s-]/g, "") : "";
+      if (mobile && !/^(09|\+639)[0-9]{9}$/.test(mobile)) {
+        alert("Please enter a valid Philippine mobile number (e.g. 09XXXXXXXXX)."); return;
+      }
+      if (emailAddress && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailAddress)) {
+        alert("Please enter a valid email address."); return;
+      }
+      if (birthdate) {
+        var d = new Date(birthdate);
+        if (isNaN(d.getTime()) || d >= new Date()) {
+          alert("Birthdate cannot be today or a future date."); return;
+        }
+      }
 
-    }
+      var selectedLoans = regs.concat(specs).map(function (x) { return x.label; });
+      var loanCategory = specs.length > 0 ? "Special Loan" : "Regular Loan";
 
-    const options = loanTypeOptions[selectedCategory] || [];
+      var result = {
+        loanCategory: loanCategory,
+        loanType: selectedLoans[0] || "",
+        loanTypes: selectedLoans,
+        otherLoanType: others,
+        applicationType: apps.length ? apps[0].label : "",
+        loanAmount: loanAmount,
+        amountInWords: amountWords,
+        payableYears: payableYears,
+        receivedDate: getVal("receivedDate"),
+        applicantName: getVal("applicantName"),
+        edpNumber: edpNumber,
+        tin: getVal("tin"),
+        lastName: lastName,
+        firstName: firstName,
+        middleName: getVal("middleName"),
+        suffix: getVal("suffix"),
+        birthdate: birthdate,
+        placeOfBirth: placeOfBirth,
+        officeStation: officeStation,
+        position: position,
+        appointment: appointment,
+        homeAddress: homeAddress,
+        zipCode: zipCode,
+        printedName: getVal("printedName"),
+        contactNumber: contactNumber,
+        emailAddress: emailAddress,
+        signature: getVal("signature"),
+        modeOfDelivery: checkedOf("delivery").map(function (x) { return x.label; }),
+        promissoryNote: {
+          pnNumber: getVal("pnNumber"),
+          amountWords: getVal("pnAmountWords"),
+          amountFigures: getVal("pnAmountFigures"),
+          interestRate: getVal("pnInterestRate"),
+          installments: getVal("pnInstallments"),
+          installmentAmount: getVal("pnInstallmentAmt"),
+          additionalRate: getVal("pnAddlRate"),
+          printedName: getVal("pnPrintedName"),
+          signature: getVal("pnSignature"),
+          signature2: getVal("pnSignature2"),
+          date: getVal("pnDate")
+        }
+      };
 
-    loanTypeField.innerHTML = "<option value=''>Select Type of Loan</option>";
-
-    options.forEach((optionLabel) => {
-
-        const option = document.createElement("option");
-
-        option.value = optionLabel;
-
-        option.textContent = optionLabel;
-
-        loanTypeField.appendChild(option);
-
+      closeModal();
+      console.log("SCSLAI Loan Application:", result);
+      window.__loanApplicationData = result;
+      generatePDF();
     });
+  }
 
-}
+  /* --------------- Generate PDF on completion ------------------- */
+  function imageToDataURL(img) {
+    var c = document.createElement("canvas");
+    c.width = img.naturalWidth || IMG_W;
+    c.height = img.naturalHeight || IMG_H;
+    var ctx = c.getContext("2d");
+    ctx.drawImage(img, 0, 0, c.width, c.height);
+    return c.toDataURL("image/png");
+  }
 
-
-function getFormValue(elementId) {
-
-    const field = document.getElementById(elementId);
-
-    return field ? field.value.trim() : "";
-
-}
-
-
-function wrapPdfText(text, maxCharsPerLine) {
-
-    const words = text.split(/\s+/).filter(Boolean);
-
-    if (words.length === 0) {
-
-        return [""];
-
-    }
-
-    const lines = [];
-
-    let currentLine = "";
-
-    words.forEach((word) => {
-
-        const candidate = currentLine
-            ? `${currentLine} ${word}`
-            : word;
-
-        if (candidate.length <= maxCharsPerLine) {
-
-            currentLine = candidate;
-
-        } else {
-
-            lines.push(currentLine);
-
-            currentLine = word;
-
-        }
-
-    });
-
-    if (currentLine) {
-
-        lines.push(currentLine);
-
-    }
-
-    return lines;
-
-}
-
-
-function drawPdfText(page, value, position, font) {
-
-    const wrappedLines = wrapPdfText(
-        value,
-        position.maxCharsPerLine || 24
-    );
-
-    wrappedLines.forEach((line, index) => {
-
-        const lineSpacing = position.lineSpacing || (position.size + 2);
-
-        page.drawText(line, {
-            x: position.x,
-            y: position.y - (index * lineSpacing),
-            size: position.size,
-            font,
-            color: PDFLib.rgb(0, 0, 0)
-        });
-
-    });
-
-}
-
-
-function markPdfSelection(page, selection, font) {
-
-    const boxWidth = selection.boxWidth || 8;
-    const boxHeight = selection.boxHeight || 8;
-    const x = selection.x;
-    const y = selection.y;
-
-    page.drawRectangle({
-        x: x - 2,
-        y: y - 2,
-        width: boxWidth + 4,
-        height: boxHeight + 4,
-        borderColor: PDFLib.rgb(0, 0, 0),
-        borderWidth: 1,
-        color: PDFLib.rgb(1, 1, 1)
-    });
-
-    page.drawText("X", {
-        x: x,
-        y: y,
-        size: selection.size,
-        font,
-        color: PDFLib.rgb(0, 0, 0)
-    });
-
-}
-
-
-function buildLoanPreviewPopupHtml() {
-
-    const templatePath = new URL(loanPdfTemplate, window.location.href).href;
-
-    const overlayRows = [
-        ["Loan Category", getFormValue("loanCategory")],
-        ["Type of Loan", getFormValue("loanType")],
-        ["Application Type", getFormValue("applicationType")],
-        ["Last Name", getFormValue("lastName")],
-        ["First Name", getFormValue("firstName")],
-        ["Middle Name", getFormValue("middleName")],
-        ["Suffix", getFormValue("suffix")],
-        ["EDP #", getFormValue("edpNumber")],
-        ["TIN", getFormValue("tin")],
-        ["Birthdate", getFormValue("birthdate")],
-        ["Place of Birth", getFormValue("placeOfBirth")],
-        ["Home Address", getFormValue("homeAddress")],
-        ["ZIP Code", getFormValue("zipCode")],
-        ["Office Station", getFormValue("officeStation")],
-        ["Region", getFormValue("region")],
-        ["Position", getFormValue("position")],
-        ["Appointment", getFormValue("appointment")],
-        ["Contact Number", getFormValue("contactNumber")],
-        ["Email Address", getFormValue("emailAddress")]
-    ].map(([label, value]) => {
-
-        const safeLabel = (label || "").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        const safeValue = (value || "-").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-        return `<div class="field-row"><span class="field-label">${safeLabel}</span><span class="field-value">${safeValue}</span></div>`;
-
-    }).join("");
-
-    return `<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Loan Application Preview</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f2f2f2;
-        }
-        .preview-shell {
-            width: 100%;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .preview-canvas {
-            position: relative;
-            width: 900px;
-            max-width: 100%;
-            background: white;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
-            margin: 0 auto;
-        }
-        .preview-canvas iframe {
-            width: 100%;
-            height: 1180px;
-            border: 0;
-            display: block;
-        }
-        .overlay {
-            position: absolute;
-            inset: 0;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px 32px;
-            padding: 120px 72px 40px 72px;
-            align-content: start;
-            font-size: 12px;
-            line-height: 1.45;
-            color: #111;
-            pointer-events: none;
-        }
-        .field-row {
-            display: flex;
-            align-items: flex-start;
-            gap: 6px;
-        }
-        .field-label {
-            font-weight: 700;
-            min-width: 110px;
-        }
-        .field-value {
-            word-break: break-word;
-        }
-        .print-button {
-            position: fixed;
-            top: 16px;
-            right: 16px;
-            z-index: 10;
-            padding: 10px 16px;
-            border: none;
-            border-radius: 6px;
-            background: #0b6b3a;
-            color: white;
-            cursor: pointer;
-        }
-        @media print {
-            body { background: white; }
-            .print-button { display: none; }
-            .preview-canvas {
-                box-shadow: none;
-                width: 100%;
-            }
-            .preview-canvas iframe {
-                height: 100vh;
-            }
-        }
-    </style>
-</head>
-<body>
-    <button class="print-button" onclick="window.print()">Print Preview</button>
-    <div class="preview-shell">
-        <div class="preview-canvas">
-            <iframe src="${templatePath}"></iframe>
-            <div class="overlay">${overlayRows}</div>
-        </div>
-    </div>
-</body>
-</html>`;
-
-}
-
-
-function syncPdfPreview() {
-
-    if (!loanForm) {
-
-        return;
-
-    }
-
+  async function getImageInput(img) {
     try {
+      var resp = await fetch(img.src);
+      if (resp.ok) return await resp.arrayBuffer();
+    } catch (e) { /* fall through to canvas */ }
+    return imageToDataURL(img);
+  }
 
-        if (activeLoanPreviewWindow && !activeLoanPreviewWindow.closed) {
-
-            activeLoanPreviewWindow.close();
-
-        }
-
-        activeLoanPreviewWindow = window.open(
-            "",
-            "_blank",
-            "width=1100,height=900,noopener,noreferrer"
-        );
-
-        window.__loanPreviewLastOpened = activeLoanPreviewWindow;
-
-        if (!activeLoanPreviewWindow) {
-
-            alert("Please allow pop-up windows for the loan preview.");
-            return;
-
-        }
-
-        activeLoanPreviewWindow.document.open();
-        activeLoanPreviewWindow.document.write(buildLoanPreviewPopupHtml());
-        activeLoanPreviewWindow.document.close();
-        activeLoanPreviewWindow.focus();
-
-    } catch (error) {
-
-        console.error("PDF sync failed:", error);
-
+  async function generatePDF() {
+    if (!window.PDFLib) {
+      alert("PDF library not loaded. Please check your internet connection and try again.");
+      return;
     }
+    try {
+      var PDFLib = window.PDFLib;
+      var doc = await PDFLib.PDFDocument.create();
+      var font = await doc.embedFont(PDFLib.StandardFonts.TimesRoman);
+      var rgb = PDFLib.rgb;
+      var pages = document.querySelectorAll(".loan-form-canvas");
+      var p, cv, isPage2, map, img, png, page, id, f, el, val, c, cy, half;
+      for (p = 0; p < pages.length; p++) {
+        cv = pages[p];
+        isPage2 = cv.getAttribute("data-page") === "2";
+        map = isPage2 ? PAGE2_FIELDS : FORM_FIELDS;
+        img = cv.querySelector(".loan-form-background");
+        png = await doc.embedPng(await getImageInput(img));
+        page = doc.addPage([IMG_W, IMG_H]);
+        page.drawImage(png, { x: 0, y: 0, width: IMG_W, height: IMG_H });
+        for (id in map) {
+          if (!Object.prototype.hasOwnProperty.call(map, id)) continue;
+          el = document.getElementById(id);
+          val = el ? el.value : "";
+          if (!val) continue;
+          f = map[id];
+          page.drawText(val, {
+            x: f.x,
+            y: IMG_H - f.y - f.h,
+            size: f.fs,
+            font: font,
+            color: rgb(0, 0, 0)
+          });
+        }
+        if (!isPage2) {
+          for (id in FORM_CHECKBOXES) {
+            if (!Object.prototype.hasOwnProperty.call(FORM_CHECKBOXES, id)) continue;
+            el = document.getElementById(id);
+            if (!el || !el.checked) continue;
+            c = FORM_CHECKBOXES[id];
+            cy = IMG_H - c.cy;
+            half = c.w * 0.55;
+            page.drawLine({ start: { x: c.cx - half, y: cy + half }, end: { x: c.cx + half, y: cy - half }, thickness: 1.5, color: rgb(0, 0, 0) });
+            page.drawLine({ start: { x: c.cx - half, y: cy - half }, end: { x: c.cx + half, y: cy + half }, thickness: 1.5, color: rgb(0, 0, 0) });
+          }
+        }
+      }
+      var bytes = await doc.save();
+      var blob = new Blob([bytes], { type: "application/pdf" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      var lastName = (document.getElementById("lastName") || {}).value || "";
+      a.href = url;
+      a.download = "SCSLAI-Loan-Application" + (lastName ? "-" + lastName.trim() : "") + ".pdf";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      alert("Your loan application has been completed. The PDF has been generated and downloaded. Please save it in FORMS/generated.");
+    } catch (err) {
+      alert("PDF generation failed: " + (err && err.message ? err.message : err));
+    }
+  }
 
-}
-
-
-if (openLoanModal) {
-
-    openLoanModal.addEventListener("click", () => {
-
-        loanModal.classList.add("active");
-
-        document.body.style.overflow = "hidden";
-
+  /* --------------- Init ----------------------------------------- */
+  function init() {
+    positionOverlays();
+    wireCheckboxGroups();
+    updateFormScale();
+    window.addEventListener("resize", positionOverlays);
+    canvases.forEach(function (cv) {
+      var img = cv.querySelector(".loan-form-background");
+      if (img && !img.complete) img.addEventListener("load", updateFormScale);
     });
-
-}
-
-
-// CLOSE MODAL FUNCTION
-function closeModal() {
-
-    loanModal.classList.remove("active");
-
-    document.body.style.overflow = "auto";
-
-}
-
-
-// CLOSE USING X BUTTON
-if (closeLoanModal) {
-
-    closeLoanModal.addEventListener(
-        "click",
-        closeModal
-    );
-
-}
-
-
-// CLOSE USING CANCEL BUTTON
-if (cancelLoanModal) {
-
-    cancelLoanModal.addEventListener(
-        "click",
-        closeModal
-    );
-
-}
-
-
-// CLOSE WHEN CLICKING OUTSIDE THE MODAL
-/*loanModal.addEventListener(
-    "click",
-    function (event) {
-
-        if (event.target === loanModal) {
-
-            closeModal();
-
-        }
-
-    }
-);*/
-
-
-// CLOSE USING ESCAPE KEY
-document.addEventListener(
-    "keydown",
-    function (event) {
-
-        if (
-            event.key === "Escape" &&
-            loanModal.classList.contains("active")
-        ) {
-
-            closeModal();
-
-        }
-
-    }
-);
-
-// ==============================
-// FORM VALIDATION
-// ==============================
-
-if (loanCategoryField) {
-
-    loanCategoryField.addEventListener("change", () => {
-
-        populateLoanTypes(loanCategoryField.value);
-
-    });
-
-}
-
-
-if (loanForm) {
-
-    loanForm.querySelectorAll("input, select").forEach(
-        (field) => {
-
-            field.addEventListener("input", () => {
-
-                if (field.id === "loanCategory") {
-
-                    populateLoanTypes(field.value);
-
-                }
-
-            });
-
-        }
-    );
-
-}
-
-
-if (loanForm) {
-
-    loanForm.addEventListener(
-        "submit",
-        async function (event) {
-
-        event.preventDefault();
-
-
-        // GET INPUT VALUES
-        const loanCategory = getFormValue("loanCategory");
-        const loanType = getFormValue("loanType");
-        const applicationType = getFormValue("applicationType");
-        const lastName = getFormValue("lastName");
-        const firstName = getFormValue("firstName");
-        const middleName = getFormValue("middleName");
-        const suffix = getFormValue("suffix");
-        const edpNumber = getFormValue("edpNumber");
-        const tin = getFormValue("tin");
-        const birthdate = document.getElementById("birthdate")?.value || "";
-        const placeOfBirth = getFormValue("placeOfBirth");
-        const homeAddress = getFormValue("homeAddress");
-        const zipCode = getFormValue("zipCode");
-        const officeStation = getFormValue("officeStation");
-        const region = getFormValue("region");
-        const position = getFormValue("position");
-        const appointment = getFormValue("appointment");
-        const contactNumber = getFormValue("contactNumber");
-        const emailAddress = getFormValue("emailAddress");
-
-
-        // REQUIRED FIELD VALIDATION
-        if (
-            !lastName ||
-            !firstName ||
-            !edpNumber ||
-            !birthdate ||
-            !placeOfBirth ||
-            !homeAddress ||
-            !zipCode ||
-            !officeStation ||
-            !region ||
-            !position ||
-            !appointment ||
-            !contactNumber ||
-            !emailAddress
-        ) {
-
-            alert(
-                "Please complete all required fields."
-            );
-
-            return;
-
-        }
-
-
-        // NAME VALIDATION
-        const namePattern =
-            /^[A-Za-zÀ-ÿ\s'-]+$/;
-
-
-        if (
-            !namePattern.test(lastName) ||
-            !namePattern.test(firstName)
-        ) {
-
-            alert(
-                "Please enter a valid name."
-            );
-
-            return;
-
-        }
-
-
-        // EDP NUMBER VALIDATION
-        const edpPattern =
-            /^[0-9]+$/;
-
-
-        if (
-            !edpPattern.test(edpNumber)
-        ) {
-
-            alert(
-                "EDP # must contain numbers only."
-            );
-
-            return;
-
-        }
-
-
-        // ZIP CODE VALIDATION
-        const zipPattern =
-            /^[0-9]{4}$/;
-
-
-        if (
-            !zipPattern.test(zipCode)
-        ) {
-
-            alert(
-                "Please enter a valid 4-digit ZIP Code."
-            );
-
-            return;
-
-        }
-
-
-        // CONTACT NUMBER VALIDATION
-        const phonePattern =
-            /^(09|\+639)[0-9]{9}$/;
-
-
-        if (
-            !phonePattern.test(contactNumber)
-        ) {
-
-            alert(
-                "Please enter a valid Philippine mobile number."
-            );
-
-            return;
-
-        }
-
-
-        // EMAIL VALIDATION
-        const emailPattern =
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-
-        if (
-            !emailPattern.test(emailAddress)
-        ) {
-
-            alert(
-                "Please enter a valid email address."
-            );
-
-            return;
-
-        }
-
-
-        // BIRTHDATE VALIDATION
-        const selectedDate =
-            new Date(birthdate);
-
-
-        const today =
-            new Date();
-
-
-        if (
-            selectedDate >= today
-        ) {
-
-            alert(
-                "Birthdate cannot be today or a future date."
-            );
-
-            return;
-
-        }
-
-
-        // SUCCESS
-        closeModal();
-        syncPdfPreview();
-
-        alert(
-            "All information is valid!"
-        );
-
-        console.log({
-
-            loanCategory,
-
-            loanType,
-
-            applicationType,
-
-            lastName,
-
-            firstName,
-
-            edpNumber,
-
-            birthdate,
-
-            placeOfBirth,
-
-            homeAddress,
-
-            zipCode,
-
-            officeStation,
-
-            region,
-
-            position,
-
-            appointment,
-
-            contactNumber,
-
-            emailAddress
-
-        });
-
-        }
-
-    );
-
-}
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
