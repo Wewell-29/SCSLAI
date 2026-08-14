@@ -1,7 +1,17 @@
 // ===========================
 // Premium yearbook library
 // ===========================
-const basePages = ['images/gallery/scslaicares1.png', 'images/gallery/scslaicares2.png', 'images/gallery/scslaicares3.png', 'images/gallery/scslaicares4.png', 'images/gallery/scslaicares5.png', 'images/gallery/scslaicares6.png', 'images/gallery/scslaicares7.png'];
+const basePages = [
+  'images/gallery/silungan/1S.jpg',
+  'images/gallery/silungan/2S.jpg',
+  'images/gallery/silungan/3S.jpg',
+  'images/gallery/silungan/4S.jpg',
+  'images/gallery/silungan/5S.jpg',
+  'images/gallery/silungan/6S.jpg', 
+  'images/gallery/silungan/7S.jpg',
+  'images/gallery/silungan/8S.jpg'
+
+];
 
 function buildPageRecords(year) {
   const activities = [
@@ -1116,7 +1126,7 @@ function createCalculatorModal() {
 
         <div class="calculator-note">
           <strong>Note:</strong>
-          <span>The calculation is based on the inputs you provide. To get the Eligible Loan Amount, we subtract 5,000 from your take-home pay so your remaining pay will not go below 5,000.</span>
+          <span>The calculation is based on the information you provide. To determine your Eligible Loan Amount, ₱5,000 is deducted from your take-home pay to ensure that your remaining pay does not fall below ₱5,000.</span>
         </div>
 
       </div>
@@ -1168,7 +1178,7 @@ function createCalculatorModal() {
 
         <div class="calculator-note">
           <strong>Note:</strong>
-          <span>The calculation is based on the inputs you provide. To get the Eligible Loan Amount, we subtract 5,000 from your take-home pay so your remaining pay will not go below 5,000.</span>
+          <span>The calculation is based on the information you provide. To determine your Eligible Loan Amount, ₱5,000 is deducted from your take-home pay to ensure that your remaining pay does not fall below ₱5,000.</span>
         </div>
         
       </div>

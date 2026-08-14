@@ -16,14 +16,33 @@ body{
     overflow-x:hidden;
     overflow-y:auto;
 
-    background-image: url('https://www.thefilipinoexpat.com/wp-content/uploads/2024/05/1280px-Supreme_Court_of_the_Philippines-800x600.jpg');
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
-    background-attachment:fixed;
-    
+    background-image: 
+        /*radial-gradient(circle at 15% 15%, rgba(255, 219, 147, 0.25), transparent 24%),
+        radial-gradient(circle at 85% 0%, rgba(255, 244, 214, 0.18), transparent 30%),
+        linear-gradient(135deg, rgba(25, 15, 8, 0.94) 0%, rgba(74, 41, 19, 0.162) 45%, rgba(16, 9, 5, 0.96) 100%),*/
+        url('https://www.thefilipinoexpat.com/wp-content/uploads/2024/05/1280px-Supreme_Court_of_the_Philippines-800x600.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 
+}
 
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(0, 0, 0, 0.16));
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Ensure content is above the overlay */
+header,
+main,
+footer {
+    position: relative;
+    z-index: 1;
 }
 
 main{
@@ -39,7 +58,7 @@ header{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    flex-wrap:nowrap; /* Changed from wrap to nowrap */
+    flex-wrap:nowrap;
     gap:12px;
     padding:10px 40px;
 }
@@ -121,17 +140,17 @@ nav a:hover{
     padding:0;
     margin:0;
     font-size:inherit;
-    transition: none; /* avoid style shift on click */
+    transition: none; 
 }
 
 .dropbtn:hover{
-    color:#78fdc6; /* match nav link hover */
+    color:#78fdc6;
 }
 
 .dropbtn:focus,
 .dropbtn:active{
     outline: none;
-    color:rgb(255, 255, 255); /* keep white on focus/active */
+    color:rgb(255, 255, 255); 
 }
 
 .dropdown-content{
@@ -3611,7 +3630,7 @@ footer{
     background:rgba(18,80,60,0.95);
     color:white;
     padding:20px 40px 5px;
-    margin-top:20px;
+    margin-top:0px;
 }
 
 .footer-content {
