@@ -13,6 +13,9 @@ body, * {
     line-height: 1.2 !important;
 }
 
+.yearbook-reader { 
+    position: fixed; inset: 0; z-index: 9999; }
+
 .yearbook-library-header h1 {
     font-family: "Playfair Display", "Cormorant Garamond", Georgia, serif !important;
 }

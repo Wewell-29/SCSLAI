@@ -1,118 +1,63 @@
 // ===========================
 // Premium yearbook library
 // ===========================
-const basePages = [
+
+// 2022 Edition - Using scslaicares images
+const pages2022 = [
+  'images/gallery/scslaicares1.png',
+  'images/gallery/scslaicares2.png',
+  'images/gallery/scslaicares3.png',
+  'images/gallery/scslaicares4.png',
+  'images/gallery/scslaicares5.png',
+  'images/gallery/scslaicares6.png',
+  'images/gallery/scslaicares7.png'
+];
+
+// 2023 Edition - Using silungan images
+const pages2023 = [
   'images/gallery/silungan/1S.jpg',
   'images/gallery/silungan/2S.jpg',
   'images/gallery/silungan/3S.jpg',
   'images/gallery/silungan/4S.jpg',
   'images/gallery/silungan/5S.jpg',
-  'images/gallery/silungan/6S.jpg', 
+  'images/gallery/silungan/6S.jpg',
   'images/gallery/silungan/7S.jpg',
   'images/gallery/silungan/8S.jpg'
-
 ];
 
-function buildPageRecords(year) {
-  const activities = [
-    {
-      activityTitle: 'Annual Outreach Program',
-      caption: 'Members gathered to support local initiatives through coordinated outreach and service.',
-      narrative: 'This activity highlights collaborative work between volunteers, officers, and community partners.',
-      date: `March ${year}`,
-      venue: 'Barangay Community Grounds, Manila',
-      participants: 'SCSLAI members, volunteers, partner residents',
-      photographer: 'SCSLAI Documentation Team',
-      album: `${year} SCSLAI Cares Collection`,
-      remarks: 'Strong member turnout and successful distribution activity.',
-      tags: ['outreach', 'community', `${year}`],
-      keywords: ['outreach', 'community', 'program']
-      
-    },
-    {
-      activityTitle: 'Tree Planting and Environmental Care',
-      caption: 'Members planted seedlings and promoted long-term environmental stewardship.',
-      narrative: 'The event focused on shared responsibility and continuity through sustainable practices.',
-      date: `April ${year}`,
-      venue: 'Partner Green Zone, Metro Manila',
-      participants: 'Member volunteers, youth delegates, local partners',
-      photographer: 'SCSLAI Media Unit',
-      album: `${year} Environmental Initiatives`,
-      remarks: 'Follow-up maintenance schedules were established after planting.',
-      tags: ['environment', 'tree planting', `${year}`],
-      keywords: ['environment', 'green', 'planting']
-    },
-    {
-      activityTitle: 'Member Service Day',
-      caption: 'A full-day activity for member welfare services and assistance booths.',
-      narrative: 'Service teams provided consultations, support pathways, and engagement sessions.',
-      date: `May ${year}`,
-      venue: 'SCSLAI Main Activity Hall',
-      participants: 'Members, support personnel, invited guests',
-      photographer: 'Official Event Photographer',
-      album: `${year} Member Services`,
-      remarks: 'High participation and positive feedback from attendees.',
-      tags: ['member services', 'engagement', `${year}`],
-      keywords: ['service', 'members', 'support']
-    },
-    {
-      activityTitle: 'Community Learning Session',
-      caption: 'Interactive learning and awareness sessions were conducted for participants.',
-      narrative: 'The session encouraged practical community participation and sharing of best practices.',
-      date: `June ${year}`,
-      venue: 'Regional Training Venue',
-      participants: 'Facilitators, members, and invited learners',
-      photographer: 'Training Documentation Desk',
-      album: `${year} Learning Programs`,
-      remarks: 'Multiple follow-up activities were proposed by participants.',
-      tags: ['learning', 'training', `${year}`],
-      keywords: ['session', 'training', 'education']
-    },
-    {
-      activityTitle: 'Relief and Donation Drive',
-      caption: 'SCSLAI members prepared and distributed donation packs for beneficiary groups.',
-      narrative: 'Relief efforts were organized with partner offices and local volunteers.',
-      date: `July ${year}`,
-      venue: 'Distribution Points Across Metro Manila',
-      participants: 'Volunteers, coordinators, partner groups',
-      photographer: 'Field Coverage Team',
-      album: `${year} Donation Drives`,
-      remarks: 'Distribution was completed on schedule across identified areas.',
-      tags: ['relief', 'donation', `${year}`],
-      keywords: ['relief', 'donation', 'drive']
-    },
-    {
-      activityTitle: 'Recognition and Fellowship Event',
-      caption: 'Members celebrated milestones through recognition and fellowship activities.',
-      narrative: 'The event acknowledged contributions and strengthened institutional camaraderie.',
-      date: `August ${year}`,
-      venue: 'SCSLAI Fellowship Hall',
-      participants: 'Member delegates, officers, and guests',
-      photographer: 'Events and Comms Team',
-      album: `${year} Fellowship Events`,
-      remarks: 'Recognition program concluded with a collaborative planning session.',
-      tags: ['recognition', 'fellowship', `${year}`],
-      keywords: ['milestone', 'recognition', 'fellowship']
-    },
-    {
-      activityTitle: 'Year-End Civic Partnership',
-      caption: 'Partner organizations joined the year-end civic action initiative.',
-      narrative: 'This closing chapter documented partnerships and outcomes for the yearbook archive.',
-      date: `September ${year}`,
-      venue: 'Civic Partner Venue',
-      participants: 'Partner institutions and SCSLAI members',
-      photographer: 'Archive Documentation Team',
-      album: `${year} Partnership Chronicle`,
-      remarks: 'Activity outcomes were endorsed for the next annual cycle.',
-      tags: ['partnership', 'civic', `${year}`],
-      keywords: ['partnership', 'civic', 'year-end']
-    }
-  ];
+// 2024 Edition - Using outreach images
+const pages2024 = [
+  'images/gallery/outreach/1.jpg',
+  'images/gallery/outreach/2.jpg',
+  'images/gallery/outreach/3.jpg',
+  'images/gallery/outreach/4.jpg',
+  'images/gallery/outreach/5.jpg',
+  'images/gallery/outreach/6.jpg',
+  'images/gallery/outreach/7.jpg',
+  'images/gallery/outreach/8.jpg'
+  // Add more images as needed (you have up to 37 images available)
+];
 
-  return basePages.map((image, index) => ({
+// 2025 Edition - Using Tree planting images
+const pages2025 = [
+  'images/gallery/Tree planting/1T.jpg',
+  'images/gallery/Tree planting/2T.jpg',
+  'images/gallery/Tree planting/3T.jpg',
+  'images/gallery/Tree planting/4T.jpg',
+  'images/gallery/Tree planting/5T.jpg',
+  'images/gallery/Tree planting/6T.jpg',
+  'images/gallery/Tree planting/7T.jpg',
+  'images/gallery/Tree planting/8T.jpg',
+
+  // Add more images as needed (you have up to 16 images available)
+];
+
+function buildPageRecords(year, imageList) {
+  return imageList.map((image, index) => ({
     image,
-    ...activities[index],
-    pageNumber: index + 1
+    pageNumber: index + 1,
+    // Optional: keep a simple title for alt text
+    activityTitle: `${year} Activity ${index + 1}`
   }));
 }
 
@@ -121,38 +66,116 @@ const yearbookData = [
     year: 2022,
     badge: 'Founding memories',
     title: '2022 Edition',
-    summary: 'Browse activities and events by year.',
-    pages: buildPageRecords(2022)
+    summary: 'Browse activities and events from 2022.',
+    pages: buildPageRecords(2022, pages2022),  // ← No activities parameter
+    editionDetails: {
+      activityTitle: '2022 SCSLAI Cares Programs',
+      caption: 'Community outreach and member support initiatives throughout 2022.',
+      narrative: 'This inaugural year marked the beginning of our community service initiatives, including relief distribution, tree planting, member services, and civic partnerships.',
+      date: 'January - December 2022',
+      venue: 'Various locations across Metro Manila',
+      participants: 'SCSLAI members, volunteers, and community partners',
+      photographer: 'SCSLAI Documentation Team',
+      album: '2022 Community Programs Collection',
+      remarks: 'Successful first year of organized community outreach programs.',
+      tags: ['2022', 'community', 'outreach', 'founding year']
+    }
   },
   {
     year: 2023,
     badge: 'Gathering moments',
     title: '2023 Edition',
-    summary: 'Browse activities and events by year.',
-    pages: buildPageRecords(2023)
+    summary: 'Browse activities and events from 2023.',
+    pages: buildPageRecords(2023, pages2023),  // ← No activities parameter
+    editionDetails: {
+      activityTitle: '2023 Silungan Housing Program',
+      caption: 'Shelter turnover and community building at Silungan Housing Site.',
+      narrative: 'This year focused on the Silungan housing project, including shelter turnover ceremonies, move-in assistance, home care workshops, community orientation, fellowship activities, and safety drills.',
+      date: 'February - November 2023',
+      venue: 'Silungan Housing Site, Caloocan City and surrounding areas',
+      participants: 'SCSLAI officers, beneficiary families, volunteers, and partner organizations',
+      photographer: 'SCSLAI Documentation Team',
+      album: '2023 Silungan Chronicles',
+      remarks: 'First batch of shelter keys awarded and families successfully settled.',
+      tags: ['2023', 'silungan', 'housing', 'community']
+    }
   },
   {
     year: 2024,
     badge: 'Academic elegance',
     title: '2024 Edition',
-    summary: 'Browse activities and events by year.',
-    pages: buildPageRecords(2024)
+    summary: 'Browse activities and events from 2024.',
+    pages: buildPageRecords(2024, pages2024),  // ← No activities parameter
+    editionDetails: {
+      activityTitle: '2024 Expanded Outreach Programs',
+      caption: 'Large-scale community outreach reaching multiple barangays.',
+      narrative: 'Expanded outreach efforts included school supplies distribution, feeding programs, elderly companionship visits, livelihood training, blood donation drives, children gift-giving, and thanksgiving gatherings.',
+      date: 'January - August 2024',
+      venue: 'Multiple locations across Metro Manila',
+      participants: 'SCSLAI members, partners, volunteers, and beneficiary communities',
+      photographer: 'Outreach Documentation Team',
+      album: '2024 Outreach Collection',
+      remarks: 'Biggest outreach program to date with sustained community impact.',
+      tags: ['2024', 'outreach', 'expansion', 'community']
+    }
   },
   {
     year: 2025,
     badge: 'Forward in focus',
     title: '2025 Edition',
-    summary: 'Browse activities and events by year.',
-    pages: buildPageRecords(2025)
-  },
-  {
-    year: 2026,
-    badge: 'Library of memories',
-    title: '2026 Edition',
-    summary: 'Browse activities and events by year.',
-    pages: buildPageRecords(2026)
+    summary: 'Browse activities and events from 2025.',
+    pages: buildPageRecords(2025, pages2025),  // ← No activities parameter
+    editionDetails: {
+      activityTitle: '2025 Environmental Initiatives',
+      caption: 'Tree planting and environmental care activities.',
+      narrative: 'Environmental focus year featuring seedling nursery preparation, reforestation kickoff, watershed clean-up, nursery monitoring, coastal greenbelt expansion, survival audits, and recognition of environmental champions.',
+      date: 'January - August 2025',
+      venue: 'Green zones, watersheds, and coastal areas across Metro Manila',
+      participants: 'Member volunteers, environmental groups, foresters, and LGU partners',
+      photographer: 'Environmental Documentation Team',
+      album: '2025 Environmental Initiatives',
+      remarks: 'Over 500 seedlings planted with strong survival rates.',
+      tags: ['2025', 'environment', 'tree planting', 'sustainability']
+    }
   }
 ];
+
+function preloadBasePages() {
+  if (preloadPromise) return preloadPromise;
+
+  // Combine all image sources for preloading
+  const sourcesToPreload = [
+    ...pages2022, 
+    ...pages2023, 
+    ...pages2024, 
+    ...pages2025
+  ];
+  
+  preloadPromise = Promise.all(sourcesToPreload.map((src) => new Promise(async (resolve) => {
+    const resolvedSrc = await preloadImageBlobUrl(src);
+    const img = new Image();
+    img.decoding = 'sync';
+    img.loading = 'eager';
+
+    const finish = () => {
+      if (typeof img.decode === 'function') {
+        img.decode().catch(() => {}).finally(resolve);
+        return;
+      }
+      resolve();
+    };
+
+    img.src = resolvedSrc;
+    if (img.complete) {
+      finish();
+      return;
+    }
+    img.onload = finish;
+    img.onerror = () => resolve();
+  })));
+
+  return preloadPromise;
+}
 
 const yearbookButtons = document.querySelectorAll('.yearbook-book');
 const yearbookReader = document.getElementById('yearbook-reader');
@@ -214,35 +237,6 @@ async function preloadImageBlobUrl(src) {
   }
 }
 
-function preloadBasePages() {
-  if (preloadPromise) return preloadPromise;
-
-  preloadPromise = Promise.all(basePages.map((src) => new Promise(async (resolve) => {
-    const resolvedSrc = await preloadImageBlobUrl(src);
-    const img = new Image();
-    img.decoding = 'sync';
-    img.loading = 'eager';
-
-    const finish = () => {
-      if (typeof img.decode === 'function') {
-        img.decode().catch(() => {}).finally(resolve);
-        return;
-      }
-      resolve();
-    };
-
-    img.src = resolvedSrc;
-    if (img.complete) {
-      finish();
-      return;
-    }
-    img.onload = finish;
-    img.onerror = () => resolve();
-  })));
-
-  return preloadPromise;
-}
-
 function isSinglePageMode() {
   return window.innerWidth <= 820;
 }
@@ -301,7 +295,7 @@ function pageMarkup(page) {
   return `
     <section class="album-page ${page.pageNumber % 2 === 0 ? 'album-page-right' : 'album-page-left'}" data-page-number="${page.pageNumber}">
       <article class="print-layout">
-        <h3 class="layout-title">${page.activityTitle}</h3>
+        <h3 class="layout-title"></h3>
         <figure class="scrap-card">
           <span class="tape tape-tl" aria-hidden="true"></span>
           <span class="tape tape-tr" aria-hidden="true"></span>
@@ -311,7 +305,7 @@ function pageMarkup(page) {
             <img src="${getResolvedImageSource(page.image)}" alt="${page.activityTitle}" loading="eager" decoding="sync" fetchpriority="high" draggable="false">
           </div>
         </figure>
-        <p class="layout-caption">${page.caption}</p>
+        
         <p class="layout-page-number">Page ${page.pageNumber} of ${activePages.length}</p>
       </article>
     </section>
@@ -348,7 +342,7 @@ function renderStaticSpread() {
   rightEl.innerHTML = pageMarkup(right);
 
   currentSpreadPage = (left?.pageNumber || right?.pageNumber || 1);
-  updateReaderStatus();
+  // updateReaderStatus(); // Removed - details are now set per-edition, not per-page
 }
 
 function animateForwardTurn() {
@@ -461,6 +455,20 @@ async function openReader(index, startPage) {
   readerTitle.textContent = edition.title;
   readerSummary.textContent = edition.summary;
   setActiveYearbookCard(index);
+
+  // Set edition-level details once (NEW CODE)
+  if (edition.editionDetails) {
+    detailBindings.activityTitle.textContent = edition.editionDetails.activityTitle;
+    detailBindings.caption.textContent = edition.editionDetails.caption;
+    detailBindings.narrative.textContent = edition.editionDetails.narrative;
+    detailBindings.date.textContent = edition.editionDetails.date;
+    detailBindings.venue.textContent = edition.editionDetails.venue;
+    detailBindings.participants.textContent = edition.editionDetails.participants;
+    detailBindings.photographer.textContent = edition.editionDetails.photographer;
+    detailBindings.album.textContent = edition.editionDetails.album;
+    detailBindings.remarks.textContent = edition.editionDetails.remarks;
+    detailBindings.tags.textContent = edition.editionDetails.tags.join(', ');
+  }
 
   initTurnJs(edition.pages, startPage || 1);
   yearbookReader.hidden = false;
