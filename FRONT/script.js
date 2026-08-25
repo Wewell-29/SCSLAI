@@ -146,7 +146,6 @@ function preloadBasePages() {
   // Combine all image sources for preloading
   const sourcesToPreload = [
     ...pages2022, 
-    ...pages2023, 
     ...pages2024, 
     ...pages2025
   ];
