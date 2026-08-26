@@ -50,6 +50,7 @@ body, * {
     transform-origin: center center;
     transform-style: preserve-3d;
     transition: transform 240ms ease, filter 240ms ease;
+    
 }
 
 /* The layered paper block beneath the cover. */

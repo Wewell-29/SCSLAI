@@ -17,9 +17,9 @@ body{
     overflow-y:auto;
 
     background-image: 
-        /*radial-gradient(circle at 15% 15%, rgba(255, 219, 147, 0.25), transparent 24%),
-        radial-gradient(circle at 85% 0%, rgba(255, 244, 214, 0.18), transparent 30%),
-        linear-gradient(135deg, rgba(25, 15, 8, 0.94) 0%, rgba(74, 41, 19, 0.162) 45%, rgba(16, 9, 5, 0.96) 100%),*/
+        radial-gradient(circle at 15% 15%, rgba(243, 222, 180, 0), transparent 24%),
+        radial-gradient(circle at 85% 0%, rgba(255, 244, 214, 0.089), transparent 30%),
+        linear-gradient(135deg, rgba(25, 15, 8, 0.087) 0%, rgba(74, 41, 19, 0.498) 45%, rgba(16, 9, 5, 0.433) 100%),
         url('https://www.thefilipinoexpat.com/wp-content/uploads/2024/05/1280px-Supreme_Court_of_the_Philippines-800x600.jpg');
     background-size: cover;
     background-position: center;
@@ -27,6 +27,23 @@ body{
     background-attachment: fixed;
 
 }
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
 
 body::before {
     content: "";
@@ -363,7 +380,7 @@ nav a:hover{
     transition:.3s;
 }
 
-/* Legacy custom 3D yearbook styles removed. */
+
 
 .reader-activity-caption,
 .reader-activity-narrative,
@@ -601,16 +618,7 @@ nav a:hover{
     padding: 0;
 }
 
-.yearbook-library-section {
-    position: relative;
-    padding: 3rem 1.25rem 4rem;
-    min-height: calc(100vh - 80px);
-    overflow: hidden;
-    background:
-        radial-gradient(circle at 15% 15%, rgba(255, 219, 147, 0.25), transparent 24%),
-        radial-gradient(circle at 85% 0%, rgba(255, 244, 214, 0.18), transparent 30%),
-        linear-gradient(135deg, rgba(25, 15, 8, 0.94) 0%, rgba(74, 41, 19, 0.162) 45%, rgba(16, 9, 5, 0.96) 100%);
-}
+
 
 .yearbook-library-section::before {
     content: "";
@@ -3220,7 +3228,7 @@ nav a:hover{
     letter-spacing:.6px;
     box-shadow:0 12px 22px rgba(47,106,86,0.34);
     margin-top:12px;
-    margin-bottom:12px;
+    margin-bottom:10px;
 
 }
 
@@ -3250,21 +3258,26 @@ nav a:hover{
     background:#eef4f1;
 }
 
+
+
 .calculator-note{
     margin-top:0;
-    padding:12px 14px;
+    margin-bottom: 10px;  
+    padding:5px 10px;
     border-radius:14px;
-    background:#f7f1ed;
+    background:#ccc8c62e;
     color:#f13f3f;
     line-height:1.6;
-    font-size:14px;
+    font-size:13px;
     font-weight:550;
     
 }
 
+
 .calculator-note span{
     color:#2e2e2e;
 }
+
 
 .calculator-lower-copy h3{
     margin-bottom:8px;
@@ -3631,7 +3644,13 @@ footer{
     color:white;
     padding:20px 40px 5px;
     margin-top:0px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 1000;
 }
+
 
 .footer-content {
     display: flex;

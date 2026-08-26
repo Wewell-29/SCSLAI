@@ -4,17 +4,7 @@
 
 // 2022 Edition - Using scslaicares images
 const pages2022 = [
-  'images/gallery/scslaicares1.png',
-  'images/gallery/scslaicares2.png',
-  'images/gallery/scslaicares3.png',
-  'images/gallery/scslaicares4.png',
-  'images/gallery/scslaicares5.png',
-  'images/gallery/scslaicares6.png',
-  'images/gallery/scslaicares7.png'
-];
-
-// 2023 Edition - Using silungan images
-const pages2023 = [
+  'images/gallery/silungan/SCSLAI.png',
   'images/gallery/silungan/1S.jpg',
   'images/gallery/silungan/2S.jpg',
   'images/gallery/silungan/3S.jpg',
@@ -23,23 +13,12 @@ const pages2023 = [
   'images/gallery/silungan/6S.jpg',
   'images/gallery/silungan/7S.jpg',
   'images/gallery/silungan/8S.jpg'
+  
 ];
 
 // 2024 Edition - Using outreach images
 const pages2024 = [
-  'images/gallery/outreach/1.jpg',
-  'images/gallery/outreach/2.jpg',
-  'images/gallery/outreach/3.jpg',
-  'images/gallery/outreach/4.jpg',
-  'images/gallery/outreach/5.jpg',
-  'images/gallery/outreach/6.jpg',
-  'images/gallery/outreach/7.jpg',
-  'images/gallery/outreach/8.jpg'
-  // Add more images as needed (you have up to 37 images available)
-];
-
-// 2025 Edition - Using Tree planting images
-const pages2025 = [
+  'images/gallery/Tree planting/tree-planting.jpg',
   'images/gallery/Tree planting/1T.jpg',
   'images/gallery/Tree planting/2T.jpg',
   'images/gallery/Tree planting/3T.jpg',
@@ -48,8 +27,57 @@ const pages2025 = [
   'images/gallery/Tree planting/6T.jpg',
   'images/gallery/Tree planting/7T.jpg',
   'images/gallery/Tree planting/8T.jpg',
+  'images/gallery/Tree planting/9T.jpg',
+  'images/gallery/Tree planting/10T.jpg',
+  'images/gallery/Tree planting/11T.jpg',
+  'images/gallery/Tree planting/12T.jpg',
+  'images/gallery/Tree planting/13T.jpg',
+  'images/gallery/Tree planting/14T.jpg',
+  'images/gallery/Tree planting/15T.jpg',
+  'images/gallery/Tree planting/16T.jpg'
+  
+];
 
-  // Add more images as needed (you have up to 16 images available)
+// 2025 Edition - Using Tree planting images
+const pages2025 = [
+  'images/gallery/outreach/OUTREACH.png',
+  'images/gallery/outreach/1.jpg',
+  'images/gallery/outreach/2.jpg',
+  'images/gallery/outreach/3.jpg',
+  'images/gallery/outreach/4.jpg',
+  'images/gallery/outreach/5.jpg',
+  'images/gallery/outreach/6.jpg',
+  'images/gallery/outreach/7.jpg',
+  'images/gallery/outreach/8.jpg',
+  'images/gallery/outreach/9.jpg',
+  'images/gallery/outreach/10.jpg',
+  'images/gallery/outreach/11.jpg',
+  'images/gallery/outreach/12.jpg',
+  'images/gallery/outreach/13.jpg',
+  'images/gallery/outreach/14.jpg',
+  'images/gallery/outreach/15.jpg',
+  'images/gallery/outreach/16.jpg',
+  'images/gallery/outreach/17.jpg',
+  'images/gallery/outreach/18.jpg',
+  'images/gallery/outreach/19.jpg',
+  'images/gallery/outreach/20.jpg',
+  'images/gallery/outreach/21.jpg',
+  'images/gallery/outreach/22.jpg',
+  'images/gallery/outreach/24.jpg', 
+  'images/gallery/outreach/25.jpg',
+  'images/gallery/outreach/26.jpg',
+  'images/gallery/outreach/27.jpg',
+  'images/gallery/outreach/28.jpg',
+  'images/gallery/outreach/29.jpg',
+  'images/gallery/outreach/30.jpg',
+  'images/gallery/outreach/31.jpg',
+  'images/gallery/outreach/32.jpg',
+  'images/gallery/outreach/33.jpg',
+  'images/gallery/outreach/34.jpg',
+  'images/gallery/outreach/35.jpg',
+  'images/gallery/outreach/36.jpg',
+  'images/gallery/outreach/37.jpg'
+
 ];
 
 function buildPageRecords(year, imageList) {
@@ -64,80 +92,62 @@ function buildPageRecords(year, imageList) {
 const yearbookData = [
   {
     year: 2022,
-    badge: 'Founding memories',
-    title: '2022 Edition',
-    summary: 'Browse activities and events from 2022.',
-    pages: buildPageRecords(2022, pages2022),  // ← No activities parameter
+    badge: 'Silungan ng Pag-asa',
+    title: '2022-2023 Edition',
+    summary: 'A community initiative focused on providing support, care, and a safe place for individuals and families in need.',
+    pages: buildPageRecords(2022 , pages2022),
     editionDetails: {
-      activityTitle: '2022 SCSLAI Cares Programs',
-      caption: 'Community outreach and member support initiatives throughout 2022.',
-      narrative: 'This inaugural year marked the beginning of our community service initiatives, including relief distribution, tree planting, member services, and civic partnerships.',
-      date: 'January - December 2022',
-      venue: 'Various locations across Metro Manila',
-      participants: 'SCSLAI members, volunteers, and community partners',
-      photographer: 'SCSLAI Documentation Team',
-      album: '2022 Community Programs Collection',
-      remarks: 'Successful first year of organized community outreach programs.',
-      tags: ['2022', 'community', 'outreach', 'founding year']
+        activityTitle: 'Silungan ng Pag-asa',
+        caption: 'An SCSLAI initiative that extends compassion and assistance to individuals and families in need through community support and outreach.',
+        narrative: 'Silungan ng Pag-asa reflects SCSLAI’s commitment to serving the community by providing support and assistance to people facing difficult circumstances. The initiative aims to offer hope, care, and meaningful help to beneficiaries while strengthening the spirit of compassion and solidarity among SCSLAI members and community partners.',
+        date: '2022-2023',
+        venue: 'Unit-K, 3rd Floor, PJM Building, Belen Street, beside Paco Park in Paco, Manila',
+        participants: 'SCSLAI members, volunteers, beneficiaries, and community partners',
+        photographer: 'SCSLAI Documentation Team',
+        album: 'Silungan ng Pag-asa Collection',
+        remarks: 'A meaningful community initiative that provided support and hope to beneficiaries in need.',
+        tags: ['2022-2023', 'Silungan ng Pag-asa', 'community', 'outreach', 'support', 'hope']
     }
-  },
-  {
-    year: 2023,
-    badge: 'Gathering moments',
-    title: '2023 Edition',
-    summary: 'Browse activities and events from 2023.',
-    pages: buildPageRecords(2023, pages2023),  // ← No activities parameter
-    editionDetails: {
-      activityTitle: '2023 Silungan Housing Program',
-      caption: 'Shelter turnover and community building at Silungan Housing Site.',
-      narrative: 'This year focused on the Silungan housing project, including shelter turnover ceremonies, move-in assistance, home care workshops, community orientation, fellowship activities, and safety drills.',
-      date: 'February - November 2023',
-      venue: 'Silungan Housing Site, Caloocan City and surrounding areas',
-      participants: 'SCSLAI officers, beneficiary families, volunteers, and partner organizations',
-      photographer: 'SCSLAI Documentation Team',
-      album: '2023 Silungan Chronicles',
-      remarks: 'First batch of shelter keys awarded and families successfully settled.',
-      tags: ['2023', 'silungan', 'housing', 'community']
-    }
-  },
-  {
+},
+  
+{
     year: 2024,
-    badge: 'Academic elegance',
+    badge: 'Growing a Greener Future',
     title: '2024 Edition',
-    summary: 'Browse activities and events from 2024.',
-    pages: buildPageRecords(2024, pages2024),  // ← No activities parameter
+    summary: 'Growing a Greener Future.',
+    pages: buildPageRecords(2024, pages2024),
     editionDetails: {
-      activityTitle: '2024 Expanded Outreach Programs',
-      caption: 'Large-scale community outreach reaching multiple barangays.',
-      narrative: 'Expanded outreach efforts included school supplies distribution, feeding programs, elderly companionship visits, livelihood training, blood donation drives, children gift-giving, and thanksgiving gatherings.',
-      date: 'January - August 2024',
-      venue: 'Multiple locations across Metro Manila',
-      participants: 'SCSLAI members, partners, volunteers, and beneficiary communities',
-      photographer: 'Outreach Documentation Team',
-      album: '2024 Outreach Collection',
-      remarks: 'Biggest outreach program to date with sustained community impact.',
-      tags: ['2024', 'outreach', 'expansion', 'community']
+        activityTitle: '2024 Tree Planting Activity',
+        caption: 'SCSLAI members and volunteers came together in Rizal to help protect the environment and promote a greener future through tree planting.',
+        narrative: 'The tree planting activity brought together SCSLAI members, volunteers, and community partners in an effort to contribute to environmental conservation. Through planting and caring for trees, the activity promoted environmental awareness, community participation, and a shared commitment to creating a healthier and greener environment for future generations.',
+        date: '2024',
+        venue: 'Rizal Province',
+        participants: 'SCSLAI members, volunteers, and community partners',
+        photographer: 'SCSLAI Documentation Team',
+        album: '2024 Tree Planting Activity Collection',
+        remarks: 'A meaningful environmental initiative that encouraged community involvement and contributed to the preservation and restoration of green spaces.',
+        tags: ['2024', 'tree planting', 'Rizal', 'environment', 'conservation', 'community']
     }
-  },
-  {
+},
+ {
     year: 2025,
-    badge: 'Forward in focus',
+    badge: 'Serving with Compassion',
     title: '2025 Edition',
-    summary: 'Browse activities and events from 2025.',
-    pages: buildPageRecords(2025, pages2025),  // ← No activities parameter
+    summary: 'Serving with Compassion',
+    pages: buildPageRecords(2025, pages2025),
     editionDetails: {
-      activityTitle: '2025 Environmental Initiatives',
-      caption: 'Tree planting and environmental care activities.',
-      narrative: 'Environmental focus year featuring seedling nursery preparation, reforestation kickoff, watershed clean-up, nursery monitoring, coastal greenbelt expansion, survival audits, and recognition of environmental champions.',
-      date: 'January - August 2025',
-      venue: 'Green zones, watersheds, and coastal areas across Metro Manila',
-      participants: 'Member volunteers, environmental groups, foresters, and LGU partners',
-      photographer: 'Environmental Documentation Team',
-      album: '2025 Environmental Initiatives',
-      remarks: 'Over 500 seedlings planted with strong survival rates.',
-      tags: ['2025', 'environment', 'tree planting', 'sustainability']
+        activityTitle: '2025 Outreach Program for the Aeta Community',
+        caption: 'SCSLAI extended care and support to the Aeta community in Calumpang, Pampanga through a meaningful community outreach program.',
+        narrative: 'The outreach program brought SCSLAI members, volunteers, and community partners together to extend assistance and support to the Aeta community in Calumpang, Pampanga. The initiative reflects SCSLAI’s commitment to community service by reaching underserved communities, promoting compassion, and strengthening partnerships through meaningful outreach activities.',
+        date: '2025',
+        venue: 'Calumpang, Pampanga',
+        participants: 'SCSLAI members, volunteers, community partners, and Aeta community beneficiaries',
+        photographer: 'SCSLAI Documentation Team',
+        album: '2025 Aeta Community Outreach Collection',
+        remarks: 'A meaningful outreach initiative that strengthened SCSLAI’s commitment to serving and supporting communities in need.',
+        tags: ['2025', 'outreach', 'Aeta community', 'Calumpang', 'Pampanga', 'community service']
     }
-  }
+}
 ];
 
 function preloadBasePages() {
@@ -146,7 +156,6 @@ function preloadBasePages() {
   // Combine all image sources for preloading
   const sourcesToPreload = [
     ...pages2022, 
-    ...pages2023, 
     ...pages2024, 
     ...pages2025
   ];
@@ -701,7 +710,7 @@ function prevSlide() {
 }
 
 function startCarousel() {
-  slideInterval = setInterval(nextSlide, 4000);
+  slideInterval = setInterval(nextSlide, 10000);
 }
 
 function resetCarousel() {
@@ -715,10 +724,11 @@ if (slides.length > 0) {
 }
 
 const announcementImages = [
-  {src: 'images/Annoncements/final-educational-poster.jpg', alt: 'Final Educational Poster'},
-  {src: 'images/Annoncements/HOUSING LOAN.png', alt: 'Announcement 2'},
-  {src: 'images/Annoncements/anniv.png', alt: 'ANNIVERSARY'},
-  {src: 'images/Annoncements/INDIPENDENCE.png', alt: 'INDEPENDENCE DAY'}
+  {src: 'images/Annoncements/calamity-loan-2.png', alt: 'Final Educational Poster'},
+  {src: 'images/Annoncements/Authority-to-deduct.jpg', alt: 'Announcement 1'},
+  {src: 'images/Annoncements/TLA.jpg', alt: 'Announcement 3'},
+  {src: 'images/Annoncements/STD-2.png', alt: 'Announcement 2'},
+  {src: 'images/Annoncements/anniv.png', alt: 'ANNIVERSARY'}
 ];
 const announcementImg = document.querySelector('.announcement-posters img');
 let announcementIndex = 0;
@@ -742,7 +752,7 @@ function nextAnnouncement() {
 
 if (announcementImg) {
   announcementImg.classList.add('slide-up');
-  setInterval(nextAnnouncement, 5000);
+  setInterval(nextAnnouncement, 15000);
 }
 
 const galleryItems = document.querySelectorAll('.gallery-item');
@@ -1135,6 +1145,12 @@ function createCalculatorModal() {
         <div class="calculator-note">
           <strong>Note:</strong>
           <span>The calculation is based on the information you provide. To determine your Eligible Loan Amount, ₱5,000 is deducted from your take-home pay to ensure that your remaining pay does not fall below ₱5,000.</span>
+
+          <div class="calculator-notice">
+            <strong>Privacy Notice:</strong>
+            <span>The information you enter into this calculator is used only to calculate your estimated loan amount. The website does not store, collect, or save any information you provide.</span>
+          </div>
+          
         </div>
 
       </div>
@@ -1187,6 +1203,12 @@ function createCalculatorModal() {
         <div class="calculator-note">
           <strong>Note:</strong>
           <span>The calculation is based on the information you provide. To determine your Eligible Loan Amount, ₱5,000 is deducted from your take-home pay to ensure that your remaining pay does not fall below ₱5,000.</span>
+
+          <div class="calculator-notice">
+            <strong>Privacy Notice:</strong>
+            <span>The information you enter into this calculator is used only to calculate your estimated loan amount. The website does not store, collect, or save any information you provide.</span>
+          </div>
+          
         </div>
         
       </div>
