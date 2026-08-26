@@ -113,9 +113,10 @@ if(!vals.emailAddress)miss.push("Email Address");
 if(!vals.loanAmount)miss.push("Loan Amount");
 },
 
-getResult:function(vals,checkedOf){ return{form:"sc",fields:vals,
+getResult:function(vals,checkedOf){ var regs=checkedOf("regular"),specs=checkedOf("special"),apps=checkedOf("application");
+return{form:"sc",fields:vals,
 loanTypes:regs.concat(specs).map(function(x){return x.label;}),
-applicationType:apps[0].label,
+applicationType:apps.length?apps[0].label:"",
 modeOfDelivery:checkedOf("delivery").map(function(x){return x.label;})};
 }
 

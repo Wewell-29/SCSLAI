@@ -47,7 +47,7 @@
     pnInterestRate:   { x: 276, y: 179, w: 84, h: 20, fs: 13 },
     pnInstallments:   { x: 488, y: 180, w: 84,  h: 20, fs: 13 },
     pnInstallmentAmt: { x: 728, y: 180, w: 75,  h: 20, fs: 13 },
-    pnAddlRate:       { x: 803, y: 348, w: 84, h: 20, fs: 13 },
+    pnAddlRate:       { x: 801, y: 366, w: 130, h: 20, fs: 13 },
     pnPrintedName:    { x: 112, y: 878, w: 305, h: 20, fs: 13 },
     // pnSignature:      { x: 488, y: 878, w: 300, h: 20, fs: 13 },
     // pnSignature2:     { x: 855, y: 878, w: 300, h: 20, fs: 13 },

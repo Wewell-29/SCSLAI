@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Download Application - SCSLAI</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="FORMS/loanForm.css?v=4">
+    <link rel="stylesheet" href="FORMS/loanForm.css?v=5">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
@@ -54,7 +54,7 @@
                                 <span>SC Loan Application Form</span>
                                 <div class="download-actions">
                                     <a href="#" class="btn btn-view">VIEW</a>
-                                    <a href="#" class="btn btn-download" data-open-loan-form>Fill-Out</a>
+                                    <a href="#" class="btn btn-download" data-open-loan-form data-form="sc">Fill-Out</a>
                                 </div>
                             </article>
                             <article class="download-item">
@@ -88,7 +88,7 @@
                                 <span>LC Loan Application Form</span>
                                 <div class="download-actions">
                                     <a href="#" class="btn btn-view">VIEW</a>
-                                    <a href="FORMS/lc-loan-application-html-only.html" class="btn btn-download">Fill-Out</a>
+                                    <a href="#" class="btn btn-download" data-open-loan-form data-form="lc">Fill-Out</a>
                                 </div>
                             </article>
                             <article class="download-item">
@@ -122,7 +122,7 @@
                                 <span>Readmission Form</span>
                                 <div class="download-actions">
                                     <a href="#" class="btn btn-view">VIEW</a>
-                                    <a href="#" class="btn btn-download">Fill-Out</a>
+                                    <a href="#" class="btn btn-download" data-open-loan-form data-form="readmission">Fill-Out</a>
                                 </div>
                             </article>
                             <article class="download-item">
@@ -200,16 +200,24 @@
         </div>
     </footer>
 
-</form>
-
-
+<!-- LOAN APPLICATION MODAL -->
+    <div id="loanModal" class="loan-modal" aria-hidden="true">
+        <div class="loan-modal-content loan-form-modal">
+            <div class="loan-modal-header">
+                <h2>Loan Application</h2>
+                <button type="button" id="closeLoanModal" class="close-loan-modal" aria-label="Close">&times;</button>
             </div>
-
+            <div class="loan-modal-body">
+                <form id="loanApplicationForm"></form>
+            </div>
         </div>
-
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
     <script src="script.js"></script>
-    <script src="FORMS/form.js?v=5"></script>
+    <script src="FORMS/engine.js?v=1"></script>
+    <script src="FORMS/sc/form.js?v=1"></script>
+    <script src="FORMS/lc/form.js?v=1"></script>
+    <script src="FORMS/readmission/form.js?v=1"></script>
 </body>
 </html>

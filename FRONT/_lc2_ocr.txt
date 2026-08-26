@@ -1,0 +1,86 @@
+y=  16-  42 x= 516- 758 s=0.99 | PROMISSORYNOTE
+y=  53-  69 x= 138- 173 s=0.98 | PN#
+y=  48-  67 x=1075-1100 s=1.0 | 20
+y=  95- 123 x= 157-1204 s=0.95 | FORVALUERECEIVED,IherebypromisedtopaytheSUPREMECOURTSAVINGS&LOANASSOCIATION,INC.(SCSLAI),oruponits
+y= 143- 167 x= 961-1205 s=0.95 | ),withinterestattherateof
+y= 148- 171 x=  74- 389 s=0.99 | similarfringebenefits,theamountof
+y= 148- 168 x= 778- 811 s=0.81 | P
+y= 167- 194 x= 800-1205 s=0.93 | each,payablemonthly,until thisloan,including
+y= 173- 196 x= 206- 293 s=0.97 | percent(
+y= 172- 195 x= 344- 484 s=0.94 | ）perannum in
+y= 171- 192 x= 573- 724 s=0.96 | installmentsofP
+y= 191- 221 x=  70-1220 s=0.97 | interestand othercharges,shallhavebeenfullypaid.Ihereby authorizedtheCashier/DisbursingOfficertodeductfrommy salary/Rata/JDF
+y= 215- 241 x=  71- 672 s=0.99 | orothersimilarallowancesthesaidamountasmaybedueandpayable.
+y= 265- 293 x= 143-1206 s=0.97 | Iherebyagreedthatincaseofdelayby thirty(30)daysormoreinthepaymentof myinstallment,orincasewarbreaksout,or
+y= 291- 316 x=  74-1203 s=0.87 | likewise,ncaseofmydeath,disability,retirement,resignation,transfer,absencewithoutpay,suspension,separationfrommypresent
+y= 313- 341 x=  75-1207 s=0.99 | office,theentireunpaidbalanceofthisloan,includinginterestandotherchargesshallimmediatelybecomedueandpayablewithout
+y= 338- 366 x=  76- 802 s=0.95 | need of any formal demand, and I hereby agreed to pay additional interest at the rate of
+y= 338- 365 x= 935-1022 s=0.92 | percent(
+y= 340- 361 x=1096-1205 s=0.96 | )perannum
+y= 365- 389 x=  75- 640 s=0.98 | on thetotalamountdueuntil paid,payableandcomputedmonthly.
+y= 410- 437 x= 121-1206 s=0.96 | Inconsiderationofthisloan,IherebyassignedinfavorofscsLAl,somuchofmycapitaldeposit,includingearneddividendswith
+y= 435- 462 x=  74-1206 s=0.97 | SCSLAland all moniesandmonetarybenefitsdueortobeduefrommypresentoffice,GovernmentServiceInsuranceSystem(GSIS)and
+y= 459- 486 x=  75-1205 s=0.95 | or from any government office orothersources aswell,sufficient to pay the entire outstandingbalance of this loan,includingstipulated
+y= 510- 531 x=  76-1205 s=0.97 | allmonieslikeEEA,cashgift,AnniversaryandotherallowancesduemeandtoremitsaidmoniesdirectlytotheScSLAIthruitsduly
+y= 532- 557 x=  75-1206 s=0.97 | authorizedrepresentative(s).This assignment isirrevocableforaslongasmyobligation(s)withSCSLAl remainsunpaid.1herebyauthorized
+y= 603- 628 x= 149-1207 s=0.99 | IncaseitshallbecomenecessarytocollectthisPromissoryNotebyand throughanattorney-at-lawand/orintheeventofcourt
+y= 628- 654 x=  75-1206 s=0.94 | litigation,Ishallpay twenty(20%)percentof the amount due as attorney'sfeeplus cost ofsuit.incase of dispute arisingoutof this
+y= 653- 678 x=  75- 852 s=0.95 | transactionshall bebroughtbeforeproper trial courtwitht Jurisdiction in theCity of Manila.
+y= 700- 727 x= 136-1075 s=0.97 | I hereby agreed that the entire amount of this loan shall be insured in SCSLAl's Loan Redemption Insurance (LRI).
+y= 751- 773 x= 596- 679 s=1.0 | CONSENT
+y= 791- 816 x= 101-1208 s=0.97 | Ihereby authorizeSCSLAItoobtainmypersonal records atEDPsection,Leavedivision,andJIB/CIDforthepurposeofprorcessing
+y= 813- 839 x=  68- 903 s=0.97 | myloan application andkeepingmydata andotherpurposesrequiredbylawandBSPregulations.
+y= 875- 901 x= 101- 405 s=0.97 | MemberBorrower'sPrinted Name
+y= 879- 900 x= 493- 748 s=0.97 | MemberBorrower'sSignature
+y= 878- 900 x= 861-1117 s=0.99 | MemberBorrower'sSignature
+y= 904- 925 x= 100- 160 s=0.99 | Date:
+y= 914- 932 x= 449- 819 s=0.98 | SURETIES'/CO-MAKERS'UNDERSTANDING
+y= 935- 956 x= 116-1186 s=0.98 | Inconsiderationoftheabovementioned loanofthePrincipal,WE,theundersignedCo-makers,bindourselvesjointlyand
+y= 980-1001 x=  48-1220 s=0.99 | attorney'sfeesinaccordancewiththetermsandconditionsoftheabovePromissoryNote.Inthisconnection,weherebyassignedin
+y=1000-1025 x=  46-1221 s=0.97 | favorofScSLAlsomuchofourmonies andmonetarybenefitsdueortobedueus,individually,fromourpresentoffices,Government
+y=1024-1048 x=  47-1221 s=0.96 | Service and InsuranceSystem(GSis),fromanyfovernment office andany othersources aswesufficienttopay the aboveloan.Upon
+y=1045-1072 x=  46-1221 s=0.98 | defaultofpaymentofanyinstallment,all otherinstallmentsshall becomedueandpayable andwejointlyandseverallyagreetopay
+y=1067-1094 x= 427-1221 s=0.99 | perannumofthetotalamountdueuntilpaid,payablewhencomputedmonthly.We
+y=1069-1091 x=  46- 351 s=1.0 | additionalinterestattherateof
+y=1090-1115 x=  46-1221 s=0.96 | therefore,authorizedtheoffice(s)concerned todeductfrom oursalaries,andotherallowances likeEEA,midyear/year end bonuses,
+y=1114-1138 x=  47-1222 s=0.94 | cashgift and anniversary allowance and monies due us,individually,the necessary amountsand to remit said moniestotheScSLAl
+y=1182-1206 x=  47-1221 s=0.98 | assignmentshall beirrevocableaslong astheaboveloanoranyrenewalthereof remainsunpaid.Theoverpaymentwill berefunedby
+y=1203-1228 x= 163-1104 s=0.98 | SCSLAlinlesstheco-makerhasexistingdeficiencyintheirloan inwhichcaseitwill be applied aspayment.
+y=1234-1255 x= 501- 775 s=0.99 | WESIGNEDASCO-MAKERS
+y=1259-1277 x= 153- 282 s=1.0 | PRINTEDNAME
+y=1259-1280 x= 395- 494 s=0.99 | SIGNATURE
+y=1258-1281 x= 612-1077 s=0.99 | EMPLOYEENO.DESIGNATIONCOURT/STATION
+y=1283-1302 x=  82-  95 s=1.0 | 1
+y=1307-1327 x=  82-  95 s=1.0 | 2
+y=1329-1351 x=  80-  96 s=1.0 | 3
+y=1354-1376 x=  80-  98 s=1.0 | 4
+y=1378-1401 x=  80-  96 s=1.0 | 5
+y=1403-1424 x=  81-  97 s=1.0 | 6
+y=1427-1449 x=  80-  96 s=1.0 | 7
+y=1452-1474 x=  80-  96 s=1.0 | 8
+y=1475-1498 x=  80-  96 s=1.0 | 9
+y=1499-1522 x=  77- 103 s=1.0 | 10
+y=1524-1546 x=  77- 103 s=1.0 | 11
+y=1548-1570 x=  77- 104 s=1.0 | 12
+y=1572-1595 x=  77- 105 s=1.0 | 13
+y=1598-1619 x=  76- 104 s=0.83 | 14_
+y=1620-1645 x=  75- 105 s=1.0 | 15
+y=1689-1713 x=  76- 183 s=0.99 | NOTES:
+y=1725-1746 x= 187- 581 s=0.98 | 1.OnlySCSLAImembercansignasCo-Makers.
+y=1747-1768 x= 186-1061 s=0.97 | 2.ForRankinfileemployees,atleast10co-makersexceptforMaxi loans,Businessloans,HELP,Housing
+y=1768-1789 x= 204- 469 s=0.97 | Asst.Loan (HAL)15co-makers.
+y=1790-1812 x= 185- 566 s=0.96 | 3.Yourpayslip serves asyourSCSLAlreceipt.
+y=1809-1835 x= 184- 805 s=0.98 | 4.Deliveryof LoanProceedswill autocredittoATMaccountpayroll(LBP)
+y=1858-1883 x=  84- 303 s=0.99 | ATTACHMENTS:
+y=1890-1916 x=  80- 249 s=0.96 | Loan Renewal:
+y=1893-1919 x= 612-1027 s=0.99 | NewMemberswithloanapplication:
+y=1919-1948 x=  99- 419 s=0.98 | Duly accomplished loan application
+y=1921-1942 x= 634-1018 s=1.0 | DulyaccomplishedMembershipapplication
+y=1943-1970 x= 100- 233 s=0.97 | Latest payslip
+y=1940-1968 x= 632- 951 s=0.99 | Duly accomplished loan application
+y=1966-1993 x=  99- 537 s=0.98 | 1governmentissued I.D.ofborrower(Photocopy)
+y=1963-1992 x= 632- 765 s=0.99 | Latest payslip
+y=1989-2016 x=  99- 602 s=0.97 | 1governmentissued I.D.ofendorsing officer(Photocopy)
+y=1988-2012 x= 632- 869 s=0.99 | Appointment(Photocopy)
+y=2010-2036 x= 630-1070 s=0.98 | 1governmentissued I.D.ofborrower(Photocopy)
+y=2034-2057 x= 631-1133 s=0.98 | 1governmentissuedI.D.ofendorsingofficer(Photocopy)

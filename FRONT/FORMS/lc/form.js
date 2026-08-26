@@ -19,7 +19,7 @@ receivedDate:{x:940,y:266,w:266,h:24,fs:13},
 others:{x:216,y:382,w:140,h:16,fs:12},
 amountWords:{x:138,y:486,w:338,h:20,fs:13},
 loanAmount:{x:608,y:486,w:82,h:20,fs:12},
-payableYearsWords:{x:832,y:48,w:80,h:18,fs:12},
+payableYearsWords:{x:832,y:486,w:80,h:18,fs:12},
 payableYears:{x:912,y:486,w:50,h:22,fs:12},
 applicantName:{x:285,y:464,w:420,h:20,fs:14},
 edpNumber:{x:58,y:575,w:230,h:22,fs:14},
@@ -104,9 +104,10 @@ if(!vals.emailAddress)miss.push("Email Address");
 if(!vals.loanAmount)miss.push("Loan Amount");
 },
 
-getResult:function(vals,checkedOf){ return{form:"lc",fields:vals,
+getResult:function(vals,checkedOf){ var regs=checkedOf("regular"),specs=checkedOf("special"),apps=checkedOf("application");
+return{form:"lc",fields:vals,
 loanTypes:regs.concat(specs).map(function(x){return x.label;}),
-applicationType:apps[0].label,
+applicationType:apps.length?apps[0].label:"",
 modeOfDelivery:checkedOf("delivery").map(function(x){return x.label;})};
 }
 
