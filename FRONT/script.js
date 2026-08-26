@@ -63,7 +63,6 @@ const pages2025 = [
   'images/gallery/outreach/20.jpg',
   'images/gallery/outreach/21.jpg',
   'images/gallery/outreach/22.jpg',
-  'images/gallery/outreach/23.jpg',
   'images/gallery/outreach/24.jpg', 
   'images/gallery/outreach/25.jpg',
   'images/gallery/outreach/26.jpg',
@@ -79,7 +78,6 @@ const pages2025 = [
   'images/gallery/outreach/36.jpg',
   'images/gallery/outreach/37.jpg'
 
-  // Add more images as needed (you have up to 16 images available)
 ];
 
 function buildPageRecords(year, imageList) {
@@ -93,17 +91,17 @@ function buildPageRecords(year, imageList) {
 
 const yearbookData = [
   {
-    year: 2022-2023,
+    year: 2022,
     badge: 'Silungan ng Pag-asa',
     title: '2022-2023 Edition',
     summary: 'A community initiative focused on providing support, care, and a safe place for individuals and families in need.',
-    pages: buildPageRecords(2022, pages2022),
+    pages: buildPageRecords(2022 , pages2022),
     editionDetails: {
         activityTitle: 'Silungan ng Pag-asa',
         caption: 'An SCSLAI initiative that extends compassion and assistance to individuals and families in need through community support and outreach.',
         narrative: 'Silungan ng Pag-asa reflects SCSLAI’s commitment to serving the community by providing support and assistance to people facing difficult circumstances. The initiative aims to offer hope, care, and meaningful help to beneficiaries while strengthening the spirit of compassion and solidarity among SCSLAI members and community partners.',
         date: '2022-2023',
-        venue: 'Various locations across Metro Manila',
+        venue: 'Unit-K, 3rd Floor, PJM Building, Belen Street, beside Paco Park in Paco, Manila',
         participants: 'SCSLAI members, volunteers, beneficiaries, and community partners',
         photographer: 'SCSLAI Documentation Team',
         album: 'Silungan ng Pag-asa Collection',
@@ -116,7 +114,7 @@ const yearbookData = [
     year: 2024,
     badge: 'Growing a Greener Future',
     title: '2024 Edition',
-    summary: 'Browse activities and events from 2024.',
+    summary: 'Growing a Greener Future.',
     pages: buildPageRecords(2024, pages2024),
     editionDetails: {
         activityTitle: '2024 Tree Planting Activity',
@@ -135,7 +133,7 @@ const yearbookData = [
     year: 2025,
     badge: 'Serving with Compassion',
     title: '2025 Edition',
-    summary: 'Browse activities and events from 2025.',
+    summary: 'Serving with Compassion',
     pages: buildPageRecords(2025, pages2025),
     editionDetails: {
         activityTitle: '2025 Outreach Program for the Aeta Community',
@@ -754,7 +752,7 @@ function nextAnnouncement() {
 
 if (announcementImg) {
   announcementImg.classList.add('slide-up');
-  setInterval(nextAnnouncement, 10000);
+  setInterval(nextAnnouncement, 15000);
 }
 
 const galleryItems = document.querySelectorAll('.gallery-item');
@@ -1147,11 +1145,12 @@ function createCalculatorModal() {
         <div class="calculator-note">
           <strong>Note:</strong>
           <span>The calculation is based on the information you provide. To determine your Eligible Loan Amount, ₱5,000 is deducted from your take-home pay to ensure that your remaining pay does not fall below ₱5,000.</span>
-        </div>
 
-        <div class="calculator-notice">
-          <strong>Privacy Notice:</strong>
-          <span>The information you enter into this calculator is used only to calculate your estimated loan amount. The website does not store, collect, or save any information you provide.</span>
+          <div class="calculator-notice">
+            <strong>Privacy Notice:</strong>
+            <span>The information you enter into this calculator is used only to calculate your estimated loan amount. The website does not store, collect, or save any information you provide.</span>
+          </div>
+          
         </div>
 
       </div>
@@ -1204,11 +1203,12 @@ function createCalculatorModal() {
         <div class="calculator-note">
           <strong>Note:</strong>
           <span>The calculation is based on the information you provide. To determine your Eligible Loan Amount, ₱5,000 is deducted from your take-home pay to ensure that your remaining pay does not fall below ₱5,000.</span>
-        </div>
 
-         <div class="calculator-notice">
-          <strong>Privacy Notice:</strong>
-          <span>The information you enter into this calculator is used only to calculate your estimated loan amount. The website does not store, collect, or save any information you provide.</span>
+          <div class="calculator-notice">
+            <strong>Privacy Notice:</strong>
+            <span>The information you enter into this calculator is used only to calculate your estimated loan amount. The website does not store, collect, or save any information you provide.</span>
+          </div>
+          
         </div>
         
       </div>

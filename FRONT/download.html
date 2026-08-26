@@ -139,6 +139,7 @@
                                     <a href="#" class="btn btn-download">Fill-Out</a>
                                 </div>
                             </article>
+                            <!-- 
                             <article class="download-item">
                                 <span>Refund Form</span>
                                 <div class="download-actions">
@@ -146,6 +147,7 @@
                                     <a href="#" class="btn btn-download">Fill-Out</a>
                                 </div>
                             </article>
+                             -->
                         </div>
                     </div>
                 </section>
@@ -197,120 +199,6 @@
             <p>&copy; 2026 SCSLAI. All rights reserved.</p>
         </div>
     </footer>
-    <!-- LOAN APPLICATION MODAL -->
-    <div id="loanModal" class="loan-modal">
-
-        <div class="loan-modal-content loan-form-modal">
-
-            <div class="loan-modal-header">
-
-                <h2>Loan Application</h2>
-
-                <button
-                    type="button"
-                    id="closeLoanModal"
-                    class="close-loan-modal"
-                >
-                    &times;
-                </button>
-
-            </div>
-
-
-            <div class="loan-modal-body">
-
-                <form id="loanApplicationForm">
-
-  <div class="loan-form-canvas">
-    <img class="loan-form-background"
-         src="FORMS/Supreme Court (SC) Loan Application Form_page-0001.png"
-         alt="SCSLAI Loan Application Form">
-
-    <!-- ============ TEXT INPUTS (transparent overlay) ============ -->
-    <input type="text" id="others" class="form-input" maxlength="60">
-
-    <input type="number" id="loanAmount" class="form-input" min="0" step="0.01" maxlength="15">
-    <input type="text" id="amountWords" class="form-input" maxlength="80">
-    <input type="text" id="payableYears" class="form-input" maxlength="10">
-    <!-- <input type="text" id="receivedDate" class="form-input" maxlength="12"> -->
-    <input type="text" id="applicantName" class="form-input" maxlength="80">
-
-    <input type="text" id="edpNumber" class="form-input" maxlength="12">
-    <input type="text" id="tin" class="form-input" maxlength="16">
-    <input type="date" id="birthdate" class="form-input">
-    <input type="text" id="placeOfBirth" class="form-input" maxlength="60">
-
-    <input type="text" id="lastName" class="form-input" maxlength="50">
-    <input type="text" id="firstName" class="form-input" maxlength="50">
-    <input type="text" id="middleName" class="form-input" maxlength="50">
-    <input type="text" id="suffix" class="form-input" maxlength="10">
-    <!-- <input type="text" id="signature" class="form-input" maxlength="60"> -->
-
-    <input type="text" id="officeStation" class="form-input" maxlength="60">
-    <input type="text" id="position" class="form-input" maxlength="50">
-    <input type="text" id="appointment" class="form-input" maxlength="60">
-
-    <input type="text" id="homeAddress" class="form-input" maxlength="100">
-    <input type="text" id="zipCode" class="form-input" maxlength="4">
-    <input type="text" id="printedName" class="form-input" maxlength="60">
-
-    <input type="text" id="contactNumber" class="form-input" maxlength="15">
-    <input type="email" id="emailAddress" class="form-input" maxlength="80">
-
-    <!-- ============ CHECKBOXES (transparent overlay) ============ -->
-    <!-- Loan types: Regular -->
-    <input type="checkbox" id="business" class="form-checkbox">
-    <input type="checkbox" id="emergencyRata" class="form-checkbox">
-    <input type="checkbox" id="maxi" class="form-checkbox">
-    <input type="checkbox" id="character" class="form-checkbox">
-    <input type="checkbox" id="help" class="form-checkbox">
-    <input type="checkbox" id="meal" class="form-checkbox">
-    <input type="checkbox" id="educational" class="form-checkbox">
-    <input type="checkbox" id="housing" class="form-checkbox">
-    <input type="checkbox" id="multiPurpose" class="form-checkbox">
-    <input type="checkbox" id="equitable" class="form-checkbox">
-    <input type="checkbox" id="jdfAllowance" class="form-checkbox">
-    <input type="checkbox" id="petty" class="form-checkbox">
-    <input type="checkbox" id="equity" class="form-checkbox">
-    <input type="checkbox" id="longTerm" class="form-checkbox">
-    <input type="checkbox" id="subsistence" class="form-checkbox">
-    <!-- Loan types: Special -->
-    <input type="checkbox" id="deeaApril" class="form-checkbox">
-    <input type="checkbox" id="eeaOctober" class="form-checkbox">
-    <input type="checkbox" id="midYear" class="form-checkbox">
-    <input type="checkbox" id="yearEnd" class="form-checkbox">
-    <input type="checkbox" id="anniversary" class="form-checkbox">
-    <input type="checkbox" id="cashGift" class="form-checkbox">
-    <!-- Application type -->
-    <input type="checkbox" id="newLoan" class="form-checkbox">
-    <input type="checkbox" id="consolidate" class="form-checkbox">
-    <!-- Mode of delivery -->
-    <input type="checkbox" id="deliveryAtm" class="form-checkbox">
-    <input type="checkbox" id="deliveryPickup" class="form-checkbox">
-  </div>
-
-  <div class="loan-form-canvas" data-page="2">
-    <img class="loan-form-background"
-         src="FORMS/Supreme Court (SC) Loan Application Form_page-0002.png"
-         alt="SCSLAI Promissory Note">
-
-    <input type="text" id="pnNumber" class="form-input" maxlength="20">
-    <input type="text" id="pnAmountWords" class="form-input" maxlength="100">
-    <input type="text" id="pnAmountFigures" class="form-input" maxlength="20">
-    <input type="text" id="pnInterestRate" class="form-input" maxlength="10">
-    <input type="text" id="pnInstallments" class="form-input" maxlength="10">
-    <input type="text" id="pnInstallmentAmt" class="form-input" maxlength="20">
-    <input type="text" id="pnAddlRate" class="form-input" maxlength="10">
-    <input type="text" id="pnPrintedName" class="form-input" maxlength="60">
-    <!-- <input type="text" id="pnSignature" class="form-input" maxlength="60">
-    <input type="text" id="pnSignature2" class="form-input" maxlength="60"> -->
-    <input type="text" id="pnDate" class="form-input" maxlength="20">
-  </div>
-
-  <div class="modal-actions">
-    <button type="button" id="cancelLoanModal">Cancel</button>
-    <button type="submit">Complete</button>
-  </div>
 
 </form>
 
