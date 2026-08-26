@@ -3508,7 +3508,7 @@ body.calculator-modal-open{
     margin-bottom:12px;
 }
 
-.contact-page .contact-header p{
+.contact-page {
     color:#edf4f2;
     max-width:780px;
     line-height:1.75;
