@@ -727,7 +727,7 @@ const announcementImages = [
   {src: 'images/Annoncements/calamity-loan-2.png', alt: 'Final Educational Poster'},
   {src: 'images/Annoncements/Authority-to-deduct.jpg', alt: 'Announcement 1'},
   {src: 'images/Annoncements/TLA.jpg', alt: 'Announcement 3'},
-  {src: 'images/Annoncements/STD-2.png', alt: 'Announcement 2'},
+  {src: 'images/Annoncements/STD-FINAL.png', alt: 'Announcement 2'},
   {src: 'images/Annoncements/anniv.png', alt: 'ANNIVERSARY'}
 ];
 const announcementImg = document.querySelector('.announcement-posters img');
