@@ -126,6 +126,13 @@ body.loan-modal-open {
     text-transform: uppercase;
 }
 
+/* dropdown (payable-years select) styled to match text inputs */
+.form-input.form-select {
+    -webkit-appearance: menulist;
+    appearance: auto;
+    cursor: pointer;
+}
+
 /* --- Checkboxes (transparent, printed square stays visible) */
 .form-checkbox {
     position: absolute;

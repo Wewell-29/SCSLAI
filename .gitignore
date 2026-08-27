@@ -1,0 +1,10 @@
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Generated loan application PDFs (README.md stays tracked)
+FRONT/FORMS/generated/*.pdf
+
+# Scratch / debug / temp artifacts
+*.log
