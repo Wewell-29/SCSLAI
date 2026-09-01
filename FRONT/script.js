@@ -1407,9 +1407,13 @@ function computeLoan(court) {
 
   if (!Number.isFinite(takeHomePay) || takeHomePay <= 0) {
     clearCalculatedLoanAmount(court);
+    elements.result.classList.add('error-result');
     elements.result.innerHTML = '<strong>Loan Eligibility</strong><span>Please enter a valid current take-home pay.</span>';
     return;
   }
+
+    elements.result.classList.remove('error-result');
+    elements.result.innerHTML = '<strong>Loan Eligibility</strong><span>Your eligible loan amount appears here.</span>';
 
   if (typeof loan.monthlyRate === 'number') {
     clearCalculatedLoanAmount(court);
@@ -1429,8 +1433,15 @@ function computeLoan(court) {
   elements.eligibleTakeHomePay.value = formatCurrency(eligibleMonthlyAmortization);
 
   if (eligibleMonthlyAmortization <= 0) {
-    clearCalculatedLoanAmount(court);
-    elements.result.innerHTML = `<strong>Loan Eligibility</strong><span>Current take-home pay must be greater than ${formatCurrency(minimumRetainedTakeHomePay)} to provide a loan payment.</span>`;
+  clearCalculatedLoanAmount(court);
+
+  elements.result.classList.add('error-result');
+
+  elements.result.innerHTML = `
+    <strong>Loan Eligibility</strong>
+    <span>Current take-home pay must be greater than ${formatCurrency(minimumRetainedTakeHomePay)} to provide a loan payment.</span>
+  `;
+
     return;
   }
 
@@ -1461,14 +1472,30 @@ function computeLoan(court) {
       return;
     }
 
-    if (desiredLoanAmountInput > eligibleLoanAmount) {
-      clearCalculatedLoanAmount(court);
-      elements.result.innerHTML = `<strong>Loan Eligibility</strong><span>Your maximum eligible amount is ${formatCurrency(eligibleLoanAmount)}. Please enter a desired amount within eligibility.</span>`;
-      return;
-    }
+    // INVALID
+  if (desiredLoanAmountInput > eligibleLoanAmount) {
+    clearCalculatedLoanAmount(court);
 
-    amortizationBaseAmount = desiredLoanAmountInput;
+    elements.result.classList.add('error-result');
+
+    elements.result.innerHTML = `
+      <strong>Loan Eligibility</strong>
+      <span>Your maximum eligible amount is ${formatCurrency(eligibleLoanAmount)}. Please enter a desired amount within eligibility.</span>
+    `;
+
+    return;
   }
+
+    // VALID
+    elements.result.classList.remove('error-result');
+
+    elements.result.innerHTML = `
+      <strong>Loan Eligibility</strong>
+      <span>Your eligible loan amount is ${formatCurrency(eligibleLoanAmount)}.</span>
+    `;
+
+      amortizationBaseAmount = desiredLoanAmountInput;
+    }
 
   const monthlyAmortization = amortizationBaseAmount * factorRate;
 

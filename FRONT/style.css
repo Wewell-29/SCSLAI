@@ -84,6 +84,7 @@ header{
     display:flex;
     align-items:center;
     gap:10px;
+    width: 20%;
 }
 
 .logo img{
@@ -108,11 +109,22 @@ header{
     line-height:1.2;
 }
 
+@media (max-width: 780px) {
+ 
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    width: 100%;
+}
+}
+
 nav{
     display:flex;
     flex-wrap:wrap;
     gap:clamp(16px, 2.6vw, 80px);
     justify-content:center;
+    width: 79%;
 }
 
 nav a{
@@ -137,10 +149,12 @@ nav a:hover{
     background:rgba(255,255,255,0.08);
     color:#ffffff;
     cursor:pointer;
+    
 }
 
 .nav-toggle i{
     font-size:18px;
+    
 }
 
 /* Minimal dropdown styles that don't change nav appearance on click */
@@ -3296,6 +3310,15 @@ body.calculator-modal-open{
     overflow:hidden;
 }
 
+.calculator-result {
+  color: inherit;
+}
+
+.calculator-result.error-result,
+.calculator-result.error-result strong,
+.calculator-result.error-result span {
+  color: #f13f3f !important;
+}
 @media (max-width: 900px){
     .calculator-modal{
         align-items:flex-start;

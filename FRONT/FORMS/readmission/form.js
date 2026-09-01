@@ -13,9 +13,9 @@ pdfSuffix:"Membership-Readmission",
 images:["FORMS/MEMBERSHIP RE-ADMISSION 2025 Edition.png"],
 
 fields:{
-lastName:{x:478,y:1400,w:690,h:55,fs:28},
-firstName:{x:1170,y:1400,w:700,h:55,fs:28},
-middleName:{x:1880,y:1400,w:650,h:55,fs:28},
+lastName:{x:300,y:1287,w:690,h:55,fs:28},
+firstName:{x:1100,y:1287,w:700,h:55,fs:28},
+middleName:{x:1880,y:1287,w:650,h:55,fs:28},
 birthdate:{x:420,y:1460,w:500,h:48,fs:26},
 placeOfBirth:{x:1180,y:1460,w:490,h:48,fs:26},
 nationality:{x:1890,y:1460,w:630,h:48,fs:26},
