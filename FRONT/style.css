@@ -120,22 +120,46 @@ header{
 }
 
 nav{
-    display:flex;
-    flex-wrap:wrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     gap:clamp(16px, 2.6vw, 80px);
-    justify-content:center;
     width: 79%;
 }
 
 nav a{
+    font-size: 18px;
+    font-weight:bold;
+    text-transform: uppercase;
+    text-decoration: none;
     color:rgb(255, 255, 255);
     text-decoration:none;
-    font-weight:bold;
-    transition:.3s;
+    padding: 0.4rem 0;
+    transition: color 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
-nav a:hover{
-    color:#78fdc6;
+/* Active main navigation item */
+nav > a.active,
+nav .dropdown.active .dropbtn {
+    color: #78fdc6;
+}
+
+/* Active submenu item */
+.dropdown-content a.active {
+    color: #030303;
+    background: rgba(118, 237, 187, 0.804);
+    font-weight: bold;
+}
+
+/*  active ABOUT US */
+nav .dropdown.active .dropbtn {
+    border-bottom: 3px solid #78fdc6;
+    padding-bottom: 5px;
+}
+
+nav a.active {
+    border-bottom: 3px solid #78fdc6;
+    padding-bottom: 5px;
 }
 
 .nav-toggle{
@@ -146,7 +170,7 @@ nav a:hover{
     height:42px;
     border:1px solid rgba(255,255,255,0.45);
     border-radius:8px;
-    background:rgba(255,255,255,0.08);
+    background:rgba(100, 97, 97, 0.08);
     color:#ffffff;
     cursor:pointer;
     
@@ -157,7 +181,6 @@ nav a:hover{
     
 }
 
-/* Minimal dropdown styles that don't change nav appearance on click */
 .dropdown{
     position:relative;
 }
@@ -173,9 +196,21 @@ nav a:hover{
     font-size:inherit;
     transition: none; 
 }
-
+nav a:hover,
 .dropbtn:hover{
     color:#78fdc6;
+}
+
+/* Dim other main nav items when hovering */
+nav:has(> a:hover) > a:not(:hover):not(.active),
+nav:has(> a:hover) .dropdown:not(.active) .dropbtn {
+    opacity: 0.6;
+}
+
+/* When hovering a dropdown, dim other items */
+nav:has(.dropdown:hover) > a:not(:hover):not(.active),
+nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
+    opacity: 0.6;
 }
 
 .dropbtn:focus,
@@ -210,7 +245,7 @@ nav a:hover{
 }
 
 .dropdown-content a:hover{
-    background:#a5ada8;
+    background:#525553ca;
 }
 
 /* Overlay */
