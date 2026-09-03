@@ -19,3 +19,5 @@ node_modules/
 package.json
 package-lock.json
 FRONT/scslaicares-qa.html
+qa-forms.js
+qa-results-forms/

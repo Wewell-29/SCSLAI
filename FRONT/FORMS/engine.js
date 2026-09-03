@@ -27,6 +27,13 @@
 
   function getWidth()  { return cfg().width  || 1275; }
   function getHeight() { return cfg().height || 2100; }
+  /* Per-page dimensions: a form may declare width2/height2 when its second
+     page image has a different size than the first. Falls back to the main
+     width/height so existing single-size forms are unaffected. */
+  function pageDims(pg2) {
+    if (pg2 && cfg().width2 && cfg().height2) return { w: cfg().width2, h: cfg().height2 };
+    return { w: getWidth(), h: getHeight() };
+  }
   function hasPage2()  { return !!cfg().hasPage2; }
   function hasBoxes()  { return !!cfg().hasCheckboxes; }
   function useUpper()  { return cfg().useUppercase !== false; }
@@ -36,7 +43,8 @@
     var img = cv.querySelector(".loan-form-background");
     var cw = img ? img.getBoundingClientRect().width : 0;
     if (cw <= 0) cw = cv.getBoundingClientRect().width;
-    return cw / getWidth();
+    var dims = pageDims(cv.getAttribute("data-page") === "2");
+    return cw / dims.w;
   }
 
   function updateScale() {
@@ -51,7 +59,7 @@
       var pg2 = cv.getAttribute("data-page") === "2";
       var map = pg2 ? (cfg().page2Fields || {}) : (cfg().fields || {});
       if (!map) return;
-      var scale = getScale(cv), aw = getWidth(), ah = getHeight();
+      var dims = pageDims(pg2), scale = getScale(cv), aw = dims.w, ah = dims.h;
       var inputs = cv.querySelectorAll(".form-input"), i, el, f;
       for (i = 0; i < inputs.length; i++) {
         el = inputs[i]; f = map[el.id]; if (!f) continue;
@@ -180,7 +188,7 @@
         map=isP2?(cfg().page2Fields||{}):(cfg().fields||{});if(!map)continue;
         img=cv.querySelector(".loan-form-background");
         try{var rp=await fetch(img.src);if(rp.ok)png=await doc.embedPng(await rp.arrayBuffer());else throw"fetch";}catch(e){png=await doc.embedPng(await img2url(img));}
-        var aw=getWidth(),ah=getHeight();
+        var dims=pageDims(isP2),aw=dims.w,ah=dims.h;
         page=doc.addPage([aw,ah]);page.drawImage(png,{x:0,y:0,width:aw,height:ah});
         for(id in map){if(!Object.prototype.hasOwnProperty.call(map,id))continue;el=document.getElementById(id);val=el?el.value:"";if(!val)continue;f=map[id];page.drawText(val.toUpperCase(),{x:f.x,y:ah-f.y-f.h,size:f.fs,font:font,color:isP2?rgb(0,0,0):(hasBoxes()?rgb(0,0.2,0.6):rgb(0,0,0))});}
         if(!isP2&&hasBoxes()){
@@ -205,7 +213,13 @@
       var fld=cfg().fields||{},vals={},id;
       for(id in fld){if(Object.prototype.hasOwnProperty.call(fld,id))vals[id]=getVal(id);}
       var miss=[];
-      if(typeof cfg().validate==="function")cfg().validate(vals,miss); if(hasBoxes()){var regs=checkedOf("regular"),specs=checkedOf("special"),apps=checkedOf("application");if(regs.length===0&&specs.length===0)miss.push("Type of Loan");if(apps.length===0)miss.push("Application Type (New Loan / Consolidate)");}
+      if(typeof cfg().validate==="function")cfg().validate(vals,miss);
+      /* Loan-category checkbox validation only applies to forms that actually
+         declare regular/special/application checkboxes (loan & withdrawal
+         forms); other checkbox forms (e.g. civil status) skip it. */
+      var needsLoanCats=false,cbm=cfg().checkboxes||{},cbk,cbg;
+      for(cbk in cbm){if(!Object.prototype.hasOwnProperty.call(cbm,cbk))continue;cbg=cbm[cbk].category;if(cbg==="regular"||cbg==="special"||cbg==="application"){needsLoanCats=true;break;}}
+      if(needsLoanCats){var regs=checkedOf("regular"),specs=checkedOf("special"),apps=checkedOf("application");if(regs.length===0&&specs.length===0)miss.push("Type of Loan");if(apps.length===0)miss.push("Application Type (New Loan / Consolidate)");}
       if(vals.edpNumber&&!/^[0-9]+$/.test(vals.edpNumber)){alert("EDP Number must be numbers only.");return;}
       if(vals.zipCode&&!/^[0-9]{4}$/.test(vals.zipCode)){alert("Please enter a valid 4-digit ZIP Code.");return;}
       var mr=cfg().mobileField?vals[cfg().mobileField]:vals.contactNumber;
