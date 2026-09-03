@@ -506,5 +506,66 @@
     </footer>
     
     <script src="../script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // Get the current page filename
+            const currentPage = window.location.pathname
+                .split("/")
+                .pop()
+                .toLowerCase();
+
+            // Normal navigation links
+            document.querySelectorAll("nav > a").forEach(link => {
+
+                const href = link.getAttribute("href");
+
+                if (!href) return;
+
+                const linkPage = href
+                    .split("/")
+                    .pop()
+                    .split("?")[0]
+                    .split("#")[0]
+                    .toLowerCase();
+
+                if (linkPage === currentPage) {
+                    link.classList.add("active");
+                }
+
+            });
+
+
+            // ABOUT US submenu links
+            document.querySelectorAll(".dropdown-content a").forEach(link => {
+
+                const href = link.getAttribute("href");
+
+                if (!href) return;
+
+                const linkPage = href
+                    .split("/")
+                    .pop()
+                    .split("?")[0]
+                    .split("#")[0]
+                    .toLowerCase();
+
+                if (linkPage === currentPage) {
+
+                    // Highlight the submenu
+                    link.classList.add("active");
+
+                    // Highlight ABOUT US button
+                    const dropdown = link.closest(".dropdown");
+
+                    if (dropdown) {
+                        dropdown.classList.add("active");
+                    }
+                }
+
+            });
+
+        });
+        </script>
 </body>
 </html>

@@ -249,5 +249,40 @@
         </div>
     </footer>
     <script src="script.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const currentPage = window.location.pathname.split("/").pop() || "index.html";
+
+        // Normal navigation links
+        document.querySelectorAll("nav > a").forEach(link => {
+
+            const linkPage = link.getAttribute("href").split("/").pop();
+
+            if (linkPage === currentPage) {
+                link.classList.add("active");
+            }
+
+        });
+
+        // Dropdown submenu links
+        document.querySelectorAll(".dropdown-content a").forEach(link => {
+
+            const linkPage = link.getAttribute("href").split("/").pop();
+
+            if (linkPage === currentPage) {
+
+                // Highlight submenu
+                link.classList.add("active");
+
+                // Also highlight ABOUT US
+                const dropdown = link.closest(".dropdown");
+                dropdown.classList.add("active");
+            }
+
+        });
+
+    });
+    </script>
 </body>
 </html>
