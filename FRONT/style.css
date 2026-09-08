@@ -248,6 +248,27 @@ nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
     background:#525553ca;
 }
 
+/* ========================================
+   MOBILE ABOUT US SUBMENU
+======================================== */
+@media (max-width: 768px) {
+
+    /* Submenu container */
+    header nav .dropdown-content {
+        width: 100%;
+        padding: 0;
+    }
+
+    /* Submenu text */
+    header nav .dropdown-content a {
+        font-size: 8px;
+        font-weight: 600;
+        padding: 8px 20px;
+        line-height: 1.2;
+    }
+
+}
+
 /* Overlay */
 .overlay{
     background:rgba(0,0,0,0.35);
@@ -1731,7 +1752,6 @@ nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
     }
 }
 
-
 /* =============================
  Annual Report Detail
  =============================== */
@@ -1766,15 +1786,17 @@ nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
     color:#4d6159;
     font-size:18px;
     font-weight:700;
+    margin-bottom:16px;
 }
 
-.intro-section,
+.intro-section h3,
 .section,
 .closing-section{
-    margin-bottom:30px;
+    margin-bottom:5px;
+    font-size:18px;
+    line-height:1.8;
 }
 
-.intro-section p,
 .description,
 .closing-section p{
     margin-bottom:16px;
@@ -3308,7 +3330,6 @@ nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
 }
 
 
-
 .calculator-note{
     margin-top:0;
     margin-bottom: 10px;  
@@ -3467,6 +3488,22 @@ body.calculator-modal-open{
     margin-bottom:28px;
 }
 
+.download-note{
+    margin-top:20px;
+    margin-bottom: 10px;  
+    padding:14px 20px;
+    border-radius:8px;
+    margin-bottom:12px;
+    background:linear-gradient(90deg, rgb(239, 240, 239));
+    color:#f13f3f;
+    line-height:1.6;
+    font-size:16px;
+    font-weight:700;
+    align-items:center;
+    display:flex;
+    justify-content:center;
+    letter-spacing:0.3px;
+}
 .section-heading{
     display:flex;
     align-items:center;
@@ -4077,7 +4114,7 @@ canvas {
     }
 }
 
-/* Ultra-compact for 1024px - prevent overlap */
+/*compact for 1024px - prevent overlap */
 @media (min-width: 769px) and (max-width: 1024px) {
     header {
         padding: 6px 8px;
@@ -4204,17 +4241,17 @@ canvas {
         right: 0;
         z-index: 1000;
         flex-direction: column;
-        align-items: stretch;
         gap: 0;
         padding: 8px 0 12px;
         background: rgba(18, 80, 60, 0.99);
         border-top: 1px solid rgba(255,255,255,0.2);
         box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+        width: 50%;
     }
 
     nav a,
     .dropbtn {
-        font-size: 8px;
+        font-size: 15px;
     }
 
     header.nav-open nav {
@@ -4258,6 +4295,13 @@ canvas {
 
     .overlay {
         min-height: auto;
+    }
+
+
+    /* Keep footer underneath the burger menu */
+    footer {
+        position: relative;
+        z-index: 1;
     }
 
     .footer-content {
