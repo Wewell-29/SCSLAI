@@ -1,4 +1,4 @@
-﻿/* SCSLAI — SC Loan Application Form Config */
+/* SCSLAI — SC Loan Application Form Config */
 (function(){
 "use strict";
 
@@ -122,4 +122,3 @@ modeOfDelivery:checkedOf("delivery").map(function(x){return x.label;})};
 });
 
 })();
-
