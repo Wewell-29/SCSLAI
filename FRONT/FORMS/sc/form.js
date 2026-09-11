@@ -1,10 +1,23 @@
-﻿/* SCSLAI — SC Loan Application Form Config */
+/* SCSLAI — SC Loan Application Form Config */
 (function(){
 "use strict";
 
 SCSLAI.register({
 key:"sc",
 title:"Loan Application",
+fieldLabels:{
+others:"Others",applicantName:"Applicant Name",amountWords:"Amount in Words",
+loanAmount:"Loan Amount",payableYearsWords:"Payable Years in Words",payableYears:"Payable Years",
+edpNumber:"EDP Number",tin:"TIN",birthdate:"Birthdate",placeOfBirth:"Place of Birth",
+lastName:"Last Name",firstName:"First Name",middleName:"Middle Name",suffix:"Suffix",
+officeStation:"Office / Station",position:"Position",appointment:"Status of Appointment",
+homeAddress:"Home Address",zipCode:"ZIP Code",printedName:"Printed Name",
+contactNumber:"Contact Number",emailAddress:"Email Address",
+pnNumber:"PN Number",pnAmountWords:"PN Amount in Words",pnAmountFigures:"PN Amount",
+pnInterestRate:"Interest Rate",pnRatePercent:"Rate Percent",
+pnInstallments:"Number of Installments",pnInstallmentAmt:"Installment Amount",
+pnAddlRate:"Additional Rate",pnPrintedName:"Printed Name"
+},
 width:1275, height:2100,
 hasPage2:true, hasCheckboxes:true, useUppercase:true,
 pdfPrefix:"",
@@ -17,43 +30,32 @@ images:[
 fields:{
 
 
-others:{x:182,y:378,w:204,h:16,fs:12},
-applicantName:{x:250,y:450,w:420,h:20,fs:14},
-amountWords:{x:170,y:476,w:360,h:20,fs:13},
-loanAmount:{x:620,y:476,w:132,h:20,fs:13},
-payableYearsWords:{x:830,y:478,w:75,h:18,fs:12},
-payableYears:{x:915,y:478,w:45,h:22,fs:12},
+
+applicantName:{x:350,y:450,w:420,h:20,fs:14},
+amountWords:{x:300,y:476,w:360,h:20,fs:13},
+loanAmount:{x:650,y:476,w:132,h:20,fs:13},
+payableYearsWords:{x:850,y:480,w:75,h:18,fs:12},
+payableYears:{x:920,y:480,w:45,h:22,fs:12},
 edpNumber:{x:58,y:572,w:270,h:22,fs:14},
 tin:{x:340,y:572,w:330,h:22,fs:13},
 birthdate:{x:685,y:572,w:238,h:22,fs:13},
 placeOfBirth:{x:932,y:572,w:296,h:22,fs:13},
-lastName:{x:118,y:622,w:292,h:30,fs:15},
-firstName:{x:415,y:622,w:202,h:30,fs:15},
-middleName:{x:622,y:622,w:212,h:30,fs:15},
-suffix:{x:842,y:622,w:80,h:30,fs:14},
+lastName:{x:118,y:635,w:292,h:30,fs:15},
+firstName:{x:415,y:635,w:202,h:30,fs:15},
+middleName:{x:622,y:635,w:212,h:30,fs:15},
+suffix:{x:842,y:635,w:80,h:30,fs:14},
 
 officeStation:{x:58,y:680,w:472,h:22,fs:14},
 position:{x:535,y:680,w:155,h:22,fs:14},
 appointment:{x:695,y:680,w:200,h:22,fs:14},
 homeAddress:{x:58,y:728,w:692,h:19,fs:14},
 zipCode:{x:762,y:728,w:150,h:19,fs:14},
-printedName:{x:952,y:710,w:244,h:15,fs:12},
+
 contactNumber:{x:61,y:783,w:482,h:22,fs:14},
 emailAddress:{x:563,y:783,w:350,h:22,fs:13}
 },
 
-page2Fields:{
-pnNumber:{x:120,y:60,w:232,h:18,fs:13},
-pnAmountWords:{x:388,y:150,w:392,h:20,fs:13},
-pnAmountFigures:{x:812,y:150,w:148,h:20,fs:13},
-pnInterestRate:{x:77,y:175,w:126,h:20,fs:13},
-pnRatePercent:{x:278,y:175,w:76,h:20,fs:13},
-pnInstallments:{x:488,y:175,w:84,h:20,fs:13},
-pnInstallmentAmt:{x:728,y:175,w:75,h:20,fs:13},
-pnAddlRate:{x:801,y:350,w:130,h:20,fs:13},
-pnPrintedName:{x:112,y:875,w:305,h:20,fs:13},
 
-},
 
 checkboxes:{
 business:{cx:123,cy:287,w:15,h:25,category:"regular"},
@@ -96,6 +98,7 @@ deliveryAtm:"By ATM Payroll Account (LBP)",
 deliveryPickup:"Personal Pick-up of crossed check"
 },
 
+
 validate:function(vals,miss){
 if(!vals.edpNumber)miss.push("EDP Number");
 if(!vals.lastName)miss.push("Last Name");
@@ -110,7 +113,10 @@ if(!vals.position)miss.push("Position");
 if(!vals.contactNumber)miss.push("Contact Number");
 if(!vals.emailAddress)miss.push("Email Address");
 if(!vals.loanAmount)miss.push("Loan Amount");
-},
+if(!vals.payableYears)miss.push("Payable Years");
+if(!vals.tin)miss.push("TIN");
+
+}, 
 
 getResult:function(vals,checkedOf){ var regs=checkedOf("regular"),specs=checkedOf("special"),apps=checkedOf("application");
 return{form:"sc",fields:vals,
@@ -122,4 +128,3 @@ modeOfDelivery:checkedOf("delivery").map(function(x){return x.label;})};
 });
 
 })();
-

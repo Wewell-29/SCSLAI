@@ -5,6 +5,12 @@
 SCSLAI.register({
 key:"withdrawal",
 title:"Withdrawal Form",
+fieldLabels:{
+date:"Date",othersReason:"Other Reason",amountWords:"Amount in Words",
+amountFigures:"Amount",office:"Office",printedName:"Applicant's Printed Name",
+appointment:"Status of Appointment",edpNumber:"EDP No.",mobileNumber:"Mobile No.",
+homeAddress1:"Home Address",homeAddress2:"Complete Home Address"
+},
 width:2550, height:4200,
 hasPage2:true, hasCheckboxes:true, useUppercase:true,
 mobileField:"mobileNumber",

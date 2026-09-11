@@ -1,8 +1,4 @@
 
-.loans-page-overlay {
-    background: rgba(235, 236, 236, 0);
-}
-
 .loans-page-content {
     width: 100%;
     max-width: none;
@@ -120,6 +116,9 @@
     color: #ffffff;
     font-weight: 800;
     font-size: 1rem;
+    line-height: 1.4;
+    white-space: normal;
+    overflow-wrap: break-word;
 }
 
 .loan-table td p {
@@ -145,12 +144,31 @@
     table-layout: fixed;
 }
 
+/* Column sizing: only pin first + last columns so both the
+   7-col (Loan Type + 5 years + Co-makers) and 5-col Occasional
+   (Loan Type + 3 years + Co-makers) tables share space fairly.
+   Pinning every column with % widths squeezed Co-makers and made
+   DIV-CAPITAL wrap/overlap the next row. */
+.loan-table th:first-child,
+.loan-table td:first-child {
+    width: 32%;
+}
+
+.loan-table th:last-child,
+.loan-table td:last-child {
+    width: 140px;
+    min-width: 140px;
+    white-space: nowrap;
+    overflow: visible;
+}
+
 .loan-table th,
 .loan-table td {
-    padding: 18px 16px;
+    padding: 16px 14px;
     border-bottom: 1px solid rgba(118, 187, 144, 0.18);
     vertical-align: middle;
-    word-break: break-word;
+    height: auto;
+    line-height: 1.35;
 }
 
 .loan-table th {
@@ -163,21 +181,27 @@
 }
 
 .loan-table th.loan-name {
-    width: 24%;
+    width: auto;
 }
 
 .loan-table th.loan-eligibility {
-    width: 26%;
+    width: auto;
 }
 
 .loan-table th.loan-interest {
-    width: 34%;
+    width: auto;
     text-align: center;
     justify-content: center;
 }
 
 .loan-table th.loan-comakers {
-    width: 16%;
+    width: auto;
+}
+
+/* Occasional table (Loan Type + 3 year cols + Co-makers = 5 cols) */
+.loan-table thead tr:last-child th:only-of-type,
+.loan-table thead tr:last-child th:first-child:last-child {
+    width: auto;
 }
 
 .loan-table th i {
@@ -186,7 +210,7 @@
 }
 
 .loan-table td {
-    background: rgba(255, 255, 255, 0.06);
+    background: #ffffff;
     color: #121312 !important;
 }
 
@@ -199,23 +223,30 @@
 }
 
 .loan-table tbody tr:nth-child(even) td {
-    background: rgba(214, 244, 230, 0.08);
+    background: #f1f8f3;
 }
 
 .loan-table tbody tr:hover td {
-    background: rgba(165, 222, 183, 0.16);
+    background: #dcefe2;
 }
 
 .loan-table .loan-type {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    text-align: left;
+    font-weight: 800;
+    line-height: 1.4;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    vertical-align: middle;
 }
 
 .loan-table .loan-rate,
 .loan-table .loan-guarantor,
 .loan-table .center {
     text-align: center;
+    white-space: nowrap;
+    line-height: 1.35;
+    vertical-align: middle;
 }
 
 @media (max-width: 1100px) {

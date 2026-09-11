@@ -5,6 +5,17 @@
 SCSLAI.register({
 key:"readmission",
 title:"Readmission Form",
+fieldLabels:{
+lastName:"Last Name",firstName:"First Name",middleName:"Middle Name",
+birthdate:"Date of Birth",placeOfBirth:"Place of Birth",nationality:"Nationality",
+gender:"Gender",civilStatus:"Civil Status",spouseName:"Spouse Name",spouseBirth:"Spouse Birthdate",
+motherMaiden:"Mother's Maiden Name",homeAddress:"Home Address",telephone:"Telephone Number",
+mobile:"Mobile Number",emailAddress:"Email Address",permanentAddr:"Permanent Address",
+officeStation:"Office / Station",position:"Position",gsisId:"GSIS ID No.",tin:"TIN",
+edpNumber:"EDP Number",officeAddress:"Office Address",monthlySalary:"Monthly Salary",
+lengthService:"Length of Service",appointment:"Status of Appointment",dateAppoint:"Date of Appointment",
+officeTel:"Office Tel. No.",incomeSource:"Source of Income"
+},
 width:2550, height:4200,
 hasPage2:false, hasCheckboxes:false, useUppercase:false,
 mobileField:"mobile",

@@ -555,6 +555,111 @@ let currentSpreadPage = 1;
 let lastSinglePageMode = false;
 let bookOpeningSequence = 0;
 let isBookOpening = false;
+let photoLightboxIndex = 0;
+let photoLightboxOpen = false;
+let photoLightboxLastFocus = null;
+
+const photoLightbox = document.getElementById('photo-lightbox');
+const photoLightboxImage = photoLightbox?.querySelector('[data-photo-image]') || null;
+const photoLightboxCaption = photoLightbox?.querySelector('[data-photo-caption]') || null;
+const photoLightboxCounter = photoLightbox?.querySelector('[data-photo-counter]') || null;
+
+function getPhotoAt(index) {
+  if (!activePages.length) return null;
+  const safe = (index + activePages.length) % activePages.length;
+  return activePages[safe];
+}
+
+function renderPhotoLightbox() {
+  const page = getPhotoAt(photoLightboxIndex);
+  if (!page || !photoLightboxImage) return;
+  photoLightboxIndex = activePages.indexOf(page);
+  photoLightboxImage.src = getResolvedImageSource(page.image);
+  photoLightboxImage.alt = page.activityTitle || ('Page ' + page.pageNumber);
+  if (photoLightboxCaption) {
+    photoLightboxCaption.textContent = page.activityTitle || ('Page ' + page.pageNumber);
+  }
+  if (photoLightboxCounter) {
+    photoLightboxCounter.textContent = 'Page ' + page.pageNumber + ' of ' + activePages.length;
+  }
+}
+
+function openPhotoLightbox(pageNumber) {
+  if (!photoLightbox || !activePages.length) return;
+  const idx = activePages.findIndex((p) => p.pageNumber === Number(pageNumber));
+  photoLightboxIndex = idx >= 0 ? idx : 0;
+  photoLightboxLastFocus = document.activeElement;
+  photoLightbox.hidden = false;
+  photoLightboxOpen = true;
+  document.body.style.overflow = 'hidden';
+  renderPhotoLightbox();
+  photoLightbox.querySelector('.photo-lightbox-close')?.focus();
+}
+
+function closePhotoLightbox() {
+  if (!photoLightbox || !photoLightboxOpen) return;
+  photoLightbox.hidden = true;
+  photoLightboxOpen = false;
+  if (!yearbookReader?.hidden) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = '';
+  }
+  if (photoLightboxLastFocus && typeof photoLightboxLastFocus.focus === 'function') {
+    photoLightboxLastFocus.focus();
+  }
+}
+
+function stepPhotoLightbox(delta) {
+  if (!photoLightboxOpen || !activePages.length) return;
+  photoLightboxIndex = (photoLightboxIndex + delta + activePages.length) % activePages.length;
+  renderPhotoLightbox();
+}
+
+function bindPhotoLightboxClicks() {
+  if (!flipbookElement || flipbookElement.dataset.photoBound === 'true') return;
+  flipbookElement.dataset.photoBound = 'true';
+  flipbookElement.addEventListener('click', (event) => {
+    const card = event.target.closest('[data-photo-page]');
+    if (!card || flipLock) return;
+    event.stopPropagation();
+    openPhotoLightbox(card.getAttribute('data-photo-page'));
+  }, true);
+  flipbookElement.addEventListener('keydown', (event) => {
+    const card = event.target.closest?.('[data-photo-page]');
+    if (!card) return;
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      event.stopPropagation();
+      if (!flipLock) openPhotoLightbox(card.getAttribute('data-photo-page'));
+    }
+  });
+}
+
+bindPhotoLightboxClicks();
+
+photoLightbox?.querySelectorAll('[data-close-photo]').forEach((el) => {
+  el.addEventListener('click', closePhotoLightbox);
+});
+photoLightbox?.querySelector('[data-photo-prev]')?.addEventListener('click', (e) => {
+  e.stopPropagation();
+  stepPhotoLightbox(-1);
+});
+photoLightbox?.querySelector('[data-photo-next]')?.addEventListener('click', (e) => {
+  e.stopPropagation();
+  stepPhotoLightbox(1);
+});
+document.addEventListener('keydown', (event) => {
+  if (!photoLightboxOpen) return;
+  if (event.key === 'Escape') {
+    event.stopPropagation();
+    closePhotoLightbox();
+  } else if (event.key === 'ArrowLeft') {
+    stepPhotoLightbox(-1);
+  } else if (event.key === 'ArrowRight') {
+    stepPhotoLightbox(1);
+  }
+});
 
 function getResolvedImageSource(src) {
   return resolvedImageSources.get(src) || src;
@@ -673,7 +778,7 @@ function pageMarkup(page) {
     <section class="album-page ${page.pageNumber % 2 === 0 ? 'album-page-right' : 'album-page-left'}" data-page-number="${page.pageNumber}">
       <article class="print-layout">
         <h3 class="layout-title"></h3>
-        <figure class="scrap-card">
+        <figure class="scrap-card" data-photo-page="${page.pageNumber}" role="button" tabindex="0" aria-label="View photo for ${page.activityTitle}">
           <span class="tape tape-tl" aria-hidden="true"></span>
           <span class="tape tape-tr" aria-hidden="true"></span>
           <span class="tape tape-bl" aria-hidden="true"></span>
@@ -682,8 +787,6 @@ function pageMarkup(page) {
             <img src="${getResolvedImageSource(page.image)}" alt="${page.activityTitle}" loading="eager" decoding="sync" fetchpriority="high" draggable="false">
           </div>
         </figure>
-        
-        <p class="layout-page-number">Page ${page.pageNumber} of ${activePages.length}</p>
       </article>
     </section>
   `;
@@ -1105,6 +1208,7 @@ async function openReaderAfterBookOpening(index, startPage) {
 
 function closeReader() {
   if (!yearbookReader) return;
+  if (photoLightboxOpen) closePhotoLightbox();
   yearbookReader.hidden = true;
   yearbookReader.classList.remove('is-visible');
   document.body.style.overflow = '';
@@ -1159,6 +1263,7 @@ function setupPageNavigation() {
   };
 
   pageFlipHost.addEventListener('click', (event) => {
+    if (event.target.closest('[data-photo-page]')) return;
     if (Date.now() - lastTouchTime < 450) return;
     handleHostTurn(event.clientX, event.clientY);
   }, true);
@@ -1173,6 +1278,7 @@ function setupPageNavigation() {
 
   pageFlipHost.addEventListener('touchend', (event) => {
     lastTouchTime = Date.now();
+    if (event.target.closest?.('[data-photo-page]')) return;
     const delta = event.changedTouches[0].clientX - touchStartX;
     const deltaY = event.changedTouches[0].clientY - touchStartY;
     if (Math.abs(delta) < 18 && Math.abs(deltaY) < 18) {
@@ -1186,6 +1292,7 @@ function setupPageNavigation() {
 
   document.addEventListener('keydown', (event) => {
     if (yearbookReader?.hidden) return;
+    if (photoLightboxOpen) return;
     if (event.key === 'Escape') {
       closeReader();
       return;
@@ -1291,28 +1398,94 @@ const announcementImages = [
   {src: 'images/Annoncements/anniv.png', alt: 'ANNIVERSARY'}
 ];
 const announcementImg = document.querySelector('.announcement-posters img');
+const announcementPrev = document.querySelector('.announcement-control.prev');
+const announcementNext = document.querySelector('.announcement-control.next');
+const announcementDotsWrap = document.querySelector('.announcement-dots');
 let announcementIndex = 0;
+let announcementTimer = null;
+let announcementDots = [];
+
+function updateAnnouncementDots() {
+  announcementDots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === announcementIndex);
+  });
+}
 
 function showAnnouncement(index) {
   if (!announcementImg) return;
+  const safeIndex = (index + announcementImages.length) % announcementImages.length;
   announcementImg.classList.remove('slide-up');
   announcementImg.style.animation = 'none';
   announcementImg.offsetWidth;
   announcementImg.style.animation = '';
-  announcementImg.src = announcementImages[index].src;
-  announcementImg.alt = announcementImages[index].alt;
+  announcementImg.src = announcementImages[safeIndex].src;
+  announcementImg.alt = announcementImages[safeIndex].alt;
   announcementImg.classList.add('slide-up');
-  announcementIndex = index;
+  announcementIndex = safeIndex;
+  updateAnnouncementDots();
 }
 
 function nextAnnouncement() {
-  const nextIndex = (announcementIndex + 1) % announcementImages.length;
-  showAnnouncement(nextIndex);
+  showAnnouncement(announcementIndex + 1);
+}
+
+function prevAnnouncement() {
+  showAnnouncement(announcementIndex - 1);
+}
+
+function startAnnouncementAuto() {
+  stopAnnouncementAuto();
+  announcementTimer = setInterval(nextAnnouncement, 8000);
+}
+
+function stopAnnouncementAuto() {
+  if (announcementTimer) {
+    clearInterval(announcementTimer);
+    announcementTimer = null;
+  }
 }
 
 if (announcementImg) {
   announcementImg.classList.add('slide-up');
-  setInterval(nextAnnouncement, 15000);
+  if (announcementDotsWrap) {
+    announcementDots = announcementImages.map((item, i) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'announcement-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Show announcement ' + (i + 1) + ': ' + item.alt);
+      dot.addEventListener('click', () => {
+        showAnnouncement(i);
+        startAnnouncementAuto();
+      });
+      announcementDotsWrap.appendChild(dot);
+      return dot;
+    });
+  }
+  if (announcementPrev) {
+    announcementPrev.addEventListener('click', () => {
+      prevAnnouncement();
+      startAnnouncementAuto();
+    });
+  }
+  if (announcementNext) {
+    announcementNext.addEventListener('click', () => {
+      nextAnnouncement();
+      startAnnouncementAuto();
+    });
+  }
+  const announcementBox = announcementImg.closest('.announcement-posters');
+  if (announcementBox) {
+    announcementBox.addEventListener('mouseenter', stopAnnouncementAuto);
+    announcementBox.addEventListener('mouseleave', startAnnouncementAuto);
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopAnnouncementAuto();
+    } else {
+      startAnnouncementAuto();
+    }
+  });
+  startAnnouncementAuto();
 }
 
 const galleryItems = document.querySelectorAll('.gallery-item');
@@ -1486,6 +1659,28 @@ document.addEventListener('keydown', (ev) => {
     }
   }
 });
+
+// Navbar active-page highlight
+(function () {
+  const currentPage = window.location.pathname.split("/").pop() || "index.html";
+
+  // Main navigation links
+  siteNav?.querySelectorAll(":scope > a").forEach((link) => {
+    const linkPage = (link.getAttribute("href") || "").split("/").pop();
+    if (linkPage === currentPage) {
+      link.classList.add("active");
+    }
+  });
+
+  // Dropdown submenu links — also highlight the ABOUT US button
+  document.querySelectorAll(".dropdown-content a").forEach((link) => {
+    const linkPage = (link.getAttribute("href") || "").split("/").pop();
+    if (linkPage === currentPage) {
+      link.classList.add("active");
+      link.closest(".dropdown")?.classList.add("active");
+    }
+  });
+})();
 
 // Calculator popup
 const calculatorLinks = document.querySelectorAll('a[href="calculator.html"]');
@@ -1678,7 +1873,7 @@ function createCalculatorModal() {
           </div>
 
           <div class="calculator-field">
-            <label for="supreme-loan-amount">Eligible Loan Amount</label>
+            <label for="supreme-loan-amount">Maximun Eligible Loan Amount</label>
             <input id="supreme-loan-amount" type="text" readonly placeholder="Calculated from eligible take-home pay" data-loan-amount>
           </div>
 
@@ -1736,7 +1931,7 @@ function createCalculatorModal() {
           </div>
 
           <div class="calculator-field">
-            <label for="lower-loan-amount">Eligible Loan Amount</label>
+            <label for="lower-loan-amount">Maximum Eligible Loan Amount</label>
             <input id="lower-loan-amount" type="text" readonly placeholder="Calculated from eligible take-home pay" data-loan-amount-lower>
           </div>
 

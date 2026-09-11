@@ -248,6 +248,27 @@ nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
     background:#525553ca;
 }
 
+/* ========================================
+   MOBILE ABOUT US SUBMENU
+======================================== */
+@media (max-width: 768px) {
+
+    /* Submenu container */
+    header nav .dropdown-content {
+        width: 100%;
+        padding: 0;
+    }
+
+    /* Submenu text */
+    header nav .dropdown-content a {
+        font-size: 8px;
+        font-weight: 600;
+        padding: 8px 20px;
+        line-height: 1.2;
+    }
+
+}
+
 /* Overlay */
 .overlay{
     background:rgba(0,0,0,0.35);
@@ -2009,7 +2030,6 @@ nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
     }
 }
 
-
 /* =============================
  Annual Report Detail
  =============================== */
@@ -2044,15 +2064,17 @@ nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
     color:#4d6159;
     font-size:18px;
     font-weight:700;
+    margin-bottom:16px;
 }
 
-.intro-section,
+.intro-section h3,
 .section,
 .closing-section{
-    margin-bottom:30px;
+    margin-bottom:5px;
+    font-size:18px;
+    line-height:1.8;
 }
 
-.intro-section p,
 .description,
 .closing-section p{
     margin-bottom:16px;
@@ -2940,6 +2962,7 @@ nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
 }
 
 .announcement-posters{
+    position: relative;
     display:flex;
     justify-content:center;
     padding:10px;
@@ -2953,6 +2976,66 @@ nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
     height:auto;
     object-fit:contain;
     border:1px solid #ccc;
+}
+
+.announcement-control{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    background:rgba(0, 0, 0, 0.123);
+    border:none;
+    color:#ffffff;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:22px;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:background .25s ease, transform .15s ease;
+    z-index:3;
+}
+
+.announcement-control:hover{
+    background:rgba(0, 0, 0, 0.384);
+    transform:translateY(-50%) scale(1.05);
+}
+
+.announcement-control.prev{
+    left:14px;
+}
+
+.announcement-control.next{
+    right:14px;
+}
+
+.announcement-dots{
+    position:absolute;
+    left:50%;
+    bottom:14px;
+    transform:translateX(-50%);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    z-index:3;
+}
+
+.announcement-dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    border:none;
+    background:rgba(255,255,255,0.45);
+    cursor:pointer;
+    padding:0;
+    transition:background .25s ease, transform .15s ease;
+}
+
+.announcement-dot.active{
+    background:#78fdc6;
+    transform:scale(1.2);
 }
 
 .title{
@@ -3586,7 +3669,6 @@ nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
 }
 
 
-
 .calculator-note{
     margin-top:0;
     margin-bottom: 10px;  
@@ -3745,6 +3827,22 @@ body.calculator-modal-open{
     margin-bottom:28px;
 }
 
+.download-note{
+    margin-top:20px;
+    margin-bottom: 10px;  
+    padding:14px 20px;
+    border-radius:8px;
+    margin-bottom:12px;
+    background:linear-gradient(90deg, rgb(239, 240, 239));
+    color:#f13f3f;
+    line-height:1.6;
+    font-size:16px;
+    font-weight:700;
+    align-items:center;
+    display:flex;
+    justify-content:center;
+    letter-spacing:0.3px;
+}
 .section-heading{
     display:flex;
     align-items:center;
@@ -4355,7 +4453,7 @@ canvas {
     }
 }
 
-/* Ultra-compact for 1024px - prevent overlap */
+/*compact for 1024px - prevent overlap */
 @media (min-width: 769px) and (max-width: 1024px) {
     header {
         padding: 6px 8px;
@@ -4482,17 +4580,17 @@ canvas {
         right: 0;
         z-index: 1000;
         flex-direction: column;
-        align-items: stretch;
         gap: 0;
         padding: 8px 0 12px;
         background: rgba(18, 80, 60, 0.99);
         border-top: 1px solid rgba(255,255,255,0.2);
         box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+        width: 50%;
     }
 
     nav a,
     .dropbtn {
-        font-size: 8px;
+        font-size: 15px;
     }
 
     header.nav-open nav {
@@ -4536,6 +4634,13 @@ canvas {
 
     .overlay {
         min-height: auto;
+    }
+
+
+    /* Keep footer underneath the burger menu */
+    footer {
+        position: relative;
+        z-index: 1;
     }
 
     .footer-content {
@@ -4807,3 +4912,429 @@ canvas {
         font-size: 11px;
     }
 }
+
+
+
+/* =========================================================
+   SCSLAI — SC LOAN APPLICATION INPUT MODAL
+   ========================================================= */
+
+body.sc-modal-open {
+    overflow: hidden;
+}
+
+
+/* ---------------------------------------------------------
+   OVERLAY
+   --------------------------------------------------------- */
+
+.sc-input-overlay {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    z-index: 99999;
+}
+
+
+/* ---------------------------------------------------------
+   MODAL
+   --------------------------------------------------------- */
+
+.sc-input-modal {
+
+    width: min(950px, 100%);
+
+    max-height: 92vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+
+/* ---------------------------------------------------------
+   HEADER
+   --------------------------------------------------------- */
+
+.sc-modal-header {
+
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    padding: 22px 26px;
+
+    border-bottom: 1px solid #e5e5e5;
+}
+
+
+.sc-modal-header h2 {
+
+    margin: 0;
+
+    font-size: 24px;
+}
+
+
+.sc-modal-header p {
+
+    margin: 5px 0 0;
+
+    color: #777;
+
+    font-size: 14px;
+}
+
+
+.sc-modal-close {
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 30px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    color: #555;
+}
+
+
+/* ---------------------------------------------------------
+   BODY
+   --------------------------------------------------------- */
+
+.sc-modal-body {
+
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding: 25px;
+}
+
+
+/* ---------------------------------------------------------
+   SECTIONS
+   --------------------------------------------------------- */
+
+.sc-form-section {
+
+    margin-bottom: 28px;
+}
+
+
+.sc-form-section h3 {
+
+    margin: 0 0 16px;
+
+    font-size: 17px;
+
+    font-weight: 600;
+}
+
+
+/* ---------------------------------------------------------
+   INPUT GRID
+   --------------------------------------------------------- */
+
+.sc-input-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+
+.sc-full-width {
+
+    grid-column: 1 / -1;
+}
+
+
+/* ---------------------------------------------------------
+   FORM GROUP
+   --------------------------------------------------------- */
+
+.sc-form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+
+.sc-form-group label {
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+.sc-form-group label span {
+
+    color: #d00;
+}
+
+
+.sc-form-group input,
+.sc-form-group select,
+.sc-form-group textarea {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 11px 12px;
+
+    border: 1px solid #d5d5d5;
+
+    border-radius: 8px;
+
+    background: #fff;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: border-color 0.2s;
+}
+
+
+.sc-form-group textarea {
+
+    min-height: 80px;
+
+    resize: vertical;
+}
+
+
+.sc-form-group input:focus,
+.sc-form-group select:focus,
+.sc-form-group textarea:focus {
+
+    border-color: #198754;
+}
+
+
+/* ---------------------------------------------------------
+   CHECKBOXES
+   --------------------------------------------------------- */
+
+.sc-checkbox-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 8px;
+}
+
+
+.sc-checkbox-option {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 10px;
+
+    border: 1px solid #e2e2e2;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 13px;
+}
+
+
+.sc-checkbox-option:hover {
+
+    background: #f7f7f7;
+}
+
+
+.sc-checkbox-option input {
+
+    width: 16px;
+    height: 16px;
+}
+
+
+/* ---------------------------------------------------------
+   ERROR
+   --------------------------------------------------------- */
+
+.sc-input-error {
+
+    display: none;
+
+    margin-top: 15px;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    background: #fff0f0;
+
+    color: #b00000;
+
+    font-size: 13px;
+}
+
+
+/* ---------------------------------------------------------
+   FOOTER
+   --------------------------------------------------------- */
+
+.sc-modal-footer {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    padding: 18px 25px;
+
+    border-top: 1px solid #e5e5e5;
+
+    background: #fafafa;
+}
+
+
+.sc-btn {
+
+    padding: 11px 20px;
+
+    border-radius: 8px;
+
+    border: none;
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+
+.sc-btn-secondary {
+
+    background: #e5e5e5;
+
+    color: #333;
+}
+
+
+.sc-btn-primary {
+
+    background: #198754;
+
+    color: #fff;
+}
+
+
+/* ---------------------------------------------------------
+   TABLET
+   --------------------------------------------------------- */
+
+@media (max-width: 768px) {
+
+    .sc-input-overlay {
+
+        padding: 10px;
+
+        align-items: center;
+    }
+
+
+    .sc-input-modal {
+
+        max-height: 95vh;
+
+        border-radius: 12px;
+    }
+
+
+    .sc-input-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .sc-checkbox-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   SMARTPHONE
+   --------------------------------------------------------- */
+
+@media (max-width: 480px) {
+
+    .sc-modal-header {
+
+        padding: 18px;
+    }
+
+
+    .sc-modal-body {
+
+        padding: 18px;
+    }
+
+
+    .sc-modal-footer {
+
+        padding: 15px;
+
+        flex-direction: column-reverse;
+    }
+
+
+    .sc-btn {
+
+        width: 100%;
+    }
+
+
+    .sc-checkbox-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+}
+

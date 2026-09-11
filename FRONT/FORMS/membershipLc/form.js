@@ -6,6 +6,24 @@
 SCSLAI.register({
 key:"membershipLc",
 title:"LC Membership Application Form",
+fieldLabels:{
+lastName:"Last Name",firstName:"First Name",middleName:"Middle Name",
+birthdate:"Date of Birth",placeOfBirth:"Place of Birth",nationality:"Nationality",
+gender:"Gender",civilStatus:"Civil Status",spouseName:"Spouse Name",spouseBirth:"Spouse Birthdate",
+motherMaiden:"Mother's Maiden Name",homeAddress:"Present Home Address",telephone:"Telephone No.",
+mobileNumber:"Mobile No.",emailAddress:"Email Address",permanentAddr:"Permanent Address",
+officeDivision:"Office / Division",rankPosition:"Rank / Position",gsisId:"GSIS ID No.",tin:"TIN",
+edpNumber:"EDP No.",officeAddress:"Office Address",monthlySalary:"Monthly Salary",
+lengthService:"Length of Service",appointment:"Status of Appointment",dateAppoint:"Date of Appointment",
+officeTel:"Office Tel. No.",incomeSource:"Source of Income",
+ben1Name:"Beneficiary #1 Name",ben1Dob:"Beneficiary #1 DOB",ben1Rel:"Relationship",ben1Contact:"Contact No.",
+ben2Name:"Beneficiary #2 Name",ben2Dob:"Beneficiary #2 DOB",ben2Rel:"Relationship",ben2Contact:"Contact No.",
+ben3Name:"Beneficiary #3 Name",ben3Dob:"Beneficiary #3 DOB",ben3Rel:"Relationship",ben3Contact:"Contact No.",
+ben4Name:"Beneficiary #4 Name",ben4Dob:"Beneficiary #4 DOB",ben4Rel:"Relationship",ben4Contact:"Contact No.",
+sig1:"Specimen Signature 1",sig2:"Specimen Signature 2",sig3:"Specimen Signature 3",
+signatureOverName:"Signature Over Printed Name",
+clName:"Checklist — CLA Name",clStation:"Checklist — Station",clPhone:"Checklist — Phone"
+},
 width:2550, height:4200,
 width2:2550, height2:3300,
 hasPage2:true, hasCheckboxes:false, useUppercase:true,
@@ -69,9 +87,7 @@ ben4Rel:{x:1334,y:2838,w:594,h:68,fs:20},
 ben4Contact:{x:1936,y:2838,w:510,h:68,fs:18},
 
 /* SPECIMEN SIGNATURE + SIGNATURE OVER PRINTED NAME */
-sig1:{x:222,y:3114,w:568,h:50,fs:24},
-sig2:{x:972,y:3114,w:568,h:50,fs:24},
-sig3:{x:1802,y:3114,w:498,h:50,fs:24},
+
 signatureOverName:{x:1700,y:3320,w:658,h:50,fs:22}
 },
 
@@ -88,7 +104,6 @@ if(!vals.birthdate)miss.push("Date of Birth");
 if(!vals.homeAddress)miss.push("Present Home Address");
 if(!vals.mobileNumber)miss.push("Mobile No.");
 if(!vals.edpNumber)miss.push("EDP No.");
-if(!vals.ben1Name)miss.push("Beneficiary #1 Name");
 },
 
 getResult:function(vals){
