@@ -5,6 +5,18 @@
 SCSLAI.register({
 key:"lc",
 title:"LC Loan Application",
+fieldLabels:{
+others:"Others",applicantName:"Applicant Name",amountWords:"Amount in Words",
+loanAmount:"Loan Amount",payableYearsWords:"Payable Years in Words",payableYears:"Payable Years",
+edpNumber:"EDP Number",tin:"TIN",birthdate:"Birthdate",placeOfBirth:"Place of Birth",
+lastName:"Last Name",firstName:"First Name",middleName:"Middle Name",suffix:"Suffix",
+homeAddress:"Home Address",zipCode:"ZIP Code",officeStation:"Office / Station",region:"Region",
+position:"Position",appointment:"Status of Appointment",contactNumber:"Contact Number",
+emailAddress:"Email Address",printedName:"Printed Name",
+pnNumber:"PN Number",pnAmountWords:"PN Amount in Words",pnAmountFigures:"PN Amount",
+pnInterestRate:"Interest Rate",pnInstallments:"Number of Installments",
+pnInstallmentAmt:"Installment Amount",pnAddlRate:"Additional Rate",pnPrintedName:"Printed Name"
+},
 width:1275, height:2100,
 hasPage2:true, hasCheckboxes:true, useUppercase:true,
 pdfPrefix:"LC-",
@@ -16,7 +28,7 @@ images:[
 
 fields:{
 
-others:{x:270,y:375,w:240,h:16,fs:12},
+
 amountWords:{x:100,y:481,w:500,h:20,fs:13},
 loanAmount:{x:625,y:481,w:200,h:20,fs:12},
 payableYearsWords:{x:960,y:482,w:80,h:18,fs:12},
@@ -42,18 +54,7 @@ emailAddress:{x:605,y:778,w:320,h:24,fs:13},
 printedName:{x:950,y:740,w:244,h:15,fs:12}
 },
 
-page2Fields:{
-pnNumber:{x:174,y:47,w:230,h:18,fs:13},
-pnAmountWords:{x:388,y:145,w:395,h:20,fs:13},
-pnAmountFigures:{x:812,y:145,w:135,h:20,fs:13},
-pnInterestRate:{x:77,y:170,w:135,h:22,fs:13},
-pnInstallments:{x:488,y:169,w:88,h:22,fs:13},
-pnInstallmentAmt:{x:720,y:169,w:82,h:22,fs:13},
-pnAddlRate:{x:801,y:338,w:130,h:20,fs:13},
-pnPrintedName:{x:106,y:858,w:310,h:20,fs:13},
 
-
-},
 
 checkboxes:{
 business:{cx:95,cy:315,w:15,h:25,category:"regular"},
@@ -101,6 +102,8 @@ if(!vals.position)miss.push("Position");
 if(!vals.contactNumber)miss.push("Contact Number");
 if(!vals.emailAddress)miss.push("Email Address");
 if(!vals.loanAmount)miss.push("Loan Amount");
+if(!vals.payableYears)miss.push("Payable Years");
+if(!vals.tin)miss.push("TIN");
 },
 
 getResult:function(vals,checkedOf){ var regs=checkedOf("regular"),specs=checkedOf("special"),apps=checkedOf("application");

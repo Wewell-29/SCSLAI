@@ -5,6 +5,20 @@
 SCSLAI.register({
 key:"membershipUpdate",
 title:"Membership Update Form",
+fieldLabels:{
+lastName:"Last Name",firstName:"First Name",middleName:"Middle Name",
+birthdate:"Date of Birth",placeOfBirth:"Place of Birth",nationality:"Nationality",
+gender:"Gender",civilStatus:"Civil Status",spouseName:"Spouse Name",spouseBirth:"Spouse Birthdate",
+motherMaiden:"Mother's Maiden Name",homeAddress:"Present Home Address",telephone:"Telephone No.",
+mobileNumber:"Mobile No.",emailAddress:"Email Address",permanentAddr:"Permanent Address",
+officeDivision:"Office / Division",rankPosition:"Rank / Position",gsisId:"GSIS ID No.",tin:"TIN",
+edpNumber:"EDP No.",officeAddress:"Office Address",monthlySalary:"Monthly Salary",
+lengthService:"Length of Service",appointment:"Status of Appointment",dateAppoint:"Date of Appointment",
+officeTel:"Office Tel. No.",incomeSource:"Source of Income",
+ben1Name:"Beneficiary #1 Name",ben1Dob:"Beneficiary #1 DOB",ben1Rel:"Relationship",ben1Contact:"Contact No.",
+ben2Name:"Beneficiary #2 Name",ben2Dob:"Beneficiary #2 DOB",ben2Rel:"Relationship",ben2Contact:"Contact No.",
+ben3Name:"Beneficiary #3 Name",ben3Dob:"Beneficiary #3 DOB",ben3Rel:"Relationship",ben3Contact:"Contact No."
+},
 width:2550, height:4200,
 hasPage2:false, hasCheckboxes:false, useUppercase:true,
 mobileField:"mobileNumber",
@@ -68,7 +82,6 @@ if(!vals.birthdate)miss.push("Date of Birth");
 if(!vals.homeAddress)miss.push("Present Home Address");
 if(!vals.mobileNumber)miss.push("Mobile No.");
 if(!vals.edpNumber)miss.push("EDP No.");
-if(!vals.ben1Name)miss.push("Beneficiary #1 Name");
 },
 
 getResult:function(vals){

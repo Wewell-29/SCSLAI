@@ -6,6 +6,12 @@
 SCSLAI.register({
 key:"ccdfSc",
 title:"SC Capital Contribution Declaration Form",
+fieldLabels:{
+lastName:"Surname",firstName:"First Name",middleName:"Middle Name",
+office:"Office",edpNumber:"EDP No.",accountNo:"Account No.",
+mobileNumber:"Mobile No.",officeLandline:"Office Landline",
+signatureOverName:"Signature Over Printed Name",dateToday:"Date Today",confirmedBy:"Confirmed By"
+},
 width:2550, height:4200,
 hasPage2:false, hasCheckboxes:false, useUppercase:true,
 mobileField:"mobileNumber",
@@ -24,10 +30,7 @@ accountNo:{x:1825,y:875,w:425,h:50,fs:24},
 mobileNumber:{x:525,y:928,w:604,h:50,fs:24},
 officeLandline:{x:1753,y:928,w:502,h:50,fs:24},
 
-/* DECLARATION — signature / date / committee confirmation */
-signatureOverName:{x:390,y:2717,w:706,h:50,fs:24},
-dateToday:{x:1678,y:2717,w:297,h:50,fs:24},
-confirmedBy:{x:1440,y:3086,w:706,h:50,fs:24}
+
 },
 
 validate:function(vals,miss){
@@ -36,7 +39,6 @@ if(!vals.firstName)miss.push("First Name");
 if(!vals.office)miss.push("Office");
 if(!vals.edpNumber)miss.push("EDP No.");
 if(!vals.mobileNumber)miss.push("Mobile No.");
-if(!vals.signatureOverName)miss.push("Signature Over Printed Name");
 },
 
 getResult:function(vals){

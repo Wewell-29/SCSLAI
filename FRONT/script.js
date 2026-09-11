@@ -642,8 +642,6 @@ function pageMarkup(page) {
             <img src="${getResolvedImageSource(page.image)}" alt="${page.activityTitle}" loading="eager" decoding="sync" fetchpriority="high" draggable="false">
           </div>
         </figure>
-        
-        <p class="layout-page-number">Page ${page.pageNumber} of ${activePages.length}</p>
       </article>
     </section>
   `;
@@ -1125,28 +1123,94 @@ const announcementImages = [
   {src: 'images/Annoncements/anniv.png', alt: 'ANNIVERSARY'}
 ];
 const announcementImg = document.querySelector('.announcement-posters img');
+const announcementPrev = document.querySelector('.announcement-control.prev');
+const announcementNext = document.querySelector('.announcement-control.next');
+const announcementDotsWrap = document.querySelector('.announcement-dots');
 let announcementIndex = 0;
+let announcementTimer = null;
+let announcementDots = [];
+
+function updateAnnouncementDots() {
+  announcementDots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === announcementIndex);
+  });
+}
 
 function showAnnouncement(index) {
   if (!announcementImg) return;
+  const safeIndex = (index + announcementImages.length) % announcementImages.length;
   announcementImg.classList.remove('slide-up');
   announcementImg.style.animation = 'none';
   announcementImg.offsetWidth;
   announcementImg.style.animation = '';
-  announcementImg.src = announcementImages[index].src;
-  announcementImg.alt = announcementImages[index].alt;
+  announcementImg.src = announcementImages[safeIndex].src;
+  announcementImg.alt = announcementImages[safeIndex].alt;
   announcementImg.classList.add('slide-up');
-  announcementIndex = index;
+  announcementIndex = safeIndex;
+  updateAnnouncementDots();
 }
 
 function nextAnnouncement() {
-  const nextIndex = (announcementIndex + 1) % announcementImages.length;
-  showAnnouncement(nextIndex);
+  showAnnouncement(announcementIndex + 1);
+}
+
+function prevAnnouncement() {
+  showAnnouncement(announcementIndex - 1);
+}
+
+function startAnnouncementAuto() {
+  stopAnnouncementAuto();
+  announcementTimer = setInterval(nextAnnouncement, 8000);
+}
+
+function stopAnnouncementAuto() {
+  if (announcementTimer) {
+    clearInterval(announcementTimer);
+    announcementTimer = null;
+  }
 }
 
 if (announcementImg) {
   announcementImg.classList.add('slide-up');
-  setInterval(nextAnnouncement, 15000);
+  if (announcementDotsWrap) {
+    announcementDots = announcementImages.map((item, i) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'announcement-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Show announcement ' + (i + 1) + ': ' + item.alt);
+      dot.addEventListener('click', () => {
+        showAnnouncement(i);
+        startAnnouncementAuto();
+      });
+      announcementDotsWrap.appendChild(dot);
+      return dot;
+    });
+  }
+  if (announcementPrev) {
+    announcementPrev.addEventListener('click', () => {
+      prevAnnouncement();
+      startAnnouncementAuto();
+    });
+  }
+  if (announcementNext) {
+    announcementNext.addEventListener('click', () => {
+      nextAnnouncement();
+      startAnnouncementAuto();
+    });
+  }
+  const announcementBox = announcementImg.closest('.announcement-posters');
+  if (announcementBox) {
+    announcementBox.addEventListener('mouseenter', stopAnnouncementAuto);
+    announcementBox.addEventListener('mouseleave', startAnnouncementAuto);
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopAnnouncementAuto();
+    } else {
+      startAnnouncementAuto();
+    }
+  });
+  startAnnouncementAuto();
 }
 
 const galleryItems = document.querySelectorAll('.gallery-item');
@@ -1512,7 +1576,7 @@ function createCalculatorModal() {
           </div>
 
           <div class="calculator-field">
-            <label for="supreme-loan-amount">Eligible Loan Amount</label>
+            <label for="supreme-loan-amount">Maximun Eligible Loan Amount</label>
             <input id="supreme-loan-amount" type="text" readonly placeholder="Calculated from eligible take-home pay" data-loan-amount>
           </div>
 
@@ -1570,7 +1634,7 @@ function createCalculatorModal() {
           </div>
 
           <div class="calculator-field">
-            <label for="lower-loan-amount">Eligible Loan Amount</label>
+            <label for="lower-loan-amount">Maximum Eligible Loan Amount</label>
             <input id="lower-loan-amount" type="text" readonly placeholder="Calculated from eligible take-home pay" data-loan-amount-lower>
           </div>
 
