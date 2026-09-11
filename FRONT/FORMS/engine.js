@@ -468,185 +468,6 @@
     }
 
 
-    var AMOUNT_ONES = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
-
-
-    var AMOUNT_TENS = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
-
-
-    function parseLoanAmount(raw) {
-        var cleaned = String(raw || "").replace(/,/g, "").replace(/[^0-9.]/g, "");
-        if (!cleaned || cleaned === ".") { return NaN; }
-        var parts = cleaned.split(".");
-        if (parts.length > 2) { return NaN; }
-        if (parts.length === 2 && parts[1].length > 2) { parts[1] = parts[1].slice(0, 2); }
-        return parseFloat(parts.join("."));
-    }
-
-
-    function threeDigitsToWords(num) {
-        var words = [];
-        var hundreds = Math.floor(num / 100);
-        var rest = num % 100;
-        if (hundreds > 0) { words.push(AMOUNT_ONES[hundreds] + " Hundred"); }
-        if (rest > 0) {
-            if (rest < 20) { words.push(AMOUNT_ONES[rest]); }
-            else {
-                var tens = Math.floor(rest / 10);
-                var ones = rest % 10;
-                var tensWord = AMOUNT_TENS[tens];
-                if (ones > 0) { tensWord += " " + AMOUNT_ONES[ones]; }
-                words.push(tensWord);
-            }
-        }
-        return words.join(" ");
-    }
-
-
-    function wholeNumberToWords(num) {
-        if (!isFinite(num)) { return ""; }
-        num = Math.floor(Math.abs(num));
-        if (num === 0) { return "Zero"; }
-        var scales = ["", "Thousand", "Million", "Billion"];
-        var words = [];
-        var scaleIndex = 0;
-        while (num > 0 && scaleIndex < scales.length) {
-            var chunk = num % 1000;
-            if (chunk > 0) {
-                var chunkWords = threeDigitsToWords(chunk);
-                if (scales[scaleIndex]) { chunkWords += " " + scales[scaleIndex]; }
-                words.unshift(chunkWords);
-            }
-            num = Math.floor(num / 1000);
-            scaleIndex++;
-        }
-        return words.join(" ");
-    }
-
-
-    function loanAmountToWords(raw) {
-        var value = parseLoanAmount(raw);
-        if (isNaN(value) || value <= 0) { return ""; }
-        var whole = Math.floor(value);
-        var cents = Math.round((value - whole) * 100);
-        if (cents === 100) { whole += 1; cents = 0; }
-        var words = wholeNumberToWords(whole) + (whole === 1 ? " Peso" : " Pesos");
-        if (cents > 0) { words += " and " + wholeNumberToWords(cents) + (cents === 1 ? " Centavo" : " Centavos"); }
-        return words;
-    }
-
-
-    function formatLoanAmount(raw) {
-        var value = parseLoanAmount(raw);
-        if (isNaN(value)) { return String(raw || ""); }
-        var parts = String(raw || "").split(".");
-        var decimals = parts.length > 1 ? Math.min(parts[1].replace(/[^0-9]/g, "").length, 2) : 0;
-        return value.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: 2 });
-    }
-
-
-    function syncAmountWordsFromLoanAmount() {
-        var amountEl = document.getElementById("loanAmount");
-        var wordsEl = document.getElementById("amountWords");
-        if (!amountEl) { return; }
-        if (!wordsEl) { return; }
-        wordsEl.value = loanAmountToWords(amountEl.value);
-    }
-
-
-    function wireLoanAmountAutoFill() {
-        var amountEl = document.getElementById("loanAmount");
-        if (!amountEl) { return; }
-        amountEl.addEventListener("input", function () {
-            var start = amountEl.selectionStart;
-            var beforeLength = amountEl.value.length;
-            amountEl.value = formatLoanAmount(amountEl.value);
-            try {
-                var next = (start || 0) + (amountEl.value.length - beforeLength);
-                amountEl.setSelectionRange(next, next);
-            } catch (err) {}
-            syncAmountWordsFromLoanAmount();
-        });
-        amountEl.addEventListener("blur", function () {
-            amountEl.value = formatLoanAmount(amountEl.value);
-            syncAmountWordsFromLoanAmount();
-        });
-        syncAmountWordsFromLoanAmount();
-    }
-
-
-    function birthDigitsOnly(raw) {
-        return String(raw || "").replace(/[^0-9]/g, "").slice(0, 8);
-    }
-
-
-    function formatBirthdate(raw) {
-        var text = String(raw || "").trim();
-        var iso = text.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-        if (iso) { return iso[2] + "/" + iso[3] + "/" + iso[1]; }
-        var d = birthDigitsOnly(raw);
-        if (d.length <= 2) { return d; }
-        if (d.length <= 4) { return d.slice(0, 2) + "/" + d.slice(2); }
-        return d.slice(0, 2) + "/" + d.slice(2, 4) + "/" + d.slice(4);
-    }
-
-
-    function parseBirthdate(raw) {
-        var text = String(raw || "").trim();
-        var m = text.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-        if (m) {
-            var mm = parseInt(m[1], 10);
-            var dd = parseInt(m[2], 10);
-            var yyyy = parseInt(m[3], 10);
-            if (mm < 1 || mm > 12 || dd < 1 || dd > 31 || yyyy < 1900 || yyyy > 2100) { return null; }
-            var dt = new Date(yyyy, mm - 1, dd);
-            if (dt.getFullYear() !== yyyy || dt.getMonth() !== mm - 1 || dt.getDate() !== dd) { return null; }
-            return dt;
-        }
-        var iso = text.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-        if (iso) {
-            var y2 = parseInt(iso[1], 10);
-            var m2 = parseInt(iso[2], 10);
-            var d2 = parseInt(iso[3], 10);
-            var dt2 = new Date(y2, m2 - 1, d2);
-            if (dt2.getFullYear() !== y2 || dt2.getMonth() !== m2 - 1 || dt2.getDate() !== d2) { return null; }
-            return dt2;
-        }
-        return null;
-    }
-
-
-    function displayBirthdate(raw) {
-        var dt = parseBirthdate(raw);
-        if (!dt) { return String(raw || ""); }
-        var mm = dt.getMonth() + 1;
-        var dd = dt.getDate();
-        var yyyy = dt.getFullYear();
-        return (mm < 10 ? "0" + mm : "" + mm) + "/" + (dd < 10 ? "0" + dd : "" + dd) + "/" + yyyy;
-    }
-
-
-    function wireBirthdateMask() {
-        var el = document.getElementById("birthdate");
-        if (!el) { return; }
-        el.addEventListener("input", function () {
-            var pos = el.selectionStart || 0;
-            var before = el.value.length;
-            var hadSlashBefore = el.value.slice(0, pos).indexOf("/") !== -1;
-            el.value = formatBirthdate(el.value);
-            try {
-                var shift = el.value.length - before;
-                if (hadSlashBefore && shift === 0 && el.value.charAt(pos) === "/") { pos += 1; }
-                else { pos += shift; }
-                el.setSelectionRange(pos, pos);
-            } catch (err) {}
-        });
-        el.addEventListener("blur", function () {
-            el.value = formatBirthdate(el.value);
-        });
-    }
-
-
     /* =========================================================
        FIELD HTML
        ========================================================= */
@@ -658,10 +479,6 @@
 
                 var label =
                     getFieldLabel(id);
-
-                if (id === "amountWords" || id === "payableYearsWords") {
-                    return "";
-                }
 
                 var input = "";
 
@@ -677,7 +494,7 @@
 
                     for (
                         var n = 1;
-                        n <= 5;
+                        n <= 30;
                         n++
                     ) {
 
@@ -726,11 +543,11 @@
 
 
                 /* =================================================
-                   BIRTHDATE
+                   PAYABLE YEARS WORDS
                    ================================================= */
 
                 else if (
-                    id === "birthdate"
+                    id === "payableYearsWords"
                 ) {
 
                     input =
@@ -745,13 +562,31 @@
 
                             'class="loan-input" ' +
 
-                            'inputmode="numeric" ' +
+                            'readonly>';
 
-                            'autocomplete="off" ' +
 
-                            'maxlength="10" ' +
+                }
 
-                            'placeholder="MM/DD/YYYY">';
+
+                /* =================================================
+                   BIRTHDATE
+                   ================================================= */
+
+                else if (
+                    id === "birthdate"
+                ) {
+
+                    input =
+
+                        '<input ' +
+
+                            'type="date" ' +
+
+                            'id="' +
+                                id +
+                            '" ' +
+
+                            'class="loan-input">';
 
                 }
 
@@ -793,7 +628,7 @@
 
                         '<input ' +
 
-                            'type="text" ' +
+                            'type="number" ' +
 
                             'id="' +
                                 id +
@@ -801,9 +636,9 @@
 
                             'class="loan-input" ' +
 
-                            'inputmode="decimal" ' +
+                            'min="0" ' +
 
-                            'autocomplete="off" ' +
+                            'step="0.01" ' +
 
                             'placeholder="Enter loan amount">';
 
@@ -1112,7 +947,24 @@
 
 
                 html +=
+
                     '<div class="loan-form-page">' +
+
+
+                        (
+                            hasPage2()
+                                ? (
+
+                                    '<div class="loan-page-title">' +
+
+                                        'Page ' +
+                                        n +
+
+                                    '</div>'
+
+                                )
+                                : ""
+                        ) +
 
 
                         (
@@ -1218,10 +1070,6 @@
            ================================================= */
 
         wirePayableAutoFill();
-
-        wireLoanAmountAutoFill();
-
-        wireBirthdateMask();
 
 
         /* =================================================
@@ -1362,6 +1210,33 @@
 
         "FIVE",
 
+        "SIX",
+
+        "SEVEN",
+
+        "EIGHT",
+
+        "NINE",
+
+        "TEN",
+
+        "ELEVEN",
+
+        "TWELVE",
+
+        "THIRTEEN",
+
+        "FOURTEEN",
+
+        "FIFTEEN",
+
+        "SIXTEEN",
+
+        "SEVENTEEN",
+
+        "EIGHTEEN",
+
+        "NINETEEN"
 
     ];
 
@@ -1458,7 +1333,7 @@
             );
 
 
-        if (!p) {
+        if (!p || !w) {
 
             return;
 
@@ -1469,12 +1344,10 @@
             "change",
             function () {
 
-                if (w) {
-                    w.value =
-                        n2w(
-                            this.value
-                        );
-                }
+                w.value =
+                    n2w(
+                        this.value
+                    );
 
             }
         );
@@ -1610,17 +1483,6 @@
         );
 
 
-        // The word fields are hidden in the modal and always
-        // derived, so compute them here instead of trusting DOM.
-        vals.amountWords = loanAmountToWords(vals.loanAmount);
-        vals.payableYearsWords = n2w(vals.payableYears);
-
-
-        if (vals.birthdate) {
-            vals.birthdate = displayBirthdate(vals.birthdate);
-        }
-
-
         return vals;
 
     }
@@ -1674,10 +1536,9 @@
             cfg()
         );
 
-        currentValues = Object.assign({}, vals || {});
-        if (!currentValues.amountWords) { currentValues.amountWords = loanAmountToWords(currentValues.loanAmount); }
-        if (!currentValues.payableYearsWords) { currentValues.payableYearsWords = n2w(currentValues.payableYears); }
-        if (currentValues.birthdate) { currentValues.birthdate = displayBirthdate(currentValues.birthdate); }
+        currentValues =
+            vals || {};
+
         currentSelections =
             selections || {};
 
@@ -2333,12 +2194,6 @@
                 }
 
 
-                if (id === "birthdate") {
-                    el.value = formatBirthdate(currentValues[id]);
-                    return;
-                }
-
-
                 el.value =
                     currentValues[id];
 
@@ -2692,23 +2547,6 @@
         selections =
             selections ||
             currentSelections;
-
-
-        values =
-            Object.assign({}, values);
-
-
-        if (!values.amountWords) {
-            values.amountWords = loanAmountToWords(values.loanAmount);
-        }
-
-        if (!values.payableYearsWords) {
-            values.payableYearsWords = n2w(values.payableYears);
-        }
-
-        if (values.birthdate) {
-            values.birthdate = displayBirthdate(values.birthdate);
-        }
 
 
         try {
@@ -3574,8 +3412,9 @@
                 ) {
 
                     var birth =
-                        parseBirthdate(
-                            vals.birthdate
+                        new Date(
+                            vals.birthdate +
+                            "T00:00:00"
                         );
 
 
@@ -3592,48 +3431,19 @@
 
 
                     if (
-                        !birth ||
+                        isNaN(
+                            birth.getTime()
+                        ) ||
                         birth >= today
                     ) {
 
                         alert(
-                            "Please enter a valid birthdate in MM/DD/YYYY format. Birthdate cannot be today or a future date."
+                            "Birthdate cannot be today or a future date."
                         );
 
                         return;
 
                     }
-
-
-                    var bmm =
-                        birth.getMonth() + 1;
-
-                    var bdd =
-                        birth.getDate();
-
-                    var byyyy =
-                        birth.getFullYear();
-
-
-                    vals.birthdate =
-
-                        (
-                            bmm < 10
-                                ? "0" + bmm
-                                : "" + bmm
-                        ) +
-
-                        "/" +
-
-                        (
-                            bdd < 10
-                                ? "0" + bdd
-                                : "" + bdd
-                        ) +
-
-                        "/" +
-
-                        byyyy;
 
                 }
 

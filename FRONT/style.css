@@ -3663,6 +3663,40 @@ nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
     line-height:1.6;
 }
 
+.calculator-disclaimer{
+    margin-top:12px;
+    padding:14px 16px;
+    border-radius:18px;
+    background:#ccc8c62e;
+    border:1px solid #504f4e25;
+    line-height:1.6;
+    font-size:13.5px;
+}
+
+.calculator-disclaimer strong{
+    display:block;
+    margin-bottom:6px;
+    font-size:14px;
+    color:#000000;
+}
+
+.calculator-disclaimer span{
+    display:block;
+    color:#0a0a0a;
+    font-weight: 500;
+}
+
+.calculator-disclaimer .not-final{
+    display:inline-block;
+    margin:0 2px;
+    padding:1px 1px;
+    border-radius:6px;
+    color:#0c0c0c;
+    font-style:normal;
+    font-weight:800;
+    letter-spacing:0.06em;
+}
+
 .calculator-result-muted{
     margin-top:0;
     background:#eef4f1;
