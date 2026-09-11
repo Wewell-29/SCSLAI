@@ -103,7 +103,7 @@ const yearbookData = [
         caption: 'An SCSLAI initiative that extends compassion and assistance to individuals and families in need through community support and outreach.',
         narrative: 'Silungan ng Pag-asa reflects SCSLAI’s commitment to serving the community by providing support and assistance to people facing difficult circumstances. The initiative aims to offer hope, care, and meaningful help to beneficiaries while strengthening the spirit of compassion and solidarity among SCSLAI members and community partners.',
         date: '2022-2023',
-        venue: 'Unit-K, 3rd Floor, PJM Building, Belen Street, beside Paco Park in Paco, Manila',
+        venue: 'N/A',
         participants: 'SCSLAI members, volunteers, beneficiaries, and community partners',
         photographer: 'SCSLAI Documentation Team',
         album: 'Silungan ng Pag-asa Collection',
@@ -123,7 +123,7 @@ const yearbookData = [
         caption: 'SCSLAI members and volunteers came together in Rizal to help protect the environment and promote a greener future through tree planting.',
         narrative: 'The tree planting activity brought together SCSLAI members, volunteers, and community partners in an effort to contribute to environmental conservation. Through planting and caring for trees, the activity promoted environmental awareness, community participation, and a shared commitment to creating a healthier and greener environment for future generations.',
         date: '2024',
-        venue: 'Rizal Province',
+        venue: 'N/A',
         participants: 'SCSLAI members, volunteers, and community partners',
         photographer: 'SCSLAI Documentation Team',
         album: '2024 Tree Planting Activity Collection',
@@ -142,7 +142,7 @@ const yearbookData = [
         caption: 'SCSLAI extended care and support to the Aeta community in Calumpang, Pampanga through a meaningful community outreach program.',
         narrative: 'The outreach program brought SCSLAI members, volunteers, and community partners together to extend assistance and support to the Aeta community in Calumpang, Pampanga. The initiative reflects SCSLAI’s commitment to community service by reaching underserved communities, promoting compassion, and strengthening partnerships through meaningful outreach activities.',
         date: '2025',
-        venue: 'Calumpang, Pampanga',
+        venue: 'N/A',
         participants: 'SCSLAI members, volunteers, community partners, and Aeta community beneficiaries',
         photographer: 'SCSLAI Documentation Team',
         album: '2025 Aeta Community Outreach Collection',
@@ -196,6 +196,12 @@ const readerSummary = document.querySelector('[data-reader-summary]');
 const pageFlipHost = document.getElementById('page-flip-host');
 let flipbookElement = document.getElementById('flipbook');
 const closeReaderButtons = document.querySelectorAll('[data-close-reader]');
+const detailsToggle = document.querySelector('[data-toggle-details]');
+const readerPaginationPrev = document.querySelector('[data-reader-prev]');
+const readerPaginationNext = document.querySelector('[data-reader-next]');
+const readerPageIndicator = document.querySelector('[data-reader-indicator]');
+const readerPanel = document.querySelector('.reader-panel');
+let detailsExpanded = false;
 const bookOpening = document.getElementById('book-opening');
 const bookOpeningLabel = document.querySelector('[data-book-opening-label]');
 const bookOpeningVideo = document.getElementById('book-opening-video');
@@ -203,7 +209,7 @@ const bookOpeningVideo = document.getElementById('book-opening-video');
 // Green-screen chroma key for the book-opening animation
 // ===========================
 //
-// The book-opening video ("animation/マエット (Maetto).mp4") is recorded against
+// The book-opening video ("animation/Book.mp4") is recorded against
 // a green screen. A plain <video> element cannot display transparency, so each
 // frame is copied onto a single reused canvas and the green background is keyed
 // out in real time (alpha = 0) before the frame is presented. The exact shade
@@ -539,7 +545,6 @@ const detailBindings = {
 };
 
 let activeYearbookIndex = -1;
-let singlePageMode = false;
 let activePages = [];
 let resizeRaf = null;
 let preloadPromise = null;
@@ -547,6 +552,7 @@ const resolvedImageSources = new Map();
 let flipLock = false;
 let currentSpreadStart = 0;
 let currentSpreadPage = 1;
+let lastSinglePageMode = false;
 let bookOpeningSequence = 0;
 let isBookOpening = false;
 
@@ -574,24 +580,58 @@ async function preloadImageBlobUrl(src) {
   }
 }
 
-function isSinglePageMode() {
+function isPhoneLayout() {
   return window.innerWidth <= 820;
 }
 
+function isSinglePageMode() {
+  // The reader must READ as a book on every device: the open two-page spread
+  // (spine + facing pages) is the book cue, so phones keep it too — just at a
+  // phone-scaled size with a large taped print on each page.
+  return false;
+}
+
 function getFlipSize() {
-  const maxWidth = Math.min(1100, Math.floor(window.innerWidth * 0.86));
-  if (singlePageMode) {
-    return {
-      width: Math.max(300, Math.floor(maxWidth * 0.52)),
-      height: Math.max(420, Math.floor(maxWidth * 0.52 * 1.38))
-    };
+  const visibleHeight = Math.floor(window.visualViewport?.height || window.innerHeight);
+
+  if (isPhoneLayout()) {
+    // Open two-page spread sized to the phone width. Facing portrait pages
+    // (ratio ~0.61 w/h, like real book pages) keep the book shape while each
+    // taped print stays viewable. Prefer measuring the real stage once the
+    // panel is on screen; fall back to a conservative estimate while hidden.
+    let availableWidth = window.innerWidth - 36;
+    const reader = document.querySelector('.yearbook-reader');
+    const stage = document.querySelector('.reader-stage');
+    if (reader && stage && yearbookReader && !yearbookReader.hidden) {
+      const measured = stage.clientWidth;
+      if (measured > 200) availableWidth = measured;
+    }
+    const width = Math.max(260, Math.min(720, Math.floor(availableWidth)));
+    const height = Math.max(200, Math.min(Math.floor(width * 0.82), Math.floor(visibleHeight * 0.52)));
+    return { width, height };
   }
 
+  const maxWidth = Math.min(1100, Math.floor(window.innerWidth * 0.86));
   const spreadWidth = Math.max(600, maxWidth);
+  // Cap by the truly visible height so short/landscape viewports still fit.
+  const desiredHeight = Math.max(420, Math.floor(spreadWidth * 0.43));
+  const heightCap = Math.max(300, visibleHeight - 160);
   return {
     width: spreadWidth,
-    height: Math.max(420, Math.floor(spreadWidth * 0.43))
+    height: Math.min(desiredHeight, heightCap)
   };
+}
+
+function applyDetailsState() {
+  // Phones open with the detail text collapsed so the taped print is the
+  // hero of the first screen; desktop always shows the full details.
+  if (!readerPanel) return;
+  const collapsed = isPhoneLayout() && !detailsExpanded;
+  readerPanel.classList.toggle('details-collapsed', collapsed);
+  if (detailsToggle) {
+    detailsToggle.setAttribute('aria-expanded', String(!collapsed));
+    detailsToggle.textContent = collapsed ? 'View activity details' : 'Hide activity details';
+  }
 }
 
 function setActiveDetails(pageNumber) {
@@ -666,22 +706,112 @@ function buildBookShell() {
 }
 
 function renderStaticSpread() {
-  const left = getPageAt(currentSpreadStart);
-  const right = getPageAt(currentSpreadStart + 1);
-
   const leftEl = flipbookElement.querySelector('[data-static-left]');
   const rightEl = flipbookElement.querySelector('[data-static-right]');
   if (!leftEl || !rightEl) return;
+
+  if (isSinglePageMode()) {
+    // One full-width page per view on phones.
+    const current = getPageAt(currentSpreadStart);
+    leftEl.innerHTML = '';
+    rightEl.innerHTML = pageMarkup(current);
+    currentSpreadPage = current?.pageNumber || 1;
+    return;
+  }
+
+  const left = getPageAt(currentSpreadStart);
+  const right = getPageAt(currentSpreadStart + 1);
 
   leftEl.innerHTML = pageMarkup(left);
   rightEl.innerHTML = pageMarkup(right);
 
   currentSpreadPage = (left?.pageNumber || right?.pageNumber || 1);
   // updateReaderStatus(); // Removed - details are now set per-edition, not per-page
+  updatePageIndicator();
+}
+
+function updatePageIndicator() {
+  if (!readerPageIndicator) return;
+
+  const total = activePages.length || 1;
+  const leftNum = getPageAt(currentSpreadStart)?.pageNumber ?? null;
+  const rightNum = getPageAt(currentSpreadStart + 1)?.pageNumber ?? null;
+
+  if (leftNum && rightNum) {
+    readerPageIndicator.textContent = `Pages ${leftNum}–${rightNum} of ${total}`;
+  } else {
+    readerPageIndicator.textContent = `Page ${leftNum || rightNum || 1} of ${total}`;
+  }
+
+  if (readerPaginationPrev) readerPaginationPrev.disabled = currentSpreadStart <= 0;
+  if (readerPaginationNext) readerPaginationNext.disabled = currentSpreadStart + 2 >= activePages.length;
+}
+
+// Keep JS timing in lockstep with the CSS book-turn animation duration
+// (bookTurnForward/Backward: 0.9s + a small settle margin).
+const PAGE_TURN_MS = 920;
+
+function playTurnAnimation(sheet, directionClass, finalize) {
+  // Runs the 3D sheet animation and finalizes the turn when the rotation
+  // actually completes (animationend), with a timeout fallback for missed
+  // events — never before the arc has played, even on slow devices.
+  const oppositeClass = directionClass === 'turn-forward' ? 'turn-backward' : 'turn-forward';
+  sheet.hidden = false;
+  sheet.classList.remove(oppositeClass, 'animate');
+  sheet.classList.add(directionClass);
+
+  let done = false;
+  const finish = () => {
+    if (done) return;
+    done = true;
+    sheet.removeEventListener('animationend', onAnimationEnd);
+    finalize();
+  };
+  const onAnimationEnd = (event) => {
+    if (event.target === sheet) finish();
+  };
+  sheet.addEventListener('animationend', onAnimationEnd);
+  window.setTimeout(finish, PAGE_TURN_MS + 700);
+
+  void sheet.offsetWidth;
+  sheet.classList.add('animate');
 }
 
 function animateForwardTurn() {
   if (flipLock) return;
+
+  if (isSinglePageMode()) {
+    const current = getPageAt(currentSpreadStart);
+    const next = getPageAt(currentSpreadStart + 1);
+    if (!current || !next) return;
+
+    flipLock = true;
+
+    const rightEl = flipbookElement.querySelector('[data-static-right]');
+    const sheet = flipbookElement.querySelector('[data-turn-sheet]');
+    const front = flipbookElement.querySelector('[data-turn-front]');
+    const back = flipbookElement.querySelector('[data-turn-back]');
+    if (!rightEl || !sheet || !front || !back) {
+      flipLock = false;
+      return;
+    }
+
+    // Static layer already shows the destination; the full-width sheet
+    // carries the current page away (front) with the next page on its back.
+    rightEl.innerHTML = pageMarkup(next);
+    front.innerHTML = pageMarkup(current);
+    back.innerHTML = pageMarkup(next);
+
+    playTurnAnimation(sheet, 'turn-forward', () => {
+      currentSpreadStart += 1;
+      renderStaticSpread();
+      sheet.hidden = true;
+      sheet.classList.remove('turn-forward', 'animate');
+      flipLock = false;
+    });
+    return;
+  }
+
   const right = getPageAt(currentSpreadStart + 1);
   const nextLeft = getPageAt(currentSpreadStart + 2);
   const nextRight = getPageAt(currentSpreadStart + 3);
@@ -702,24 +832,50 @@ function animateForwardTurn() {
   front.innerHTML = pageMarkup(right);
   back.innerHTML = pageMarkup(nextLeft);
 
-  sheet.hidden = false;
-  sheet.classList.remove('turn-backward', 'animate');
-  sheet.classList.add('turn-forward');
-
-  void sheet.offsetWidth;
-  sheet.classList.add('animate');
-
-  window.setTimeout(() => {
+  playTurnAnimation(sheet, 'turn-forward', () => {
     currentSpreadStart += 2;
     renderStaticSpread();
     sheet.hidden = true;
     sheet.classList.remove('turn-forward', 'animate');
     flipLock = false;
-  }, 1120);
+  });
 }
 
 function animateBackwardTurn() {
   if (flipLock) return;
+
+  if (isSinglePageMode()) {
+    const current = getPageAt(currentSpreadStart);
+    const prev = getPageAt(currentSpreadStart - 1);
+    if (!current || !prev) return;
+
+    flipLock = true;
+
+    const rightEl = flipbookElement.querySelector('[data-static-right]');
+    const sheet = flipbookElement.querySelector('[data-turn-sheet]');
+    const front = flipbookElement.querySelector('[data-turn-front]');
+    const back = flipbookElement.querySelector('[data-turn-back]');
+    if (!rightEl || !sheet || !front || !back) {
+      flipLock = false;
+      return;
+    }
+
+    // Static layer keeps the current page; the sheet sweeps the previous
+    // page in from the left (front), its back carrying the page being left.
+    rightEl.innerHTML = pageMarkup(current);
+    front.innerHTML = pageMarkup(prev);
+    back.innerHTML = pageMarkup(current);
+
+    playTurnAnimation(sheet, 'turn-backward', () => {
+      currentSpreadStart -= 1;
+      renderStaticSpread();
+      sheet.hidden = true;
+      sheet.classList.remove('turn-backward', 'animate');
+      flipLock = false;
+    });
+    return;
+  }
+
   const left = getPageAt(currentSpreadStart);
   const prevLeft = getPageAt(currentSpreadStart - 2);
   const prevRight = getPageAt(currentSpreadStart - 1);
@@ -740,34 +896,26 @@ function animateBackwardTurn() {
   front.innerHTML = pageMarkup(left);
   back.innerHTML = pageMarkup(prevRight);
 
-  sheet.hidden = false;
-  sheet.classList.remove('turn-forward', 'animate');
-  sheet.classList.add('turn-backward');
-
-  void sheet.offsetWidth;
-  sheet.classList.add('animate');
-
-  window.setTimeout(() => {
+  playTurnAnimation(sheet, 'turn-backward', () => {
     currentSpreadStart -= 2;
     renderStaticSpread();
     sheet.hidden = true;
     sheet.classList.remove('turn-backward', 'animate');
     flipLock = false;
-  }, 1120);
+  });
 }
 
 function initTurnJs(pages, startPage) {
   if (!flipbookElement) return;
 
-  singlePageMode = isSinglePageMode();
-  pageFlipHost.classList.toggle('single-page', singlePageMode);
   activePages = pages.slice();
 
   const safeStart = Math.max(1, Math.min(activePages.length, startPage || 1));
   currentSpreadStart = Math.max(0, safeStart - 1);
-  if (currentSpreadStart % 2 !== 0) {
+  if (!isSinglePageMode() && currentSpreadStart % 2 !== 0) {
     currentSpreadStart -= 1;
   }
+  lastSinglePageMode = isSinglePageMode();
 
   buildBookShell();
   renderStaticSpread();
@@ -809,6 +957,11 @@ async function openReader(index, startPage) {
   yearbookReader.hidden = false;
   yearbookReader.classList.add('is-visible');
   document.body.style.overflow = 'hidden';
+  // Every open starts with the phone details collapsed so the book leads.
+  detailsExpanded = false;
+  applyDetailsState();
+  // Now that the panel is measurable, re-apply the exact fitted book size.
+  resizeActiveFlipbook();
 }
 
 function hasReducedMotionPreference() {
@@ -959,9 +1112,13 @@ function resizeActiveFlipbook() {
   if (yearbookReader?.hidden) return;
   if (!flipbookElement) return;
 
-  const nextSingleMode = isSinglePageMode();
-  if (nextSingleMode !== singlePageMode) {
-    singlePageMode = nextSingleMode;
+  // Rebuild the shell when crossing the single-page breakpoint so spread and
+  // single page never render with the wrong geometry.
+  const single = isSinglePageMode();
+  if (single !== lastSinglePageMode) {
+    lastSinglePageMode = single;
+    buildBookShell();
+    renderStaticSpread();
   }
 
   const size = getFlipSize();
@@ -1040,6 +1197,9 @@ function setupPageNavigation() {
       event.preventDefault();
     }
   });
+
+  readerPaginationPrev?.addEventListener('click', () => turnPrevious());
+  readerPaginationNext?.addEventListener('click', () => turnNext());
 }
 
 yearbookButtons.forEach((button) => {
@@ -1051,6 +1211,11 @@ yearbookButtons.forEach((button) => {
 
 closeReaderButtons.forEach((button) => {
   button.addEventListener('click', closeReader);
+});
+
+detailsToggle?.addEventListener('click', () => {
+  detailsExpanded = !detailsExpanded;
+  applyDetailsState();
 });
 
 yearbookReader?.addEventListener('click', (event) => {
@@ -1070,6 +1235,7 @@ window.addEventListener('resize', () => {
     window.cancelAnimationFrame(resizeRaf);
   }
   resizeRaf = window.requestAnimationFrame(() => {
+    applyDetailsState();
     resizeActiveFlipbook();
     resizeRaf = null;
   });

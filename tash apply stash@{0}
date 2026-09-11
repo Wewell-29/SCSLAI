@@ -44,7 +44,7 @@
 [32m+[m[32m// Green-screen chroma key for the book-opening animation[m
 [32m+[m[32m// ===========================[m
 [32m+[m[32m//[m
-[32m+[m[32m// The book-opening video ("animation/マエット (Maetto).mp4") is recorded against[m
+[32m+[m[32m// The book-opening video ("animation/Book.mp4") is recorded against[m
 [32m+[m[32m// a green screen. A plain <video> element cannot display transparency, so each[m
 [32m+[m[32m// frame is copied onto a single reused canvas and the green background is keyed[m
 [32m+[m[32m// out in real time (alpha = 0) before the frame is presented. The exact shade[m

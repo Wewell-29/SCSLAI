@@ -1,5 +1,5 @@
 /* SCSLAI Cares page stylesheet */
-@import url("style.css");
+@import url("style.css?v=20260903h");
 
 /* Override Bootstrap's font stack and heading sizes to match the home page */
 body, * {
@@ -246,6 +246,23 @@ body, * {
     .book-opening-label {
         font-size: 0.72rem;
         bottom: 0.7rem;
+    }
+}
+
+/* Mobile: the book-opening clip is 1920x1080 with a black pillarbox border
+   around the green screen, and the book (~1540px wide, centered) is what
+   should fill the screen. A plain "contain" leaves the book tiny; a full
+   "cover" crops it. So we size the video/canvas to a 16:9 box 1.2x the
+   screen width (centered, clipped by the panel): that crops off the black
+   pillarbox and the empty green margins so the book fills ~96% of the width
+   without being cut off. Aspect ratio and animation are untouched. Tune the
+   120vw multiplier to taste (higher = more zoom / tighter crop). */
+@media (max-width: 768px) {
+    .book-opening-video,
+    .book-opening-canvas {
+        width: 120vw;
+        height: 67.5vw;
+        margin: auto;
     }
 }
 
