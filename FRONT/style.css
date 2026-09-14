@@ -4016,20 +4016,29 @@ body.calculator-modal-open{
     fill:#024730e8;
 }
 
-.contact-card-body h2{
+.contact-card-body a{
     margin:0 0 8px;
     font-size:22px;
-    color:#67ee9b;
+    color:#4ec291;
     letter-spacing:0.2px;
     overflow-wrap:anywhere;
+    transition:color 0.25s ease, text-decoration-color 0.25s ease;
+    text-decoration:underline;
+    text-decoration-color:transparent;
+    text-underline-offset:4px;
+
 }
 
 .contact-card-body p{
     margin:0;
-    color:#eef6ec;
+    color:#fdfdfd;
     line-height:1.6;
 }
 
+.contact-card-body a:hover{
+    color:#48daa2;
+    text-decoration-color:#48daa2;
+}
 .bank-contact{
     background:rgba(255,255,255,0.93);
     color:#164a35;

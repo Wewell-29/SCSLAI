@@ -21,9 +21,9 @@ images:["FORMS/CCDF - SC.png"],
 
 fields:{
 /* MEMBER'S PROFILE — name line (Surname / First Name / Middle Name) */
-lastName:{x:240,y:664,w:2032,h:50,fs:24},
+lastName:{x:240,y:664,w:932,h:50,fs:24},
 firstName:{x:850,y:664,w:920,h:50,fs:24},
-middleName:{x:1780,y:664,w:492,h:50,fs:24},
+middleName:{x:1700,y:664,w:492,h:50,fs:24},
 office:{x:436,y:770,w:1828,h:50,fs:24},
 edpNumber:{x:434,y:875,w:680,h:50,fs:24},
 accountNo:{x:1825,y:875,w:425,h:50,fs:24},

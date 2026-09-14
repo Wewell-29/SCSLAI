@@ -86,8 +86,7 @@ ben4Dob:{x:734,y:2838,w:592,h:68,fs:20},
 ben4Rel:{x:1334,y:2838,w:594,h:68,fs:20},
 ben4Contact:{x:1936,y:2838,w:510,h:68,fs:18},
 
-/* SPECIMEN SIGNATURE + SIGNATURE OVER PRINTED NAME */
-signatureOverName:{x:1700,y:3320,w:658,h:50,fs:22}
+
 },
 
 
