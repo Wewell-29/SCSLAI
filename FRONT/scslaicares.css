@@ -1,0 +1,456 @@
+/* SCSLAI Cares page stylesheet */
+@import url("style.css?v=20260903h");
+
+/* Override Bootstrap's font stack and heading sizes to match the home page */
+body, * {
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+
+.logo-text h3 {
+    font-size: 1.17em !important;
+    font-weight: bold !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+}
+
+.yearbook-reader { 
+    position: fixed; inset: 0; z-index: 9999; }
+
+.yearbook-library-header h1 {
+    font-family: "Playfair Display", "Cormorant Garamond", Georgia, serif !important;
+}
+
+.yearbook-book .book-title {
+    font-family: "Cormorant Garamond", Georgia, serif !important;
+}
+
+/* Closed-book treatment for the SCSLAI Cares yearbook editions. */
+.yearbook-grid {
+    gap: 2.4rem 1.5rem;
+}
+
+.yearbook-book {
+    padding: 0.8rem 0.5rem 1rem;
+    perspective: 1100px;
+}
+
+.yearbook-cover {
+    --cover-tilt: perspective(920px) rotateX(26deg) rotateZ(-7deg);
+    position: relative;
+    display: block;
+    width: min(100%, 250px);
+    aspect-ratio: 1.48 / 1;
+    max-width: none;
+    margin: 0 auto 1.8rem;
+    overflow: visible;
+    isolation: isolate;
+    border-radius: 10px 13px 9px 11px;
+    background: #faf8f2;
+    transform: var(--cover-tilt);
+    transform-origin: center center;
+    transform-style: preserve-3d;
+    transition: transform 240ms ease, filter 240ms ease;
+    
+}
+
+/* The layered paper block beneath the cover. */
+.yearbook-cover::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 9px -7px -22px 9px;
+    border: 1px solid #aaa28f;
+    border-radius: 4px 7px 10px 9px;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(116, 106, 88, 0.24) 0,
+            rgba(116, 106, 88, 0.24) 1px,
+            rgba(255, 253, 244, 0.98) 1px,
+            rgba(255, 253, 244, 0.98) 3px
+        ),
+        #f8f4e8;
+    box-shadow: 8px 12px 15px rgba(8, 5, 2, 0.33);
+}
+
+/* A lower hard-cover lip makes the page block read as a bound book. */
+.yearbook-cover::after {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    inset: 16px -10px -28px 12px;
+    border-radius: 5px 8px 12px 10px;
+    background: linear-gradient(145deg, #fffef9, #d9d1c1);
+    box-shadow: 9px 16px 18px rgba(8, 5, 2, 0.25);
+}
+
+.yearbook-cover img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 5px solid #fffdf7;
+    border-radius: inherit;
+    box-shadow:
+        inset 4px 0 0 rgba(87, 66, 39, 0.16),
+        0 5px 7px rgba(15, 8, 2, 0.28);
+}
+
+.yearbook-book:hover .yearbook-cover,
+.yearbook-book:focus-visible .yearbook-cover {
+    transform: translateY(-12px) var(--cover-tilt);
+    filter: brightness(1.04);
+}
+
+.yearbook-book:focus-visible {
+    outline: 2px solid #f8e8c9;
+    outline-offset: 5px;
+    border-radius: 8px;
+}
+
+/* First stage: animate the selected library book before its modal opens. */
+.yearbook-book.is-opening {
+    position: relative;
+    z-index: 4;
+    pointer-events: none;
+}
+
+.yearbook-book.is-opening .yearbook-cover {
+    animation: selectedYearbookOpen 560ms cubic-bezier(0.22, 0.8, 0.3, 1) both;
+}
+
+@keyframes selectedYearbookOpen {
+    0% {
+        opacity: 1;
+        transform: var(--cover-tilt);
+    }
+    62% {
+        opacity: 1;
+        transform: translateY(-1.2rem) scale(1.1) perspective(920px) rotateX(18deg) rotateZ(-3deg);
+    }
+    100% {
+        opacity: 0.2;
+        transform: translateY(-1.7rem) scale(1.16) perspective(920px) rotateX(10deg) rotateZ(0deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .yearbook-cover,
+    .yearbook-book {
+        transition: none;
+    }
+}
+
+/* Opening sequence shown between selecting an edition and displaying its reader. */
+.book-opening {
+    position: fixed;
+    z-index: 1450;
+    inset: 0;
+    display: grid;
+    overflow: hidden;
+    place-items: center;
+    background: transparent;
+}
+
+.book-opening[hidden] {
+    display: none !important;
+}
+
+.book-opening-label {
+    position: absolute;
+    z-index: 2;
+    right: 1rem;
+    bottom: 0.9rem;
+    left: 1rem;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.75);
+}
+
+.book-opening-panel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: transparent;
+}
+
+/* The opening sequence is the green-screen book-opening video. A canvas next
+   to the <video> receives every frame with the green screen keyed out to real
+   transparency (alpha = 0), so the page behind the overlay stays visible.
+   The raw <video> itself stays hidden: it is only the decode source, plus a
+   fallback renderer for browsers where per-pixel access is unavailable. */
+.book-opening-video {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: transparent;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Fallback: chroma keying unavailable - show the raw video unmodified. */
+.book-opening.is-fallback .book-opening-video {
+    opacity: 1;
+    visibility: visible;
+}
+
+.book-opening-canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: transparent;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* While keying, only the processed canvas is presented. */
+.book-opening.is-chroma .book-opening-canvas {
+    opacity: 1;
+    visibility: visible;
+    animation: bookOpeningPrelude 0.45s cubic-bezier(0.22, 0.8, 0.3, 1) both;
+}
+
+.book-opening.is-fallback .book-opening-canvas {
+    display: none;
+}
+
+@keyframes bookOpeningPrelude {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 480px) {
+    .book-opening-label {
+        font-size: 0.72rem;
+        bottom: 0.7rem;
+    }
+}
+
+/* Mobile: the book-opening clip is 1920x1080 with a black pillarbox border
+   around the green screen, and the book (~1540px wide, centered) is what
+   should fill the screen. A plain "contain" leaves the book tiny; a full
+   "cover" crops it. So we size the video/canvas to a 16:9 box 1.2x the
+   screen width (centered, clipped by the panel): that crops off the black
+   pillarbox and the empty green margins so the book fills ~96% of the width
+   without being cut off. Aspect ratio and animation are untouched. Tune the
+   120vw multiplier to taste (higher = more zoom / tighter crop). */
+@media (max-width: 768px) {
+    .book-opening-video,
+    .book-opening-canvas {
+        width: 120vw;
+        height: 67.5vw;
+        margin: auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .yearbook-book.is-opening .yearbook-cover,
+    .book-opening.is-chroma .book-opening-canvas {
+        animation: none;
+    }
+}
+
+/* icons to display */
+.fas, .fab, .fa {
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900 !important;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+}
+
+.fab {
+    font-family: "Font Awesome 6 Brands" !important;
+    font-weight: 400 !important;
+}
+
+/* Ensure nav toggle icon shows */
+.nav-toggle i {
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900 !important;
+}
+
+/* Ensure footer icons show */
+footer i {
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900 !important;
+}
+
+footer .fab {
+    font-family: "Font Awesome 6 Brands" !important;
+    font-weight: 400 !important;
+}
+
+/* Click-to-view: book photos open in a lightbox. */
+#flipbook .scrap-card {
+    cursor: zoom-in;
+}
+
+#flipbook .photo-mat img {
+    cursor: zoom-in;
+}
+
+.photo-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 20000;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    isolation: isolate;
+}
+
+.photo-lightbox[hidden] {
+    display: none !important;
+}
+
+.photo-lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: rgba(10, 8, 5, 0.82);
+    backdrop-filter: blur(2px);
+}
+
+.photo-lightbox-panel {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    width: min(100%, 980px);
+    max-height: calc(100vh - 2rem);
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-rows: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.6rem 0.6rem;
+    padding: 0.9rem;
+    border-radius: 16px;
+    background: rgba(24, 18, 12, 0.96);
+    border: 1px solid rgba(248, 232, 201, 0.22);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+}
+
+.photo-lightbox-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    z-index: 2;
+    width: 38px;
+    height: 38px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(248, 232, 201, 0.14);
+    color: #f8e8c9;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.photo-lightbox-close:hover {
+    background: rgba(248, 232, 201, 0.28);
+}
+
+.photo-lightbox-image {
+    grid-column: 2;
+    grid-row: 1;
+    display: block;
+    width: 100%;
+    max-height: calc(100vh - 9rem);
+    object-fit: contain;
+    border-radius: 10px;
+    background: #111;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.photo-lightbox-nav {
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(248, 232, 201, 0.14);
+    color: #f8e8c9;
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.photo-lightbox-nav:hover {
+    background: rgba(248, 232, 201, 0.28);
+}
+
+.photo-lightbox-prev {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.photo-lightbox-next {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+.photo-lightbox-caption {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin: 0;
+    color: #f8e8c9;
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+
+.photo-lightbox-counter {
+    flex: 0 0 auto;
+    color: rgba(248, 232, 201, 0.75);
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+@media (max-width: 560px) {
+    .photo-lightbox-panel {
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        padding: 0.6rem;
+    }
+
+    .photo-lightbox-nav {
+        width: 36px;
+        height: 36px;
+    }
+
+    .photo-lightbox-image {
+        max-height: calc(100vh - 11rem);
+    }
+}
