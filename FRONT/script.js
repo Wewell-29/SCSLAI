@@ -1,6 +1,66 @@
 
 
 // ===========================
+function createSiteLoader() {
+  if (document.querySelector('.site-loader')) return;
+
+  const loaderStartedAt = performance.now();
+  const minimumDisplayMs = 2200;
+  const loader = document.createElement('div');
+  loader.className = 'site-loader';
+  loader.setAttribute('role', 'status');
+  loader.setAttribute('aria-label', 'Loading page');
+  loader.innerHTML = `
+    <div class="wallet-loader">
+      <div class="wallet-back"></div>
+      <div class="bill bill-1"></div>
+      <div class="bill bill-2"></div>
+      <div class="bill bill-3"></div>
+      <div class="wallet-front">
+        <div class="text">Loading<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></div>
+      </div>
+    </div>`;
+
+  document.body.prepend(loader);
+
+  const billDropFrames = [
+    { transform: 'translateX(-50%) translateY(-22px) scale(0.82)', opacity: 0.35 },
+    { transform: 'translateX(-50%) translateY(0) scale(1)', opacity: 1, offset: 0.45 },
+    { transform: 'translateX(-50%) translateY(0) scale(1)', opacity: 1, offset: 0.78 },
+    { transform: 'translateX(-50%) translateY(8px) scale(0.94)', opacity: 0.35 }
+  ];
+
+  loader.querySelectorAll('.bill').forEach((bill, index) => {
+    bill.style.animation = 'none';
+    bill.animate(billDropFrames, {
+      duration: 1200,
+      easing: 'ease-in-out',
+      iterations: Infinity,
+      delay: -index * 400
+    });
+  });
+
+  const hideLoader = () => {
+    const remainingMs = minimumDisplayMs - (performance.now() - loaderStartedAt);
+    if (remainingMs > 0) {
+      window.setTimeout(hideLoader, remainingMs);
+      return;
+    }
+
+    loader.classList.add('is-hidden');
+    window.setTimeout(() => loader.remove(), 360);
+  };
+
+  if (document.readyState === 'complete') {
+    hideLoader();
+  } else {
+    window.addEventListener('load', hideLoader, { once: true });
+  }
+}
+
+createSiteLoader();
+
+// ===========================
 // Premium yearbook library
 // ===========================
 
