@@ -21,18 +21,16 @@ images:["FORMS/CCDF - LC.png"],
 
 fields:{
 /* MEMBER'S PROFILE — name line (Surname / First Name / Middle Name) */
-lastName:{x:240,y:664,w:2032,h:50,fs:24},
+lastName:{x:240,y:664,w:932,h:50,fs:24},
 firstName:{x:850,y:664,w:920,h:50,fs:24},
-middleName:{x:1780,y:664,w:492,h:50,fs:24},
+middleName:{x:1700,y:664,w:492,h:50,fs:24},
 office:{x:436,y:770,w:1828,h:50,fs:24},
 edpNumber:{x:434,y:875,w:680,h:50,fs:24},
 accountNo:{x:1825,y:875,w:425,h:50,fs:24},
 mobileNumber:{x:525,y:928,w:604,h:50,fs:24},
 officeLandline:{x:1753,y:928,w:502,h:50,fs:24},
 
-/* DECLARATION — signature / date / committee confirmation */
-dateToday:{x:1678,y:2717,w:297,h:50,fs:24},
-confirmedBy:{x:1440,y:3086,w:706,h:50,fs:24}
+
 },
 
 validate:function(vals,miss){

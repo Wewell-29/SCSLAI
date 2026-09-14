@@ -3861,6 +3861,40 @@ nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
     line-height:1.6;
 }
 
+.calculator-disclaimer{
+    margin-top:12px;
+    padding:14px 16px;
+    border-radius:18px;
+    background:#ccc8c62e;
+    border:1px solid #504f4e25;
+    line-height:1.6;
+    font-size:13.5px;
+}
+
+.calculator-disclaimer strong{
+    display:block;
+    margin-bottom:6px;
+    font-size:14px;
+    color:#000000;
+}
+
+.calculator-disclaimer span{
+    display:block;
+    color:#0a0a0a;
+    font-weight: 500;
+}
+
+.calculator-disclaimer .not-final{
+    display:inline-block;
+    margin:0 2px;
+    padding:1px 1px;
+    border-radius:6px;
+    color:#0c0c0c;
+    font-style:normal;
+    font-weight:800;
+    letter-spacing:0.06em;
+}
+
 .calculator-result-muted{
     margin-top:0;
     background:#eef4f1;
@@ -4180,20 +4214,29 @@ body.calculator-modal-open{
     fill:#024730e8;
 }
 
-.contact-card-body h2{
+.contact-card-body a{
     margin:0 0 8px;
     font-size:22px;
-    color:#67ee9b;
+    color:#4ec291;
     letter-spacing:0.2px;
     overflow-wrap:anywhere;
+    transition:color 0.25s ease, text-decoration-color 0.25s ease;
+    text-decoration:underline;
+    text-decoration-color:transparent;
+    text-underline-offset:4px;
+
 }
 
 .contact-card-body p{
     margin:0;
-    color:#eef6ec;
+    color:#fdfdfd;
     line-height:1.6;
 }
 
+.contact-card-body a:hover{
+    color:#48daa2;
+    text-decoration-color:#48daa2;
+}
 .bank-contact{
     background:rgba(255,255,255,0.93);
     color:#164a35;

@@ -291,15 +291,57 @@ body.loan-modal-open {
     max-width: 100%;
 
     margin: 0;
-    padding: 0;
 
-    object-fit: contain;
-
+    /*
+       The image itself is decorative — never let it
+       swallow clicks or text selection that belong
+       to the inputs layered on top of it.
+    */
     user-select: none;
 
     -webkit-user-select: none;
 
     pointer-events: none;
+}
+
+
+/* ============================================================
+   DESKTOP FILL-ON-IMAGE MODE
+   (inputs are positioned by JS; this just styles the page)
+   ============================================================ */
+
+.loan-image-page {
+    padding: 20px 20px 8px;
+    background: #e9eceb;
+}
+
+.loan-form-canvas {
+    /*
+        JS sets aspect-ratio inline from the PNG's
+        design dimensions (dims.w / dims.h) and
+        caps the width at the design width, so
+        the form is never stretched beyond the
+        scale the preview / print uses. Center
+        it when it is narrower than the modal.
+    */
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.loan-form-canvas .form-input {
+    font-size: 12px; /* overridden per-input by JS (f.fs) */
+}
+
+
+/* ============================================================
+   FORM PAGE
+   ============================================================ */
+
+.loan-form-page {
+    padding: 0;
+
+    object-fit: contain;
 }
 
 
@@ -351,20 +393,21 @@ body.loan-modal-open {
     color: #003f91;
 
     /*
-       Use a normal readable font.
-       The actual size is controlled by JS/config.
+       Match the preview / printed output exactly:
+       Arial, BOLD and CENTERED (the preview values
+       and the printed PDF are bold + centered too).
+       Actual size is scaled by JS per field (f.fs).
     */
     font-family:
-        "Times New Roman",
-        Times,
-        Georgia,
-        serif;
+        Arial,
+        Helvetica,
+        sans-serif;
 
-    font-weight: 500;
+    font-weight: 700;
 
     line-height: 1;
 
-    text-align: left;
+    text-align: center;
 
     white-space: nowrap;
 
@@ -385,7 +428,7 @@ body.loan-modal-open {
    ============================================================ */
 
 .form-input:hover {
-    background: rgba(255, 255, 255, 0.10);
+    background: transparent;
 
     border-color: rgba(0, 63, 145, 0.25);
 }
@@ -396,7 +439,7 @@ body.loan-modal-open {
    ============================================================ */
 
 .form-input:focus {
-    background: rgba(255, 255, 255, 0.30);
+    background: transparent;
 
     border: 1px solid rgba(0, 63, 145, 0.45);
 
@@ -417,6 +460,51 @@ body.loan-modal-open {
     font-weight: 400;
 
     opacity: 1;
+}
+
+
+/* ============================================================
+   MOBILE STACKED INPUTS — centered + bold, same as the
+   desktop fill view, the preview and the printed form.
+   ============================================================ */
+
+.loan-input {
+    text-align: center;
+
+    font-weight: 700;
+}
+
+
+/* ============================================================
+   AUTOFILL NEUTRALIZER
+   Chrome / Edge paint autofilled inputs light blue
+   (#e8f0fe) and force their own text color. Force it back:
+   transparent background + blue ink on the fill-on-image
+   view, and the normal white box on the stacked view.
+   ============================================================ */
+
+.form-input:-webkit-autofill,
+.form-input:-webkit-autofill:hover,
+.form-input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px transparent inset;
+    box-shadow: 0 0 0 1000px transparent inset;
+    -webkit-text-fill-color: #003f91;
+    caret-color: #003f91;
+    /*
+        The 99999s transition stops Chrome from ever
+        painting its blue autofill background.
+    */
+    transition: background-color 99999s ease-in-out 0s;
+}
+
+.loan-input:-webkit-autofill,
+.loan-input:-webkit-autofill:hover,
+.loan-input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+    box-shadow: 0 0 0 1000px #ffffff inset;
+    -webkit-text-fill-color: #222222;
+    caret-color: #222222;
+    transition: background-color 99999s ease-in-out 0s;
 }
 
 
@@ -1589,4 +1677,6 @@ select:focus-visible {
     left: 0 !important;
 
     margin: 0 !important;
+
+    padding: 0 !important;
 }

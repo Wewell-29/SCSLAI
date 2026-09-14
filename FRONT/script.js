@@ -1957,6 +1957,11 @@ function createCalculatorModal() {
           <span>Your eligible loan amount appears here.</span>
         </div>
 
+        <div class="calculator-disclaimer">
+          
+          <span>The eligible loan amount shown on the screen is subject to further adjustment, particularly with regard to the interest computation of your previous loan/s, if any. Therefore, the amount shown is <em class="not-final">NOT FINAL</em>.</span>
+        </div>
+
         <div class="calculator-note">
           <strong>Note:</strong>
           <span>The calculation is based on the information you provide. To determine your Eligible Loan Amount, ₱5,000 is deducted from your take-home pay to ensure that your remaining pay does not fall below ₱5,000.</span>
@@ -2015,6 +2020,11 @@ function createCalculatorModal() {
           <span>Your eligible loan amount appears here.</span>
         </div>
 
+        <div class="calculator-disclaimer">
+          <strong>Disclaimer:</strong>
+          <span>The loan amortization shown on the screen is subject to further adjustment, particularly with regard to the interest computation of your previous loan/s, if any. Therefore, the amount shown is <em class="not-final">NOT FINAL</em>.</span>
+        </div>
+
         <div class="calculator-note">
           <strong>Note:</strong>
           <span>The calculation is based on the information you provide. To determine your Eligible Loan Amount, ₱5,000 is deducted from your take-home pay to ensure that your remaining pay does not fall below ₱5,000.</span>
@@ -2030,7 +2040,7 @@ function createCalculatorModal() {
     </div>
   `;
 
-  document.body.appendChild(modal);
+  document.body.appendChild(modal); 
   return modal;
 }
 

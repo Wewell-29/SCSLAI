@@ -9,16 +9,15 @@ fieldLabels:{
 date:"Date",othersReason:"Other Reason",amountWords:"Amount in Words",
 amountFigures:"Amount",office:"Office",printedName:"Applicant's Printed Name",
 appointment:"Status of Appointment",edpNumber:"EDP No.",mobileNumber:"Mobile No.",
-homeAddress1:"Home Address",homeAddress2:"Complete Home Address"
+homeAddress1:"City  ",homeAddress2:"Complete Home Address"
 },
 width:2550, height:4200,
-hasPage2:true, hasCheckboxes:true, useUppercase:true,
+hasPage2:false, hasCheckboxes:true, useUppercase:true,
 mobileField:"mobileNumber",
 pdfPrefix:"Withdrawal-",
 pdfSuffix:"Form",
 images:[
 "FORMS/WITHDRAWAL 01.png",
-"FORMS/WITHDRAWAL 02.png"
 ],
 
 fields:{
