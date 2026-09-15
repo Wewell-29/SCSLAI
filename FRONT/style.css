@@ -138,6 +138,10 @@ nav a{
     transition: color 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
+.dropbtn{
+    font-size: 18px;
+}
+
 /* Active main navigation item */
 nav > a.active,
 nav .dropdown.active .dropbtn {
@@ -3191,6 +3195,27 @@ nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
 }
 
 
+/* Home Gallery item label */
+.gallery-home .gallery-item-label{
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:100%;
+    padding:28px 14px 10px;
+    background:linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 100%);
+    color:#ffffffd7;
+    font-size:clamp(13px, 1.7vw, 16px);
+    font-weight:500;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    pointer-events:none;
+    z-index:2;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+
 /* Keep gallery below carousel */
 .gallery-section{
     width:100%;
@@ -4046,8 +4071,8 @@ body.calculator-modal-open{
 }
 
 .contact-card-body a:hover{
-    color:#48daa2;
-    text-decoration-color:#48daa2;
+    color:#ffffff;
+    text-decoration-color:#0ed68a;
 }
 .bank-contact{
     background:rgba(255,255,255,0.93);
