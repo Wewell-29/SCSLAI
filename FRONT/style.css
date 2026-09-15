@@ -1896,8 +1896,10 @@ nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
 
 .annual-report-grid{
     display:grid;
-    grid-template-columns:repeat(5, minmax(0, 1fr));
-    gap:18px;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:80px;
+    height:60%;
+    
 }
 
 .report-card{
@@ -2090,6 +2092,13 @@ nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
     color:#164a35;
     font-size:28px;
     border-bottom:2px solid #d9e3de;
+} 
+
+.section-title-expenses{
+    padding-bottom:10px;
+    color:#0c3d26b9;
+    font-size:20px;
+    font-weight:600;
 }
 
 .table-wrapper{
@@ -2241,6 +2250,7 @@ nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
     .section-title{
         font-size:clamp(21px, 6vw, 26px);
     }
+
 
     .table-wrapper{
         border-radius:6px;
