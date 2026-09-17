@@ -1174,7 +1174,6 @@ async function openReaderAfterBookOpening(index, startPage) {
     return;
   }
 
-  selectedBook?.classList.remove('is-opening');
   if (bookOpeningLabel) {
     bookOpeningLabel.textContent = `Opening ${edition.title}`;
   }
@@ -1203,6 +1202,7 @@ async function openReaderAfterBookOpening(index, startPage) {
   if (bookOpeningVideo) bookOpeningVideo.pause();
   bookOpening.hidden = true;
   bookOpening.setAttribute('aria-hidden', 'true');
+  selectedBook?.classList.remove('is-opening');
   await openReader(index, startPage);
 }
 
@@ -2288,23 +2288,26 @@ calculatorLinks.forEach((link) => {
 });
 
 document.addEventListener('click', (event) => {
-  if (event.target?.matches?.('[data-open-calculator]')) {
+  const target = event.target instanceof Element ? event.target : null;
+
+  if (target?.closest('[data-open-calculator]')) {
     openCalculator();
   }
 
-  if (event.target?.matches?.('[data-close-calculator]')) {
+  if (target?.closest('[data-close-calculator]')) {
     closeCalculator();
   }
 
-  if (event.target?.matches?.('[data-court-tab]')) {
-    setCalculatorCourt(event.target.dataset.courtTab);
+  const courtTab = target?.closest('[data-court-tab]');
+  if (courtTab) {
+    setCalculatorCourt(courtTab.dataset.courtTab);
   }
 
-  if (event.target?.matches?.('[data-compute-supreme]')) {
+  if (target?.closest('[data-compute-supreme]')) {
     computeLoan('supreme');
   }
 
-  if (event.target?.matches?.('[data-compute-lower]')) {
+  if (target?.closest('[data-compute-lower]')) {
     computeLoan('lower');
   }
 });

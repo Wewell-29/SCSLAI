@@ -3533,6 +3533,7 @@ nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
     position:absolute;
     top:18px;
     right:18px;
+    z-index:5;
     width:42px;
     height:42px;
     border-radius:50%;
@@ -4873,6 +4874,236 @@ canvas {
     }
 }
 
+/* Refined site navigation */
+header {
+    min-height: 88px;
+    padding: 12px clamp(20px, 4vw, 56px);
+    gap: clamp(12px, 1.5vw, 24px);
+    background: rgba(10, 74, 54, 0.96);
+    border-bottom: 1px solid rgba(177, 255, 220, 0.22);
+    box-shadow: 0 8px 24px rgba(5, 31, 22, 0.18);
+}
+
+.logo {
+    flex: 0 1 auto;
+    width: auto;
+    min-width: 250px;
+    gap: 12px;
+}
+
+.logo img {
+    width: clamp(62px, 5.5vw, 82px);
+    height: auto;
+}
+
+.logo-text h3 {
+    font-size: clamp(14px, 1.25vw, 18px);
+    letter-spacing: 0.01em;
+}
+
+.logo-text p {
+    font-size: clamp(9px, 0.78vw, 12px);
+    letter-spacing: 0.02em;
+}
+
+header nav {
+    flex: 0 1 auto;
+    width: fit-content;
+    max-width: calc(100% - 270px);
+    min-width: 0;
+    justify-content: flex-start;
+    gap: 0;
+    flex-wrap: nowrap;
+    overflow: visible;
+    padding: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    animation: nav-slide-in 600ms ease-out both;
+}
+
+@keyframes nav-slide-in {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+header nav > a,
+header nav .dropbtn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0.55rem clamp(10px, 1vw, 17px);
+    border-radius: 22px;
+    color: rgba(255, 255, 255, 0.94);
+    font-size: clamp(11px, 0.82vw, 15px);
+    letter-spacing: 0.025em;
+    white-space: nowrap;
+    transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+header nav > a:hover,
+header nav .dropbtn:hover,
+header nav > a.active,
+header nav .dropdown.active .dropbtn {
+    color: #073b2a;
+    background: #78fdc6;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15), 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+header nav > a.active,
+header nav .dropdown.active .dropbtn {
+    border-bottom: 0;
+    padding-bottom: 0.55rem;
+}
+
+header nav .dropdown {
+    display: flex;
+    align-items: center;
+}
+
+header nav .dropbtn::after {
+    content: "\f078";
+    margin-left: 0.5rem;
+    color: currentColor;
+    font-family: "Font Awesome 6 Free";
+    font-size: 0.65em;
+    font-weight: 900;
+    transition: transform 180ms ease;
+}
+
+header nav .dropdown.open .dropbtn::after {
+    transform: rotate(180deg);
+}
+
+header nav .dropdown-content {
+    top: calc(100% + 9px);
+    min-width: 228px;
+    padding: 7px;
+    border: 1px solid rgba(9, 73, 52, 0.14);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 16px 34px rgba(4, 35, 24, 0.22);
+}
+
+header nav .dropdown-content a {
+    border-radius: 8px;
+    color: #164d39;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+header nav .dropdown-content a:hover,
+header nav .dropdown-content a.active {
+    color: #073b2a;
+    background: #d7f8e9;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    header nav,
+    header nav > a,
+    header nav .dropbtn {
+        animation: none;
+        transition: none;
+    }
+}
+
+@media (max-width: 1100px) {
+    header {
+        min-height: 72px;
+        padding: 10px 16px;
+    }
+
+    .logo {
+        min-width: 0;
+    }
+
+    .logo img {
+        width: 56px;
+    }
+
+    .logo-text h3 {
+        font-size: 13px;
+    }
+
+    .logo-text p {
+        font-size: 9px;
+    }
+
+    .nav-toggle {
+        display: inline-flex;
+        flex: 0 0 44px;
+        border: 1px solid rgba(218, 255, 240, 0.65);
+        border-radius: 12px;
+        background: rgba(5, 58, 42, 0.42);
+    }
+
+    header nav {
+        display: none;
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 16px;
+        left: 16px;
+        width: auto;
+        padding: 8px;
+        border-radius: 14px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 2px;
+        background: rgba(7, 63, 45, 0.99);
+    }
+
+    header.nav-open nav {
+        display: flex;
+    }
+
+    header nav > a,
+    header nav .dropbtn {
+        width: 100%;
+        min-height: 44px;
+        justify-content: space-between;
+        padding: 0.7rem 0.9rem;
+        border-radius: 9px;
+        font-size: 14px;
+    }
+
+    header nav > a.active,
+    header nav .dropdown.active .dropbtn,
+    header nav > a:hover,
+    header nav .dropbtn:hover {
+        transform: none;
+    }
+
+    header nav .dropdown {
+        display: block;
+    }
+
+    header nav .dropdown-content {
+        position: static;
+        min-width: 0;
+        margin: 0 8px 6px;
+        padding: 4px;
+        border: 0;
+        border-radius: 8px;
+        box-shadow: none;
+        background: rgba(255, 255, 255, 0.96);
+    }
+
+    header nav .dropdown-content a {
+        padding: 9px 12px;
+        font-size: 12px;
+    }
+}
+
 /* Small mobile devices (≤480px) */
 @media (max-width: 480px) {
     footer {
@@ -4954,6 +5185,33 @@ canvas {
     .footer-bottom p {
         font-size: 11px;
     }
+}
+
+/* Keep calculator depth neutral and remove bright glow effects. */
+.calculator-dialog {
+    box-shadow: 18px 18px 38px rgba(0, 0, 0, 0.24), inset 1px 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.calculator-close,
+.calculator-tab,
+.calculator-compute,
+.calculator-launch {
+    box-shadow: 5px 5px 10px rgba(31, 52, 44, 0.18), inset 1px 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+.calculator-field select,
+.calculator-field input,
+.calculator-field input[readonly],
+.calculator-result,
+.calculator-result-muted,
+.calculator-note,
+.calculator-disclaimer {
+    box-shadow: inset 4px 4px 9px rgba(31, 52, 44, 0.12), inset -2px -2px 5px rgba(255, 255, 255, 0.42);
+}
+
+.calculator-field select:focus,
+.calculator-field input:focus {
+    box-shadow: inset 3px 3px 7px rgba(31, 52, 44, 0.16), inset -2px -2px 5px rgba(255, 255, 255, 0.42);
 }
 
 
@@ -5341,6 +5599,326 @@ body.sc-modal-open {
 
 }
 
+/* Neumorphic depth for the primary navigation and calculator surfaces. */
+header nav {
+    border-color: rgba(255, 255, 255, 0.22);
+    box-shadow:
+        10px 10px 24px rgba(0, 31, 22, 0.28),
+        -8px -8px 20px rgba(133, 255, 210, 0.08),
+        inset 1px 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+header nav > a,
+header nav .dropbtn {
+    box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
+}
+
+header nav > a:hover,
+header nav .dropbtn:hover,
+header nav > a.active,
+header nav .dropdown.active .dropbtn {
+    box-shadow:
+        4px 4px 10px rgba(0, 43, 30, 0.22),
+        -3px -3px 8px rgba(255, 255, 255, 0.28),
+        inset 1px 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.calculator-dialog {
+    background: #e7f0eb;
+    box-shadow:
+        22px 22px 50px rgba(0, 0, 0, 0.3),
+        -12px -12px 30px rgba(255, 255, 255, 0.5),
+        inset 1px 1px 0 rgba(255, 255, 255, 0.72);
+}
+
+.calculator-close,
+.calculator-tab,
+.calculator-compute,
+.calculator-launch {
+    border: 0;
+    box-shadow:
+        7px 7px 14px rgba(31, 72, 57, 0.18),
+        -6px -6px 12px rgba(255, 255, 255, 0.78),
+        inset 1px 1px 0 rgba(255, 255, 255, 0.32);
+    transition: box-shadow 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.calculator-close:hover,
+.calculator-tab:hover,
+.calculator-compute:hover,
+.calculator-launch:hover {
+    transform: translateY(-1px);
+}
+
+.calculator-close:active,
+.calculator-tab:active,
+.calculator-compute:active,
+.calculator-launch:active,
+.calculator-tab.active {
+    box-shadow:
+        inset 4px 4px 9px rgba(31, 72, 57, 0.18),
+        inset -3px -3px 8px rgba(255, 255, 255, 0.45);
+    transform: translateY(0);
+}
+
+.calculator-field select,
+.calculator-field input {
+    border-color: transparent;
+    background: #e7f0eb;
+    box-shadow:
+        inset 4px 4px 9px rgba(31, 72, 57, 0.13),
+        inset -4px -4px 9px rgba(255, 255, 255, 0.78);
+}
+
+.calculator-field select:focus,
+.calculator-field input:focus {
+    border-color: rgba(47, 106, 86, 0.42);
+    box-shadow:
+        inset 3px 3px 7px rgba(31, 72, 57, 0.16),
+        inset -3px -3px 7px rgba(255, 255, 255, 0.7),
+        0 0 0 3px rgba(95, 211, 163, 0.18);
+}
+
+.calculator-field input[readonly],
+.calculator-result,
+.calculator-result-muted {
+    background: #e7f0eb;
+    border-color: transparent;
+    box-shadow:
+        inset 4px 4px 9px rgba(31, 72, 57, 0.12),
+        inset -4px -4px 9px rgba(255, 255, 255, 0.72);
+}
+
+.calculator-note,
+.calculator-disclaimer {
+    background: rgba(231, 240, 235, 0.7);
+    border-color: transparent;
+    box-shadow:
+        inset 3px 3px 7px rgba(31, 72, 57, 0.1),
+        inset -3px -3px 7px rgba(255, 255, 255, 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .calculator-close,
+    .calculator-tab,
+    .calculator-compute,
+    .calculator-launch {
+        transition: none;
+    }
+}
+
+/* Shared motion language for the navigation and calculator. */
+@keyframes nav-item-reveal {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes nav-active-pulse {
+    0%, 100% {
+        box-shadow:
+            4px 4px 10px rgba(0, 43, 30, 0.22),
+            -3px -3px 8px rgba(255, 255, 255, 0.28),
+            inset 1px 1px 0 rgba(255, 255, 255, 0.35);
+    }
+    50% {
+        box-shadow:
+            4px 4px 14px rgba(0, 43, 30, 0.28),
+            -3px -3px 10px rgba(255, 255, 255, 0.38),
+            inset 1px 1px 0 rgba(255, 255, 255, 0.45);
+    }
+}
+
+header nav > a,
+header nav .dropdown {
+    animation: nav-item-reveal 420ms ease-out both;
+}
+
+header nav > a,
+header nav .dropbtn {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+header nav > a::before,
+header nav .dropbtn::before {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    z-index: 0;
+    border-radius: inherit;
+    background: rgba(255, 255, 255, 0.16);
+    transform: translateX(-105%);
+    transition: transform 260ms ease;
+}
+
+header nav > a:hover::before,
+header nav .dropbtn:hover::before {
+    transform: translateX(0);
+}
+
+header nav > a,
+header nav .dropbtn {
+    text-indent: 0;
+}
+
+header nav .dropbtn::after {
+    position: relative;
+    z-index: 1;
+}
+
+header nav > a:not(.active):hover,
+header nav .dropdown:not(.active) .dropbtn:hover {
+    transform: none;
+}
+
+header nav > a:nth-of-type(1) { animation-delay: 70ms; }
+header nav > a:nth-of-type(2) { animation-delay: 130ms; }
+header nav > a:nth-of-type(3) { animation-delay: 190ms; }
+header nav > a:nth-of-type(4) { animation-delay: 250ms; }
+header nav > a:nth-of-type(5) { animation-delay: 310ms; }
+header nav > a:nth-of-type(6) { animation-delay: 370ms; }
+header nav .dropdown { animation-delay: 100ms; }
+
+header nav > a.active,
+header nav .dropdown.active .dropbtn {
+    animation: nav-active-pulse 2.8s ease-in-out 700ms infinite;
+}
+
+.calculator-modal {
+    transition: opacity 260ms ease, visibility 260ms ease;
+}
+
+.calculator-dialog {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+    transition: opacity 320ms ease, transform 420ms cubic-bezier(0.22, 0.8, 0.3, 1);
+}
+
+.calculator-modal.open .calculator-dialog {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.calculator-dialog > * {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.calculator-modal.open .calculator-dialog > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.calculator-modal.open .calculator-dialog > :nth-child(1) { transition-delay: 80ms; }
+.calculator-modal.open .calculator-dialog > :nth-child(2) { transition-delay: 140ms; }
+.calculator-modal.open .calculator-dialog > :nth-child(3) { transition-delay: 200ms; }
+.calculator-modal.open .calculator-dialog > :nth-child(4) { transition-delay: 260ms; }
+
+@media (prefers-reduced-motion: reduce) {
+    header nav,
+    header nav > a,
+    header nav .dropdown,
+    header nav > a.active,
+    header nav .dropdown.active .dropbtn,
+    .calculator-dialog,
+    .calculator-dialog > * {
+        animation: none;
+        transition: none;
+        transform: none;
+    }
+}
+
+/* Responsive navigation layout */
+@media (max-width: 1100px) {
+    header {
+        position: sticky;
+        min-height: 72px;
+        padding: 10px clamp(14px, 3vw, 28px);
+    }
+
+    header nav {
+        max-width: none;
+        top: calc(100% + 10px);
+        right: clamp(10px, 2vw, 20px);
+        left: clamp(10px, 2vw, 20px);
+        max-height: calc(100vh - 92px);
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        box-shadow:
+            12px 16px 30px rgba(0, 31, 22, 0.3),
+            -6px -6px 16px rgba(133, 255, 210, 0.08),
+            inset 1px 1px 0 rgba(255, 255, 255, 0.16);
+    }
+
+    header nav > a,
+    header nav .dropbtn {
+        min-height: 46px;
+        font-size: clamp(13px, 1.8vw, 15px);
+    }
+
+    header nav .dropdown-content {
+        max-height: none;
+    }
+}
+
+@media (max-width: 600px) {
+    header {
+        gap: 10px;
+        padding: 9px 12px;
+    }
+
+    .logo {
+        gap: 8px;
+    }
+
+    .logo img {
+        width: 50px;
+    }
+
+    .logo-text h3 {
+        font-size: 11px;
+    }
+
+    .logo-text p {
+        max-width: 190px;
+        font-size: 8px;
+        line-height: 1.15;
+    }
+
+    .nav-toggle {
+        width: 42px;
+        height: 42px;
+        flex-basis: 42px;
+    }
+
+    header nav {
+        top: calc(100% + 7px);
+        right: 8px;
+        left: 8px;
+        padding: 6px;
+        border-radius: 18px;
+    }
+
+    header nav > a,
+    header nav .dropbtn {
+        min-height: 44px;
+        padding: 0.65rem 0.8rem;
+        font-size: 13px;
+    }
+
+    header nav .dropdown-content {
+        margin-right: 5px;
+        margin-left: 5px;
+    }
+}
+
 
 /* ---------------------------------------------------------
    SMARTPHONE
@@ -5379,5 +5957,10 @@ body.sc-modal-open {
         grid-template-columns: 1fr;
     }
 
+}
+
+/* Final calculator override: neutral outer separation, no light halo. */
+.calculator-dialog {
+    box-shadow: 0 18px 30px rgba(0, 0, 0, 0.24) !important;
 }
 

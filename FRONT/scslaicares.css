@@ -114,31 +114,34 @@ body, * {
     position: relative;
     z-index: 4;
     pointer-events: none;
+    animation: selectedYearbookExit 560ms cubic-bezier(0.22, 0.8, 0.3, 1) both;
 }
 
 .yearbook-book.is-opening .yearbook-cover {
-    animation: selectedYearbookOpen 560ms cubic-bezier(0.22, 0.8, 0.3, 1) both;
+    transform: var(--cover-tilt);
 }
 
-@keyframes selectedYearbookOpen {
+@keyframes selectedYearbookExit {
     0% {
         opacity: 1;
-        transform: var(--cover-tilt);
+        transform: translateX(0) scale(1);
     }
-    62% {
+    42% {
         opacity: 1;
-        transform: translateY(-1.2rem) scale(1.1) perspective(920px) rotateX(18deg) rotateZ(-3deg);
+        transform: translateX(-5vw) scale(1.04);
     }
     100% {
-        opacity: 0.2;
-        transform: translateY(-1.7rem) scale(1.16) perspective(920px) rotateX(10deg) rotateZ(0deg);
+        opacity: 0;
+        transform: translateX(-115vw) scale(0.96);
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .yearbook-cover,
-    .yearbook-book {
+    .yearbook-book,
+    .yearbook-book.is-opening {
         transition: none;
+        animation: none;
     }
 }
 
