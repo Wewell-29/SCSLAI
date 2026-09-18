@@ -124,7 +124,7 @@ nav{
     justify-content: center;
     align-items: center;
     gap:clamp(16px, 2.6vw, 80px);
-    width: 90%;
+    width: 85%;
 }
 
 nav a{
