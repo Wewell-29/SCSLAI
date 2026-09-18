@@ -107,7 +107,7 @@ header{
     margin:0;
     font-size:12px;
     line-height:1.2;
-    width: 100%;
+    width: 500px;
 }
 
 @media (max-width: 780px) {
