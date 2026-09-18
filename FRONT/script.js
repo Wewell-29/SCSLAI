@@ -1377,7 +1377,7 @@ function prevSlide() {
 }
 
 function startCarousel() {
-  slideInterval = setInterval(nextSlide, 10000);
+  slideInterval = setInterval(nextSlide, 40000);
 }
 
 function resetCarousel() {
@@ -1435,7 +1435,7 @@ function prevAnnouncement() {
 
 function startAnnouncementAuto() {
   stopAnnouncementAuto();
-  announcementTimer = setInterval(nextAnnouncement, 8000);
+  announcementTimer = setInterval(nextAnnouncement, 30000);
 }
 
 function stopAnnouncementAuto() {
