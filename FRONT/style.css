@@ -98,7 +98,7 @@ header{
 
 .logo-text h3{
     margin:0;
-    font-size:16px;
+    font-size:16px !important; 
     line-height:1.1;
     font-weight:700;
 }
@@ -4924,11 +4924,11 @@ header {
     flex: 0 1 auto;
     width: auto;
     min-width: 250px;
-    gap: 12px;
+    gap: 10px;
 }
 
 .logo img {
-    width: clamp(62px, 5.5vw, 82px);
+    width: clamp(80px, 6.2vw, 80px);
     height: auto;
 }
 
@@ -5064,7 +5064,7 @@ header nav .dropdown-content a.active {
     }
 
     .logo img {
-        width: 56px;
+        width: 68px;
     }
 
     .logo-text h3 {
@@ -5915,7 +5915,7 @@ header nav .dropdown.active .dropbtn {
     }
 
     .logo img {
-        width: 50px;
+        width: 60px;
     }
 
     .logo-text h3 {

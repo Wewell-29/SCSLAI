@@ -1673,9 +1673,15 @@ document.addEventListener('keydown', (ev) => {
   });
 
   // Dropdown submenu links — also highlight the ABOUT US button
+  // Annual report pages live in reports/<year>-annual-report.html while the
+  // "Annual Report" menu item points to about-annual-report.html; treat any
+  // yearly report page as the Annual Report submenu item so both the submenu
+  // link and the ABOUT US button stay highlighted on report pages.
+  const isAnnualReportPage = /^\d{4}-annual-report\.html$/.test(currentPage);
+
   document.querySelectorAll(".dropdown-content a").forEach((link) => {
     const linkPage = (link.getAttribute("href") || "").split("/").pop();
-    if (linkPage === currentPage) {
+    if (linkPage === currentPage || (isAnnualReportPage && linkPage === "about-annual-report.html")) {
       link.classList.add("active");
       link.closest(".dropdown")?.classList.add("active");
     }
