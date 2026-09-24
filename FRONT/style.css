@@ -200,6 +200,7 @@ nav a.active {
     margin:0;
     font-size:inherit;
     transition: none; 
+    
 }
 nav a:hover,
 .dropbtn:hover{
@@ -243,7 +244,7 @@ nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
 
 .dropdown-content a{
     display:block;
-    color:#123;
+    color:rgb(207, 195, 195);
     padding:10px 14px;
     text-decoration:none;
     font-size:14px;
@@ -5034,8 +5035,9 @@ header nav .dropdown-content a {
     border-radius: 8px;
     color: #164d39;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 800;
     line-height: 1.25;
+    
 }
 
 header nav .dropdown-content a:hover,
