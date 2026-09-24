@@ -3551,7 +3551,7 @@ nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
 .calculator-dialog-header h2{
     margin-bottom:5px;
     padding-right:48px;
-    font-size:clamp(24px, 2.4vw, 34px);
+    font-size:clamp(24px, 2.4vw, 10px);
     line-height:1.05;
 }
 
