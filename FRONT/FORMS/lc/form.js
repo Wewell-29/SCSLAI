@@ -5,6 +5,7 @@
 SCSLAI.register({
 key:"lc",
 title:"LC Loan Application",
+hiddenFields:["amountWords","payableYearsWords"],
 fieldLabels:{
 others:"Others",applicantName:"Applicant Name",amountWords:"Amount in Words",
 loanAmount:"Loan Amount",payableYearsWords:"Payable Years in Words",payableYears:"Payable Years",

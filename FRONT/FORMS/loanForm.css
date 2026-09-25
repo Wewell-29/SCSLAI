@@ -451,6 +451,32 @@ body.loan-modal-open {
 
 
 /* ============================================================
+   AUTO-GENERATED (READ-ONLY) INPUTS
+   "Amount in Words" and "Payable Years in Words" are filled
+   in by the engine. They are shown on the desktop fill-on-
+   image view but must not look like editable boxes or react
+   to hover / focus.
+   ============================================================ */
+
+.form-input[readonly] {
+    cursor: default;
+
+    background: transparent;
+
+    border-color: transparent;
+}
+
+.form-input[readonly]:hover,
+.form-input[readonly]:focus {
+    background: transparent;
+
+    border-color: transparent;
+
+    box-shadow: none;
+}
+
+
+/* ============================================================
    PLACEHOLDER
    ============================================================ */
 

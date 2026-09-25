@@ -92,26 +92,25 @@ function buildPageRecords(year, imageList) {
 }
 
 const yearbookData = [
-  {
-    year: 2022,
-    badge: 'Silungan ng Pag-asa',
-    title: '2022-2023 Edition',
-    summary: 'A community initiative focused on providing support, care, and a safe place for individuals and families in need.',
-    pages: buildPageRecords(2022 , pages2022),
+{
+    year: 2025,
+    badge: 'Serving with Compassion',
+    title: '2025 Edition',
+    summary: 'Serving with Compassion',
+    pages: buildPageRecords(2025, pages2025),
     editionDetails: {
-        activityTitle: 'Silungan ng Pag-asa',
-        caption: 'An SCSLAI initiative that extends compassion and assistance to individuals and families in need through community support and outreach.',
-        narrative: 'Silungan ng Pag-asa reflects SCSLAI’s commitment to serving the community by providing support and assistance to people facing difficult circumstances. The initiative aims to offer hope, care, and meaningful help to beneficiaries while strengthening the spirit of compassion and solidarity among SCSLAI members and community partners.',
-        date: '2022-2023',
-        venue: 'Silungan ng Pag-asa Community Center',
-        participants: 'SCSLAI members, volunteers, beneficiaries, and community partners',
+        activityTitle: '2025 Outreach Program for the Aeta Community',
+        caption: 'SCSLAI extended care and support to the Aeta community in Calumpang, Pampanga through a meaningful community outreach program.',
+        narrative: 'The outreach program brought SCSLAI members, volunteers, and community partners together to extend assistance and support to the Aeta community in Calumpang, Pampanga. The initiative reflects SCSLAI’s commitment to community service by reaching underserved communities, promoting compassion, and strengthening partnerships through meaningful outreach activities.',
+        date: '2025',
+        venue: 'Calumpang, Mabalacat City, Pampanga',
+        participants: 'SCSLAI members, volunteers, community partners, and Aeta community beneficiaries',
         photographer: 'SCSLAI Documentation Team',
-        album: 'Silungan ng Pag-asa Collection',
-        remarks: 'A meaningful community initiative that provided support and hope to beneficiaries in need.',
-        tags: ['2022-2023', 'Silungan ng Pag-asa', 'community', 'outreach', 'support', 'hope']
+        album: '2025 Aeta Community Outreach Collection',
+        remarks: 'A meaningful outreach initiative that strengthened SCSLAI’s commitment to serving and supporting communities in need.',
+        tags: ['2025', 'outreach', 'Aeta community', 'Calumpang', 'Pampanga', 'community service']
     }
 },
-  
 {
     year: 2024,
     badge: 'Growing a Greener Future',
@@ -131,23 +130,23 @@ const yearbookData = [
         tags: ['2024', 'tree planting', 'Rizal', 'environment', 'conservation', 'community']
     }
 },
- {
-    year: 2025,
-    badge: 'Serving with Compassion',
-    title: '2025 Edition',
-    summary: 'Serving with Compassion',
-    pages: buildPageRecords(2025, pages2025),
+{
+    year: 2022,
+    badge: 'Silungan ng Pag-asa',
+    title: '2022-2023 Edition',
+    summary: 'A community initiative focused on providing support, care, and a safe place for individuals and families in need.',
+    pages: buildPageRecords(2022 , pages2022),
     editionDetails: {
-        activityTitle: '2025 Outreach Program for the Aeta Community',
-        caption: 'SCSLAI extended care and support to the Aeta community in Calumpang, Pampanga through a meaningful community outreach program.',
-        narrative: 'The outreach program brought SCSLAI members, volunteers, and community partners together to extend assistance and support to the Aeta community in Calumpang, Pampanga. The initiative reflects SCSLAI’s commitment to community service by reaching underserved communities, promoting compassion, and strengthening partnerships through meaningful outreach activities.',
-        date: '2025',
-        venue: 'Calumpang, Mabalacat City, Pampanga',
-        participants: 'SCSLAI members, volunteers, community partners, and Aeta community beneficiaries',
+        activityTitle: 'Silungan ng Pag-asa',
+        caption: 'An SCSLAI initiative that extends compassion and assistance to individuals and families in need through community support and outreach.',
+        narrative: 'Silungan ng Pag-asa reflects SCSLAI’s commitment to serving the community by providing support and assistance to people facing difficult circumstances. The initiative aims to offer hope, care, and meaningful help to beneficiaries while strengthening the spirit of compassion and solidarity among SCSLAI members and community partners.',
+        date: '2022-2023',
+        venue: 'Silungan ng Pag-asa Community Center',
+        participants: 'SCSLAI members, volunteers, beneficiaries, and community partners',
         photographer: 'SCSLAI Documentation Team',
-        album: '2025 Aeta Community Outreach Collection',
-        remarks: 'A meaningful outreach initiative that strengthened SCSLAI’s commitment to serving and supporting communities in need.',
-        tags: ['2025', 'outreach', 'Aeta community', 'Calumpang', 'Pampanga', 'community service']
+        album: 'Silungan ng Pag-asa Collection',
+        remarks: 'A meaningful community initiative that provided support and hope to beneficiaries in need.',
+        tags: ['2022-2023', 'Silungan ng Pag-asa', 'community', 'outreach', 'support', 'hope']
     }
 }
 ];

@@ -5,6 +5,8 @@
 SCSLAI.register({
 key:"withdrawal",
 title:"Withdrawal Form",
+amountField:"amountFigures",
+hiddenFields:["amountWords"],
 fieldLabels:{
 date:"Date",othersReason:"Other Reason",amountWords:"Amount in Words",
 amountFigures:"Amount",office:"Office",printedName:"Applicant's Printed Name",

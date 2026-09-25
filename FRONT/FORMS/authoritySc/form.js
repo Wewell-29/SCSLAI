@@ -10,7 +10,7 @@ title:"SC Authority to Deduct Form",
 fieldLabels:{
 dearSir:"Dear Sir",fullName:"Full Name",employedAs:"Employed As",
 officeOf:"Office Of",signDay:"Day Signed",signMonth:"Month Signed",
-signYear:"Year Signed",signPlace:"Place Signed",signatureOverName:"Signature Over Printed Name",
+signYear:"Year Signed",signPlace:"Place Signed",
 email:"Email",mobileNumber:"Mobile Number",permanentAddr:"Permanent Address",processedBy:"Processed By"
 },
 width:2550, height:4200,
@@ -46,8 +46,7 @@ signMonth:{x:847,y:2280,w:151,h:50,fs:22},
 signYear:{x:1091,y:2280,w:91,h:50,fs:22},
 signPlace:{x:1254,y:2280,w:151,h:50,fs:22},
 
-/* SIGNATURE + CONTACT DETAILS */
-signatureOverName:{x:897,y:2481,w:844,h:50,fs:26},
+/* CONTACT DETAILS */
 email:{x:404,y:2730,w:664,h:50,fs:22},
 mobileNumber:{x:636,y:2793,w:514,h:50,fs:22},
 permanentAddr:{x:886,y:2855,w:634,h:50,fs:22},

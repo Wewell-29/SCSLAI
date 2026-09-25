@@ -9,8 +9,8 @@ key:"authorityLc",
 title:"LC Authority to Deduct Form",
 fieldLabels:{
 fullName:"Full Name",employedAs:"Employed As",
-officeOf:"Office Of",signDay:"Day Signed",signMonth:"Month Signed",
-signYear:"Year Signed",signPlace:"Place Signed",
+officeOf:"Office Of",signDay:"Day today",signMonth:"Month today",
+signYear:"Year today",signPlace:"Place Signed",
 email:"Email",mobileNumber:"Mobile Number",permanentAddr:"Permanent Address"
 },
 width:2550, height:4200,
@@ -54,9 +54,9 @@ validate:function(vals,miss){
 if(!vals.fullName)miss.push("Full Name (I, ___)");
 if(!vals.employedAs)miss.push("Presently employed as");
 if(!vals.officeOf)miss.push("Office of");
-if(!vals.signDay)miss.push("Day signed");
-if(!vals.signMonth)miss.push("Month signed");
-if(!vals.signYear)miss.push("Year signed");
+if(!vals.signDay)miss.push("Day today");
+if(!vals.signMonth)miss.push("Month today");
+if(!vals.signYear)miss.push("Year today");
 if(!vals.mobileNumber)miss.push("Mobile Number");
 },
 

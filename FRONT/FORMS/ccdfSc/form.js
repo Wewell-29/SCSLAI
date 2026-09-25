@@ -10,7 +10,7 @@ fieldLabels:{
 lastName:"Surname",firstName:"First Name",middleName:"Middle Name",
 office:"Office",edpNumber:"EDP No.",accountNo:"Account No.",
 mobileNumber:"Mobile No.",officeLandline:"Office Landline",
-signatureOverName:"Signature Over Printed Name",dateToday:"Date Today",confirmedBy:"Confirmed By"
+dateToday:"Date Today",confirmedBy:"Confirmed By"
 },
 width:2550, height:4200,
 hasPage2:false, hasCheckboxes:false, useUppercase:true,

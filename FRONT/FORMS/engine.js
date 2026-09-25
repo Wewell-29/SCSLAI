@@ -157,6 +157,33 @@
 
 
     /* =========================================================
+       HIDDEN FIELDS
+       Fields listed in cfg().hiddenFields are still rendered
+       in the DOM and auto-filled / collected (e.g. auto
+       generated "Amount in Words" / "Payable Years in Words").
+
+       They are hidden ONLY on the small-screen stacked
+       fill-out view, where the modal is just a list of inputs
+       and the value is already generated onto the form for
+       the user.
+
+       On desktops / laptops the modal shows the actual form
+       image (fill-on-image), so these fields stay VISIBLE:
+       the user watches them fill in automatically on the form
+       itself as they type the amount / pick the years.
+       ========================================================= */
+
+    function isHiddenField(id) {
+
+        var hidden =
+            cfg().hiddenFields || [];
+
+        return hidden.indexOf(id) !== -1;
+
+    }
+
+
+    /* =========================================================
        INK COLOR
        ========================================================= */
 
@@ -597,16 +624,67 @@
     }
 
 
+    /* =========================================================
+       AMOUNT FIELD IDS
+       A form may declare which field holds the numeric amount
+       (cfg().amountField, default "loanAmount") and which one
+       receives the auto-generated words (cfg().amountWordsField,
+       default "amountWords"). The loan application forms use the
+       defaults; the Withdrawal form maps amountFigures ->
+       amountWords.
+       ========================================================= */
+
+    function amountFieldId() {
+
+        return cfg().amountField || "loanAmount";
+
+    }
+
+
+    function amountWordsFieldId() {
+
+        return cfg().amountWordsField || "amountWords";
+
+    }
+
+
+    /* =========================================================
+       AUTO-GENERATED FIELD
+       These inputs are filled in by the engine itself, never
+       by the user:
+         - the amount in words (loanAmount / amountFigures)
+         - the payable years in words (payableYears)
+       They are rendered on the desktop fill-on-image view so
+       the generated text is visible on the form, but are kept
+       read-only so the generated value stays authoritative.
+       ========================================================= */
+
+    function isAutoFilledField(id) {
+
+        return (
+            id === amountWordsFieldId() ||
+            id === "payableYearsWords"
+        );
+
+    }
+
+
     function syncAmountWordsFromLoanAmount() {
-        var amountEl = document.getElementById("loanAmount");
-        var wordsEl = document.getElementById("amountWords");
+        var amountEl = document.getElementById(amountFieldId());
+        var wordsEl = document.getElementById(amountWordsFieldId());
         if (!amountEl || !wordsEl) { return; }
         wordsEl.value = loanAmountToWords(amountEl.value);
+        /*
+            The value is written programmatically, so no input
+            event fires — re-fit the box so the generated words
+            are shown in full on the desktop fill-on-image view.
+        */
+        refitField(amountWordsFieldId());
     }
 
 
     function wireLoanAmountAutoFill() {
-        var amountEl = document.getElementById("loanAmount");
+        var amountEl = document.getElementById(amountFieldId());
         if (!amountEl || amountEl.dataset.amountWired === "true") { return; }
         amountEl.dataset.amountWired = "true";
         amountEl.addEventListener("input", function () {
@@ -802,11 +880,13 @@
 
 
                 /* =================================================
-                   LOAN AMOUNT
+                   AMOUNT FIELD
+                   (loanAmount on the loan forms, amountFigures
+                   on the Withdrawal form — see cfg().amountField)
                    ================================================= */
 
                 else if (
-                    id === "loanAmount"
+                    id === amountFieldId()
                 ) {
 
                     input =
@@ -855,7 +935,11 @@
 
                 return (
 
-                    '<div class="loan-field">' +
+                    '<div class="loan-field"' +
+
+                        (isHiddenField(id) ? ' style="display:none;"' : '') +
+
+                        '>' +
 
                         '<label for="' +
                             id +
@@ -1209,13 +1293,13 @@
         }
 
 
-        if (id === "loanAmount") {
+        if (id === amountFieldId()) {
 
             return (
                 '<input type="text" id="' + id +
                 '" class="' + cls +
                 '" inputmode="decimal" autocomplete="off"' +
-                ' placeholder="Enter loan amount">'
+                ' placeholder="Enter amount">'
             );
 
         }
@@ -1223,6 +1307,25 @@
 
         var upper =
             useUpper() ? " form-upper" : "";
+
+
+        /*
+            AUTO-GENERATED FIELDS
+            Amount in Words / Payable Years in Words are filled
+            in by the engine. On the desktop fill-on-image view
+            they must stay VISIBLE (the user watches them fill
+            in on the form) but read-only, so the generated
+            value is always what is collected / printed.
+        */
+        if (isAutoFilledField(id)) {
+
+            return (
+                '<input type="text" id="' + id +
+                '" class="' + cls + upper +
+                '" readonly tabindex="-1">'
+            );
+
+        }
 
 
         /*
@@ -1651,6 +1754,39 @@
             input.style.left = leftPct + "%";
 
         }
+
+    }
+
+
+    /* =========================================================
+       REFIT AUTO-GENERATED FIELD
+       "Amount in Words" / "Payable Years in Words" are written
+       to their inputs programmatically, so no input event ever
+       fires for them. Re-run the auto-fit for that box so the
+       generated text is shown in full on the desktop
+       fill-on-image view (the stacked mobile view has no
+       canvas parent, so this is a no-op there).
+       ========================================================= */
+
+    function refitField(id) {
+
+        var el =
+            document.getElementById(id);
+
+        if (!el) { return; }
+
+        var canvas =
+            el.parentNode;
+
+        if (
+            !canvas ||
+            !canvas.classList ||
+            !canvas.classList.contains(
+                "loan-form-canvas"
+            )
+        ) { return; }
+
+        fitInputToContent(el, canvas);
 
     }
 
@@ -2263,6 +2399,15 @@
                     n2w(
                         this.value
                     );
+
+                /*
+                    Written programmatically — re-fit the box so
+                    the generated words are shown in full on the
+                    desktop fill-on-image view.
+                */
+                refitField(
+                    "payableYearsWords"
+                );
 
             }
         );
@@ -3169,6 +3314,14 @@
                 n2w(
                     payable.value
                 );
+
+            /*
+                Restored programmatically — re-fit the box so the
+                restored words are shown in full.
+            */
+            refitField(
+                "payableYearsWords"
+            );
 
         }
 
