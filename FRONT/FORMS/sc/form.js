@@ -33,10 +33,10 @@ fields:{
 
 
 applicantName:{x:125,y:450,w:550,h:20,fs:14},
-amountWords:{x:160,y:476,w:360,h:20,fs:13},
+amountWords:{x:160,y:485,w:360,h:25,fs:7 },
 loanAmount:{x:620,y:476,w:132,h:20,fs:13},
 payableYearsWords:{x:825,y:480,w:75,h:18,fs:12},
-payableYears:{x:910,y:480,w:45,h:22,fs:12},
+payableYears:{x:910,y:478,w:45,h:22,fs:12},
 edpNumber:{x:58,y:572,w:230,h:22,fs:14},
 tin:{x:300,y:572,w:330,h:22,fs:13},
 birthdate:{x:660,y:572,w:238,h:22,fs:13},

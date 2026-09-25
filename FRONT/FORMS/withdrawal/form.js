@@ -25,7 +25,7 @@ images:[
 fields:{
 date:{x:2141,y:479,w:370,h:46,fs:22},
 othersReason:{x:1086,y:583,w:277,h:46,fs:22},
-amountWords:{x:1002,y:1204,w:824,h:50,fs:24},
+amountWords:{x:1002,y:1204,w:824,h:50,fs:18},
 amountFigures:{x:1863,y:1204,w:324,h:50,fs:24},
 office:{x:501,y:1444,w:602,h:46,fs:22},
 printedName:{x:1500,y:1650,w:600,h:46,fs:22},

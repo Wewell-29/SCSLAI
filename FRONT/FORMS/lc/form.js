@@ -30,10 +30,10 @@ images:[
 fields:{
 
 
-amountWords:{x:100,y:481,w:500,h:20,fs:13},
-loanAmount:{x:625,y:481,w:200,h:20,fs:12},
-payableYearsWords:{x:960,y:482,w:80,h:18,fs:12},
-payableYears:{x:1060,y:481,w:50,h:22,fs:12},
+amountWords:{x:100,y:485,w:500,h:20,fs:8},
+loanAmount:{x:625,y:485,w:200,h:20,fs:12},
+payableYearsWords:{x:960,y:485,w:80,h:18,fs:12},
+payableYears:{x:1060,y:485,w:50,h:22,fs:12},
 applicantName:{x:130,y:460,w:600,h:20,fs:14},
 edpNumber:{x:58,y:573,w:230,h:22,fs:14},
 tin:{x:300,y:573,w:290,h:22,fs:13},
