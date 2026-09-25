@@ -1977,8 +1977,8 @@ nav:has(.dropdown:hover) .dropdown:not(:hover):not(.active) .dropbtn {
     margin-top:26px;
     padding:18px 20px;
     border-radius:8px;
-    background:rgba(255,255,255,0.1);
-    border:1px solid rgba(255,255,255,0.16);
+    background:#194b3496;
+    border:1px solid rgba(255, 255, 255, 0.212);
 }
 
 .annual-note i{
