@@ -1,5 +1,5 @@
 /* SCSLAI — LC Membership Application Form Config (FORM 21)
-   Page 1 image: 2550x4200, Page 2 (checklist): 2550x3300. */
+   Single page image: 2550x4200. */
 (function(){
 "use strict";
 
@@ -20,18 +20,15 @@ ben1Name:"Beneficiary #1 Name",ben1Dob:"Beneficiary #1 DOB",ben1Rel:"Relationshi
 ben2Name:"Beneficiary #2 Name",ben2Dob:"Beneficiary #2 DOB",ben2Rel:"Relationship",ben2Contact:"Contact No.",
 ben3Name:"Beneficiary #3 Name",ben3Dob:"Beneficiary #3 DOB",ben3Rel:"Relationship",ben3Contact:"Contact No.",
 ben4Name:"Beneficiary #4 Name",ben4Dob:"Beneficiary #4 DOB",ben4Rel:"Relationship",ben4Contact:"Contact No.",
-sig1:"Specimen Signature 1",sig2:"Specimen Signature 2",sig3:"Specimen Signature 3",
-clName:"Checklist — CLA Name",clStation:"Checklist — Station",clPhone:"Checklist — Phone"
+sig1:"Specimen Signature 1",sig2:"Specimen Signature 2",sig3:"Specimen Signature 3"
 },
 width:2550, height:4200,
-width2:2550, height2:3300,
-hasPage2:true, hasCheckboxes:false, useUppercase:true,
+hasPage2:false, hasCheckboxes:false, useUppercase:true,
 mobileField:"mobileNumber",
 pdfPrefix:"LC-Membership-Application-",
 pdfSuffix:"Form",
 images:[
-"FORMS/LOWER COURT MEMBERSHIP APPLICATION FORM 01.png",
-"FORMS/LOWER COURT MEMBERSHIP APPLICATION FORM 02.png"
+"FORMS/LOWER COURT MEMBERSHIP APPLICATION FORM 01.png"
 ],
 
 fields:{
@@ -94,6 +91,18 @@ if(!vals.birthdate)miss.push("Date of Birth");
 if(!vals.homeAddress)miss.push("Present Home Address");
 if(!vals.mobileNumber)miss.push("Mobile No.");
 if(!vals.edpNumber)miss.push("EDP No.");
+if(!vals.officeDivision)miss.push("Office / Division");
+if(!vals.rankPosition)miss.push("Rank / Position");
+if(!vals.gsisId)miss.push("GSIS ID No.");
+if(!vals.tin)miss.push("TIN");
+if(!vals.officeAddress)miss.push("Office Address");
+if(!vals.monthlySalary)miss.push("Monthly Salary");
+if(!vals.lengthService)miss.push("Length of Service");
+if(!vals.appointment)miss.push("Status of Appointment");
+if(!vals.dateAppoint)miss.push("Date of Appointment");
+if(!vals.officeTel)miss.push("Office Tel. No.");
+if(!vals.incomeSource)miss.push("Source of Income");
+
 },
 
 getResult:function(vals){

@@ -94,6 +94,10 @@ if(!vals.officeAddress)miss.push("Office Address");
 if(!vals.monthlySalary)miss.push("Monthly Salary");
 if(!vals.lengthService)miss.push("Length of Service");
 if(!vals.appointment)miss.push("Status of Appointment");
+if(!vals.dateAppoint)miss.push("Date of Appointment");
+if(!vals.officeTel)miss.push("Office Tel. No.");
+if(!vals.incomeSource)miss.push("Source of Income");
+
 },
 
 getResult:function(vals){

@@ -38,6 +38,7 @@ if(!vals.lastName)miss.push("Surname");
 if(!vals.firstName)miss.push("First Name");
 if(!vals.office)miss.push("Office");
 if(!vals.edpNumber)miss.push("EDP No.");
+if(!vals.accountNo)miss.push("Account No.");
 if(!vals.mobileNumber)miss.push("Mobile No.");
 },
 

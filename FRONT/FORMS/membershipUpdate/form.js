@@ -82,6 +82,12 @@ if(!vals.birthdate)miss.push("Date of Birth");
 if(!vals.homeAddress)miss.push("Present Home Address");
 if(!vals.mobileNumber)miss.push("Mobile No.");
 if(!vals.edpNumber)miss.push("EDP No.");
+if(!vals.officeDivision)miss.push("Office / Division");
+if(!vals.rankPosition)miss.push("Rank / Position");
+if(!vals.appointment)miss.push("Status of Appointment");
+if(!vals.dateAppoint)miss.push("Date of Appointment");
+if(!vals.officeTel)miss.push("Office Tel. No.");
+if(!vals.incomeSource)miss.push("Source of Income");
 },
 
 getResult:function(vals){

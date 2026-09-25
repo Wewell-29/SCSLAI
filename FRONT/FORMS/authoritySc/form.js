@@ -63,6 +63,8 @@ if(!vals.signDay)miss.push("Day today");
 if(!vals.signMonth)miss.push("Month today");
 if(!vals.signYear)miss.push("Year today");
 if(!vals.mobileNumber)miss.push("Mobile Number");
+if(!vals.email)miss.push("Email");
+if(!vals.permanentAddr)miss.push("Permanent Address");
 },
 
 getResult:function(vals,checkedOf){

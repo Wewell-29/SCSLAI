@@ -10,7 +10,7 @@ fieldLabels:{
 lastName:"Surname",firstName:"First Name",middleName:"Middle Name",
 office:"Office",edpNumber:"EDP No.",accountNo:"Account No.",
 mobileNumber:"Mobile No.",officeLandline:"Office Landline",
-dateToday:"Date Today",confirmedBy:"Confirmed By"
+dateToday:"Date Today"
 },
 width:2550, height:4200,
 hasPage2:false, hasCheckboxes:false, useUppercase:true,
@@ -39,6 +39,8 @@ if(!vals.firstName)miss.push("First Name");
 if(!vals.office)miss.push("Office");
 if(!vals.edpNumber)miss.push("EDP No.");
 if(!vals.mobileNumber)miss.push("Mobile No.");
+if(!vals.accountNo)miss.push("Account No.");
+
 },
 
 getResult:function(vals){

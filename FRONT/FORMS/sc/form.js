@@ -117,6 +117,7 @@ if(!vals.loanAmount)miss.push("Loan Amount");
 if(!vals.payableYears)miss.push("Payable Years");
 if(!vals.tin)miss.push("TIN");
 
+
 }, 
 
 getResult:function(vals,checkedOf){ var regs=checkedOf("regular"),specs=checkedOf("special"),apps=checkedOf("application");
