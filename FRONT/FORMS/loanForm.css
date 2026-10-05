@@ -394,7 +394,7 @@ body.loan-modal-open {
 
 .form-photo-widget.has-photo .form-photo-frame {
     border-style: solid;
-    border-color: rgba(0, 63, 145, 0.55);
+    border-color: rgba(0, 63, 145, 0.603);
 }
 
 .form-photo-empty {
@@ -449,7 +449,7 @@ body.loan-modal-open {
     padding: 4px 8px;
     border: none;
     border-radius: 4px;
-    background: #176b3a;
+    background: #18a854;
     color: #ffffff;
     font-size: 11px;
     font-weight: 700;
@@ -457,15 +457,16 @@ body.loan-modal-open {
 }
 
 .form-photo-btn:hover {
-    background: #12572f;
+    background: #0c6e35;
 }
 
+
 .form-photo-remove {
-    background: #8a8f8c;
+    background: #7a7878;
 }
 
 .form-photo-remove:hover {
-    background: #6f7472;
+    background: #c0170b;
 }
 
 .form-photo-name {
