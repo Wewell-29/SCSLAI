@@ -2522,3 +2522,265 @@ if (lightbox && lightboxImg) {
       }
   });
 }
+
+/* =====================================================
+   TEMPORARY — HIDDEN LOGO EASTER EGG 5-LOGO HUNT (remove anytime)
+   HOW TO REMOVE: delete from here down to
+   TEMPORARY EASTER EGG — END. Nothing else to clean.
+   Spots: contact card + membership + framework + home hero
+   + loans footer = 5 total. Navbar egg removed (broke mobile).
+   ===================================================== */
+(function initHiddenLogoEasterEgg() {
+  var TOTAL_EGGS = 5;
+  var STORE_KEY = 'scslai_easter_egg_found_v2';
+  var EGGS = [
+    { id: 'contact-card', match: /contact\.html?$/i, container: '.contact-card', mode: 'contact-card', tint: 'egg-tint-2' },
+    { id: 'membership', match: /membership\.html?$/i, container: '.footer-bottom p', mode: 'append-inline', tint: 'egg-tint-3' },
+    { id: 'framework', match: /about-framework\.html?$/i, container: '.framework-chart', mode: 'framework-top', tint: 'egg-tint-4' },
+    { id: 'home-hero', match: /index\.html?$/i, isDefault: true, container: '.announcements .title', mode: 'append-inline', tint: 'egg-tint-5' },
+    { id: 'download-note', match: /download\.html?$/i, container: '.download-note span', mode: 'append-inline', tint: 'egg-tint-1' }
+  ];
+  function readFound() {
+    try {
+      var raw = localStorage.getItem(STORE_KEY);
+      if (!raw) return [];
+      var p = JSON.parse(raw);
+      return Array.isArray(p) ? p : [];
+    } catch (e) { return []; }
+  }
+  function writeFound(list) {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(list)); } catch (e) {}
+  }
+  function boot() {
+    var path = window.location.pathname || '';
+    var file = path.split('/').pop() || '';
+    if (file === '' || file === 'FRONT') file = 'index.html';
+    // TEMPORARY EASTER EGG: collect every egg for THIS page.
+    // Navbar egg removed — nav left untouched for mobile.
+    var pageEggs = [];
+    for (var i = 0; i < EGGS.length; i++) {
+      var c = EGGS[i];
+      if (c.pages === 'all') { pageEggs.push(c); continue; }
+      if (c.isDefault && file.toLowerCase() === 'index.html') { pageEggs.push(c); continue; }
+      if (c.match && (c.match.test(path) || c.match.test(file))) { pageEggs.push(c); }
+    }
+    if (!pageEggs.length) return;
+    // Reuse the site's real logo so the path works in / and /reports/
+    var headerLogo = document.querySelector('header .logo img');
+    var logoSrc = headerLogo ? headerLogo.getAttribute('src') : null;
+    if (!logoSrc) {
+      logoSrc = window.location.pathname.indexOf('/reports/') !== -1
+        ? '../images/logoW.png'
+        : 'images/logoW.png';
+    }
+
+    var foundNow = readFound();
+    function makeTrigger(eggDef) {
+      var done = foundNow.indexOf(eggDef.id) !== -1;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'easter-egg-trigger ' + eggDef.tint;
+      btn.setAttribute('aria-label', 'Hidden SCSLAI logo — click me!');
+      btn.title = '...';
+      btn.setAttribute('data-egg-id', eggDef.id);
+      btn.innerHTML = '<img src="' + logoSrc + '" alt="" aria-hidden="true" />';
+      if (done) btn.classList.add('found');
+      return btn;
+    }
+    function placeTrigger(eggDef, btn) {
+      // TEMPORARY EASTER EGG: navbar mode removed (broke mobile nav).
+      // If an old 'navbar' id is stored, ignore it for placement.
+      if (eggDef.mode === 'contact-card') {
+        var cards = document.querySelectorAll(eggDef.container);
+        var card = cards[1] || cards[0];
+        if (card) {
+          card.style.position = 'relative';
+          btn.style.position = 'absolute';
+          btn.style.right = '10px';
+          btn.style.top = '10px';
+          btn.style.marginLeft = '0';
+          card.appendChild(btn);
+          return true;
+        }
+        return false;
+      }
+      if (eggDef.mode === 'framework-top') {
+        var chart = document.querySelector(eggDef.container);
+        if (chart) {
+          // TEMPORARY EASTER EGG: sit ON TOP of chart, not inside h1,
+          // so the bigger logo never gets cropped by heading overflow.
+          if (getComputedStyle(chart).position === 'static') {
+            chart.style.position = 'relative';
+          }
+          chart.style.overflow = 'visible';
+          btn.style.position = 'absolute';
+          btn.style.marginLeft = '0';
+          // Mobile-safe: keep it in front + inside viewport, not behind rows.
+          var isSmall = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+          if (isSmall) {
+            btn.style.top = '8px';
+            btn.style.right = '10px';
+          } else {
+            btn.style.top = '56px';
+            btn.style.right = '18%';
+          }
+          btn.style.zIndex = '50';
+          chart.appendChild(btn);
+          return true;
+        }
+        return false;
+      }
+      var host = document.querySelector(eggDef.container);
+      if (host) { host.appendChild(btn); return true; }
+      return false;
+    }
+
+    // TEMPORARY EASTER EGG: shared popup for all eggs on this page.
+    var overlay = document.createElement('div');
+    overlay.className = 'easter-egg-overlay';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.innerHTML =
+      '<div class="easter-egg-card" role="document">' +
+        '<span class="easter-egg-trophy" aria-hidden="true">🎉</span>' +
+        '<img class="easter-egg-found-logo" src="' + logoSrc + '" alt="SCSLAI secret logo" />' +
+        '<h2 class="easter-egg-title">Congratulations, you found it! 🎊</h2>' +
+        '<span class="easter-egg-count"></span>' +
+        '<p class="easter-egg-message">You discovered the <strong>hidden SCSLAI logo</strong>!</p>' +
+        '<div class="easter-egg-progress" aria-hidden="true"></div>' +
+        '<p class="easter-egg-sub">Keep hunting — 5 hidden logos across the site!</p>' +
+        '<div class="easter-egg-prize" hidden></div>' +
+        '<button type="button" class="easter-egg-close">Awesome!</button>' +
+      '</div>';
+
+    document.body.appendChild(overlay);
+
+    var card = overlay.querySelector('.easter-egg-card');
+    var titleEl = overlay.querySelector('.easter-egg-title');
+    var msgEl = overlay.querySelector('.easter-egg-message');
+    var subEl = overlay.querySelector('.easter-egg-sub');
+    var countEl = overlay.querySelector('.easter-egg-count');
+    var progEl = overlay.querySelector('.easter-egg-progress');
+    var prizeEl = overlay.querySelector('.easter-egg-prize');
+    var closeBtn = overlay.querySelector('.easter-egg-close');
+
+    function spawnConfetti(big) {
+      var colors = ['#12503c', '#78fdc6', '#ffd166', '#ef476f', '#4ec291', '#ffffff'];
+      var total = big ? 110 : 60;
+      for (var i = 0; i < total; i++) {
+        var piece = document.createElement('span');
+        piece.className = 'easter-egg-confetti';
+        piece.style.left = Math.random() * 100 + '%';
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDuration = 1.6 + Math.random() * 1.8 + 's';
+        piece.style.animationDelay = (Math.random() * 0.5) + 's';
+        piece.style.transform = 'rotate(' + Math.floor(Math.random() * 360) + 'deg)';
+        card.appendChild(piece);
+        (function (el) {
+          setTimeout(function () { el.remove(); }, 3800);
+        })(piece);
+      }
+    }
+
+    function renderPopup(list) {
+      var count = list.length;
+      var done = count >= TOTAL_EGGS;
+      progEl.innerHTML = '';
+      for (var d = 0; d < TOTAL_EGGS; d++) {
+        var dot = document.createElement('span');
+        dot.className = 'easter-egg-dot' + (d < count ? ' lit' : '');
+        progEl.appendChild(dot);
+      }
+      countEl.textContent = 'Found ' + Math.min(count, TOTAL_EGGS) + ' of ' + TOTAL_EGGS + ' hidden logos';
+      if (done) {
+        titleEl.textContent = '🎉 Congratulations, you found it! 🎊';
+        msgEl.innerHTML = 'You discovered the <strong>hidden SCSLAI logo</strong> — all <strong>5 of 5</strong>!';
+        subEl.textContent = 'You are an official SCSLAI treasure hunter!';
+        prizeEl.hidden = false;
+        prizeEl.innerHTML = '📸 <strong>Take a screenshot and claim your prize if you are the first one to find it!</strong><br/>Show this popup to SCSLAI to claim. First finder wins!';
+        closeBtn.textContent = 'Claim My Prize! 🏆';
+      } else {
+        prizeEl.hidden = true; prizeEl.innerHTML = '';
+        closeBtn.textContent = 'Awesome! (' + count + '/' + TOTAL_EGGS + ')';
+      }
+    }
+    function openPopup(eggId, btn) {
+      var list = readFound();
+      // TEMPORARY EASTER EGG: drop legacy 'navbar' id so count stays 5 max.
+      var ni = list.indexOf('navbar');
+      if (ni !== -1) { list.splice(ni, 1); }
+      var li = list.indexOf('loans-note');
+      if (li !== -1) { list.splice(li, 1); }
+      if (list.indexOf(eggId) === -1) { list.push(eggId); writeFound(list); }
+      else { writeFound(list); }
+      if (btn) btn.classList.add('found');
+      renderPopup(list);
+      overlay.classList.add('show');
+      overlay.setAttribute('aria-hidden', 'false');
+      spawnConfetti(list.length >= TOTAL_EGGS);
+      if (closeBtn) closeBtn.focus();
+    }
+    var lastBtn = null;
+    var claimed = false;
+    function resetGame() {
+      // TEMPORARY EASTER EGG: claiming restarts the hunt from 0/5.
+      claimed = true;
+      writeFound([]);
+      var triggers = document.querySelectorAll('.easter-egg-trigger.found');
+      for (var r = 0; r < triggers.length; r++) {
+        triggers[r].classList.remove('found');
+      }
+      renderPopup([]);
+    }
+    function closePopup() {
+      overlay.classList.remove('show');
+      overlay.setAttribute('aria-hidden', 'true');
+      if (claimed) {
+        // Start fresh next open: reset popup to 0/5 + normal button.
+        claimed = false;
+        renderPopup([]);
+        closeBtn.textContent = 'Awesome! (0/' + TOTAL_EGGS + ')';
+      }
+      if (lastBtn) lastBtn.focus();
+    }
+    // TEMPORARY EASTER EGG: place 1-2 eggs on this page + wire clicks.
+    for (var k = 0; k < pageEggs.length; k++) {
+      (function (eggDef) {
+        if (document.querySelector('[data-egg-id="' + eggDef.id + '"]')) return;
+        var btn = makeTrigger(eggDef);
+        if (!placeTrigger(eggDef, btn)) return;
+        btn.addEventListener('click', function () { lastBtn = btn; openPopup(eggDef.id, btn); });
+      })(pageEggs[k]);
+    }
+    closeBtn.addEventListener('click', function () {
+      var list = readFound();
+      if (list.length >= TOTAL_EGGS && closeBtn.textContent.indexOf('Claim') !== -1) {
+        // TEMPORARY EASTER EGG: Claim = celebrate, then restart game.
+        spawnConfetti(true);
+        closeBtn.textContent = 'New Hunt Started! 🔄';
+        prizeEl.innerHTML = '🏆 <strong>Prize claimed!</strong><br/>The hunt has restarted — find all 5 logos again!';
+        setTimeout(function () {
+          resetGame();
+          closePopup();
+        }, 1400);
+        return;
+      }
+      closePopup();
+    });
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) closePopup();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && overlay.classList.contains('show')) closePopup();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+// TEMPORARY EASTER EGG — END (delete up to START above to remove).
+
