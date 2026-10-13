@@ -2533,6 +2533,9 @@ if (lightbox && lightboxImg) {
 (function initHiddenLogoEasterEgg() {
   var TOTAL_EGGS = 5;
   var STORE_KEY = 'scslai_easter_egg_found_v2';
+  // TEMPORARY 1-DAY HUNT: once claimed, set this key = hunt is over,
+  // no eggs render anywhere (site back to normal).
+  var END_KEY = 'scslai_easter_egg_done';
   var EGGS = [
     { id: 'contact-card', match: /contact\.html?$/i, container: '.contact-card', mode: 'contact-card', tint: 'egg-tint-2' },
     { id: 'membership', match: /membership\.html?$/i, container: '.footer-bottom p', mode: 'append-inline', tint: 'egg-tint-3' },
@@ -2552,6 +2555,11 @@ if (lightbox && lightboxImg) {
     try { localStorage.setItem(STORE_KEY, JSON.stringify(list)); } catch (e) {}
   }
   function boot() {
+    try {
+      // TEMPORARY 1-DAY HUNT: one-time only — if already claimed,
+      // render nothing, website stays normal.
+      if (localStorage.getItem(END_KEY) === '1') return;
+    } catch (e) {}
     var path = window.location.pathname || '';
     var file = path.split('/').pop() || '';
     if (file === '' || file === 'FRONT') file = 'index.html';
@@ -2649,7 +2657,7 @@ if (lightbox && lightboxImg) {
         '<span class="easter-egg-count"></span>' +
         '<p class="easter-egg-message">You discovered the <strong>hidden SCSLAI logo</strong>!</p>' +
         '<div class="easter-egg-progress" aria-hidden="true"></div>' +
-        '<p class="easter-egg-sub">Keep hunting — 5 hidden logos across the site!</p>' +
+        '<p class="easter-egg-sub">Keep hunting there are 5 hidden logos across the site!</p>' +
         '<div class="easter-egg-prize" hidden></div>' +
         '<button type="button" class="easter-egg-close">Awesome!</button>' +
       '</div>';
@@ -2695,10 +2703,10 @@ if (lightbox && lightboxImg) {
       countEl.textContent = 'Found ' + Math.min(count, TOTAL_EGGS) + ' of ' + TOTAL_EGGS + ' hidden logos';
       if (done) {
         titleEl.textContent = '🎉 Congratulations, you found it! 🎊';
-        msgEl.innerHTML = 'You discovered the <strong>hidden SCSLAI logo</strong> — all <strong>5 of 5</strong>!';
+        msgEl.innerHTML = 'You discovered the <strong>hidden SCSLAI logos!';
         subEl.textContent = 'You are an official SCSLAI treasure hunter!';
         prizeEl.hidden = false;
-        prizeEl.innerHTML = '📸 <strong>Take a screenshot and claim your prize if you are the first one to find it!</strong><br/>Show this popup to SCSLAI to claim. First finder wins!';
+        prizeEl.innerHTML = '📸 <strong>Take a screenshot and claim your prize if you are the first one to find it!</strong><br/>Show this pop-up to SCSLAI to claim. First finder wins!';
         closeBtn.textContent = 'Claim My Prize! 🏆';
       } else {
         prizeEl.hidden = true; prizeEl.innerHTML = '';
@@ -2722,26 +2730,21 @@ if (lightbox && lightboxImg) {
       if (closeBtn) closeBtn.focus();
     }
     var lastBtn = null;
-    var claimed = false;
-    function resetGame() {
-      // TEMPORARY EASTER EGG: claiming restarts the hunt from 0/5.
-      claimed = true;
-      writeFound([]);
-      var triggers = document.querySelectorAll('.easter-egg-trigger.found');
+    function finishHuntForever() {
+      // TEMPORARY 1-DAY HUNT: one-time only. Wipe all eggs from page
+      // + remember claimed, so site is back to normal forever.
+      try {
+        localStorage.setItem(END_KEY, '1');
+        localStorage.removeItem(STORE_KEY);
+      } catch (e) {}
+      var triggers = document.querySelectorAll('.easter-egg-trigger');
       for (var r = 0; r < triggers.length; r++) {
-        triggers[r].classList.remove('found');
+        if (triggers[r].parentNode) triggers[r].parentNode.removeChild(triggers[r]);
       }
-      renderPopup([]);
     }
     function closePopup() {
       overlay.classList.remove('show');
       overlay.setAttribute('aria-hidden', 'true');
-      if (claimed) {
-        // Start fresh next open: reset popup to 0/5 + normal button.
-        claimed = false;
-        renderPopup([]);
-        closeBtn.textContent = 'Awesome! (0/' + TOTAL_EGGS + ')';
-      }
       if (lastBtn) lastBtn.focus();
     }
     // TEMPORARY EASTER EGG: place 1-2 eggs on this page + wire clicks.
@@ -2756,14 +2759,16 @@ if (lightbox && lightboxImg) {
     closeBtn.addEventListener('click', function () {
       var list = readFound();
       if (list.length >= TOTAL_EGGS && closeBtn.textContent.indexOf('Claim') !== -1) {
-        // TEMPORARY EASTER EGG: Claim = celebrate, then restart game.
+        // TEMPORARY 1-DAY HUNT: one-time only. Claim = game over,
+        // all logos gone, website back to normal.
         spawnConfetti(true);
-        closeBtn.textContent = 'New Hunt Started! 🔄';
-        prizeEl.innerHTML = '🏆 <strong>Prize claimed!</strong><br/>The hunt has restarted — find all 5 logos again!';
+        closeBtn.textContent = 'Welcome to SCSLAI Website 🎉';
+        closeBtn.disabled = true;
+        prizeEl.innerHTML = '🏆<br/>Thank you for playing!';
         setTimeout(function () {
-          resetGame();
+          finishHuntForever();
           closePopup();
-        }, 1400);
+        }, 7000);
         return;
       }
       closePopup();
