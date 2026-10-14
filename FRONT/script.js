@@ -2707,7 +2707,7 @@ if (lightbox && lightboxImg) {
         subEl.textContent = 'You are an official SCSLAI treasure hunter!';
         prizeEl.hidden = false;
         prizeEl.innerHTML = '📸 <strong>Take a screenshot and claim your prize if you are the first one to find it!</strong><br/>Show this pop-up to SCSLAI to claim. First finder wins!';
-        closeBtn.textContent = 'Claim My Prize! 🏆';
+        closeBtn.textContent = 'Done taking Screenshot 🏆';
       } else {
         prizeEl.hidden = true; prizeEl.innerHTML = '';
         closeBtn.textContent = 'Awesome! (' + count + '/' + TOTAL_EGGS + ')';
@@ -2747,6 +2747,44 @@ if (lightbox && lightboxImg) {
       overlay.setAttribute('aria-hidden', 'true');
       if (lastBtn) lastBtn.focus();
     }
+    // TEMPORARY EASTER EGG — finale: big word-only WELCOME blast.
+    // Shows after prize card closes (button / outside click / Esc / timer).
+    var welcomeShown = false;
+    function showWelcomeBlast() {
+      if (welcomeShown) return;
+      welcomeShown = true;
+      try {
+        if (localStorage.getItem(END_KEY) !== '1') return;
+      } catch (e) {}
+      var w = document.createElement('div');
+      w.className = 'easter-egg-welcome-overlay';
+      w.setAttribute('role', 'alert');
+      w.innerHTML = '<h2 class="easter-egg-welcome-text">WELCOME TO <span>SCSLAI WEBSITE</span></h2>';
+      document.body.appendChild(w);
+      var colors = ['#12503c', '#78fdc6', '#ffd166', '#ef476f', '#4ec291', '#ffffff'];
+      for (var i = 0; i < 130; i++) {
+        var p = document.createElement('span');
+        p.className = 'easter-egg-welcome-confetti';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.background = colors[Math.floor(Math.random() * colors.length)];
+        p.style.animationDuration = (1.8 + Math.random() * 2) + 's';
+        p.style.animationDelay = (Math.random() * 0.8) + 's';
+        w.appendChild(p);
+      }
+      requestAnimationFrame(function () { w.classList.add('show'); });
+      var done = false;
+      function hideWelcome() {
+        if (done) return;
+        done = true;
+        w.classList.remove('show');
+        setTimeout(function () { if (w.parentNode) w.parentNode.removeChild(w); }, 400);
+      }
+      w.addEventListener('click', hideWelcome);
+      document.addEventListener('keydown', function esc(e) {
+        if (e.key === 'Escape') { hideWelcome(); document.removeEventListener('keydown', esc); }
+      });
+      setTimeout(hideWelcome, 6000);
+    }
     // TEMPORARY EASTER EGG: place 1-2 eggs on this page + wire clicks.
     for (var k = 0; k < pageEggs.length; k++) {
       (function (eggDef) {
@@ -2762,22 +2800,34 @@ if (lightbox && lightboxImg) {
         // TEMPORARY 1-DAY HUNT: one-time only. Claim = game over,
         // all logos gone, website back to normal.
         spawnConfetti(true);
-        closeBtn.textContent = 'Welcome to SCSLAI Website 🎉';
+        closeBtn.textContent = 'Thank you for playing!';
         closeBtn.disabled = true;
-        prizeEl.innerHTML = '🏆<br/>Thank you for playing!';
+        prizeEl.innerHTML = '🏆<br/>Hope you enjoyed the hunt';
         setTimeout(function () {
           finishHuntForever();
           closePopup();
+          // TEMPORARY EASTER EGG: after prize card closes, big finale blast.
+          setTimeout(showWelcomeBlast, 350);
         }, 7000);
         return;
       }
       closePopup();
     });
     overlay.addEventListener('click', function (e) {
-      if (e.target === overlay) closePopup();
+      if (e.target === overlay) {
+        var wasClaimed = false;
+        try { wasClaimed = localStorage.getItem(END_KEY) === '1'; } catch (err) {}
+        closePopup();
+        if (wasClaimed) setTimeout(showWelcomeBlast, 350);
+      }
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && overlay.classList.contains('show')) closePopup();
+      if (e.key === 'Escape' && overlay.classList.contains('show')) {
+        var wasClaimedEsc = false;
+        try { wasClaimedEsc = localStorage.getItem(END_KEY) === '1'; } catch (err2) {}
+        closePopup();
+        if (wasClaimedEsc) setTimeout(showWelcomeBlast, 350);
+      }
     });
   }
 
