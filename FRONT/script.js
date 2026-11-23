@@ -1462,8 +1462,8 @@ if (slides.length > 0) {
 
 const announcementImages = [
   {src: 'images/Annoncements/Authority-to-deduct.jpg', alt: 'Announcement 1'},
-  {src: 'images/Annoncements/TLA.jpg', alt: 'Announcement 2'},
-  {src: 'images/Annoncements/GA.jpg', alt: 'Announcement 3'},
+  {src: 'images/Annoncements/TLA.jpg', alt: 'Announcement 2'}
+  
 ];
 const announcementImg = document.querySelector('.announcement-posters img');
 const announcementPrev = document.querySelector('.announcement-control.prev');
