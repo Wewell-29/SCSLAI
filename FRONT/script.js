@@ -1405,19 +1405,46 @@ setupPageNavigation();
 // Only the yearbook page needs these images; other pages just wasted requests.
 if (document.querySelector('.yearbook-library-section')) preloadBasePages();
 
-const slides = document.querySelectorAll('.carousel-slide');
+const slides = Array.from(document.querySelectorAll('.carousel-slide'));
 const nextButton = document.querySelector('.carousel-control.next');
 const prevButton = document.querySelector('.carousel-control.prev');
 let currentIndex = 0;
 let slideInterval;
 
+function parseScheduleDate(value) {
+  if (!value || !value.trim()) return null;
+  const date = new Date(value.trim());
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function isScheduledItemActive(item, now = new Date()) {
+  const startDate = parseScheduleDate(item.dataset?.startDateTime || item.startDateTime);
+  const endDate = parseScheduleDate(item.dataset?.endDateTime || item.endDateTime);
+  if (startDate && now.getTime() < startDate.getTime()) return false;
+  if (endDate && now.getTime() > endDate.getTime()) return false;
+  return true;
+}
+
+function getActiveSlides() {
+  return slides.filter((slide) => isScheduledItemActive(slide));
+}
+
 function showSlide(index) {
-  slides.forEach((slide, i) => {
-    const isActive = i === index;
+  const activeSlides = getActiveSlides();
+  if (!activeSlides.length) {
+    clearInterval(slideInterval);
+    document.querySelector('.featured-banner')?.setAttribute('hidden', '');
+    return;
+  }
+
+  document.querySelector('.featured-banner')?.removeAttribute('hidden');
+  const safeIndex = (index + activeSlides.length) % activeSlides.length;
+  slides.forEach((slide) => {
+    const isActive = slide === activeSlides[safeIndex];
     slide.classList.toggle('active', isActive);
     if (isActive) { loadSlideArtwork(slide); }
   });
-  currentIndex = index;
+  currentIndex = safeIndex;
 }
 
 // Slides 2–5 keep their picture in data-src, so the home page does not pull
@@ -1437,16 +1464,22 @@ function loadSlideArtwork(slide) {
 }
 
 function nextSlide() {
-  const nextIndex = (currentIndex + 1) % slides.length;
+  const activeSlides = getActiveSlides();
+  if (!activeSlides.length) return;
+  const nextIndex = (currentIndex + 1) % activeSlides.length;
   showSlide(nextIndex);
 }
 
 function prevSlide() {
-  const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+  const activeSlides = getActiveSlides();
+  if (!activeSlides.length) return;
+  const prevIndex = (currentIndex - 1 + activeSlides.length) % activeSlides.length;
   showSlide(prevIndex);
 }
 
 function startCarousel() {
+  clearInterval(slideInterval);
+  if (!getActiveSlides().length) return;
   slideInterval = setInterval(nextSlide, 40000);
 }
 
@@ -1455,16 +1488,41 @@ function resetCarousel() {
   startCarousel();
 }
 
-if (slides.length > 0) {
-  showSlide(0);
-  startCarousel();
+function refreshCarouselSchedule() {
+  slides.forEach((slide) => {
+    slide.hidden = !isScheduledItemActive(slide);
+  });
+  if (!getActiveSlides().length) {
+    clearInterval(slideInterval);
+    document.querySelector('.featured-banner')?.setAttribute('hidden', '');
+  } else {
+    document.querySelector('.featured-banner')?.removeAttribute('hidden');
+    showSlide(currentIndex);
+  }
 }
 
-const announcementImages = [
-  {src: 'images/Annoncements/Authority-to-deduct.jpg', alt: 'Announcement 1'},
-  {src: 'images/Annoncements/TLA.jpg', alt: 'Announcement 2'}
-  
+if (slides.length > 0) {
+  refreshCarouselSchedule();
+  startCarousel();
+}
+setInterval(refreshCarouselSchedule, 60000);
+
+const allAnnouncementImages = [
+  // Optional Philippine time schedule: YYYY-MM-DDTHH:MM:SS+08:00
+  {
+    src: 'images/Annoncements/Authority-to-deduct.jpg',
+    alt: 'Announcement 1',
+    startDateTime: '',
+    endDateTime: ''
+  },
+  {
+    src: 'images/Annoncements/TLA.jpg',
+    alt: 'Announcement 2',
+    startDateTime: '',
+    endDateTime: ''
+  }
 ];
+let announcementImages = allAnnouncementImages.filter(isScheduledItemActive);
 const announcementImg = document.querySelector('.announcement-posters img');
 const announcementPrev = document.querySelector('.announcement-control.prev');
 const announcementNext = document.querySelector('.announcement-control.next');
@@ -1506,6 +1564,12 @@ function updateAnnouncementDots() {
 
 async function showAnnouncement(index, direction) {
   if (!announcementImg) return;
+  if (!announcementImages.length) {
+    stopAnnouncementAuto();
+    announcementImg.closest('.announcement-posters')?.setAttribute('hidden', '');
+    announcementImg.closest('.announcements')?.setAttribute('hidden', '');
+    return;
+  }
   const safeIndex = (index + announcementImages.length) % announcementImages.length;
   const next = announcementImages[safeIndex];
   const request = ++announcementRequest;
@@ -1558,22 +1622,48 @@ function stopAnnouncementAuto() {
   }
 }
 
-if (announcementImg) {
-  preloadAnnouncements();
-  if (announcementDotsWrap) {
-    announcementDots = announcementImages.map((item, i) => {
-      const dot = document.createElement('button');
-      dot.type = 'button';
-      dot.className = 'announcement-dot' + (i === 0 ? ' active' : '');
-      dot.setAttribute('aria-label', 'Show announcement ' + (i + 1) + ': ' + item.alt);
-      dot.addEventListener('click', () => {
-        showAnnouncement(i, i >= announcementIndex ? 1 : -1);
-        startAnnouncementAuto();
-      });
-      announcementDotsWrap.appendChild(dot);
-      return dot;
+function buildAnnouncementDots() {
+  if (!announcementDotsWrap) return;
+  announcementDotsWrap.replaceChildren();
+  announcementDots = announcementImages.map((item, i) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'announcement-dot' + (i === announcementIndex ? ' active' : '');
+    dot.setAttribute('aria-label', 'Show announcement ' + (i + 1) + ': ' + item.alt);
+    dot.addEventListener('click', () => {
+      showAnnouncement(i, i >= announcementIndex ? 1 : -1);
+      startAnnouncementAuto();
     });
+    announcementDotsWrap.appendChild(dot);
+    return dot;
+  });
+}
+
+function refreshAnnouncementSchedule() {
+  const activeImages = allAnnouncementImages.filter(isScheduledItemActive);
+  const changed = activeImages.length !== announcementImages.length ||
+    activeImages.some((item, index) => item.src !== announcementImages[index]?.src);
+
+  announcementImages = activeImages;
+  if (!announcementImages.length) {
+    stopAnnouncementAuto();
+    announcementImg?.closest('.announcements')?.setAttribute('hidden', '');
+    return;
   }
+
+  announcementImg?.closest('.announcements')?.removeAttribute('hidden');
+  if (changed) {
+    announcementIndex = 0;
+    announcementCache.length = 0;
+    buildAnnouncementDots();
+  }
+  showAnnouncement(announcementIndex, 0);
+  startAnnouncementAuto();
+}
+
+if (announcementImg) {
+  refreshAnnouncementSchedule();
+  preloadAnnouncements();
   if (announcementPrev) {
     announcementPrev.addEventListener('click', () => {
       prevAnnouncement();
@@ -1600,6 +1690,7 @@ if (announcementImg) {
     }
   });
   startAnnouncementAuto();
+  setInterval(refreshAnnouncementSchedule, 60000);
 }
 
 const galleryItems = document.querySelectorAll('.gallery-item');
