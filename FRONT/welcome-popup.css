@@ -1,9 +1,9 @@
 /* =========================================================================
-   SCSLAI — WELCOME POPUP  (styles)
+   SCSLAI — WELCOME / PROMO POPUP  (styles)
    -------------------------------------------------------------------------
-   The intro banner that greets a visitor before they use the site.
+   The banners shown one at a time before the visitor uses the site.
      • Markup + behaviour ... welcome-popup.js
-     • Artwork ............. images/welcome/welcome-banner.*
+     • Artwork ............. images/welcome/*.webp (+ .jpg fallback)
    Every rule below is scoped to the popup's own class names, so it cannot
    change any other part of the website.
    ========================================================================= */
@@ -94,6 +94,21 @@ body.scslai-welcome-open {
     display: block;
 }
 
+/* Linked banners (the promos) wrap their artwork in a plain full-bleed link. */
+.scslai-welcome__link {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    color: inherit;
+    text-decoration: none;
+}
+
+.scslai-welcome__link:focus-visible {
+    outline: 3px solid #f0d27a;
+    outline-offset: -3px;
+}
+
 .scslai-welcome__image {
     display: block;
     width: 100%;
@@ -103,7 +118,7 @@ body.scslai-welcome-open {
     padding: 0;
     border: 0;
     object-fit: contain;
-    cursor: pointer;            /* clicking the banner also enters the site */
+    cursor: pointer;            /* clicking the banner also dismisses / opens it */
     -webkit-user-select: none;
     user-select: none;
     -webkit-user-drag: none;
